@@ -32,65 +32,118 @@ namespace LazerTag.CommandPattern
 
         private InputHandler()
         {
-            Character character = GameWorld.Instance.FindObjectOfType<Character>() as Character;
-            GamePadState padState = GamePad.GetState(PlayerIndex.One);
+            //Character character = GameWorld.Instance.FindObjectOfType<Character>() as Character;
+            //GameObject gameObject = GameWorld.Instance.FindObjectByTag("Player1");
+            //GamePadState padState = GamePad.GetState(PlayerIndex.One);
+
 
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickLeft), new MoveCommand(new Vector2(-1, 0)));
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickRight), new MoveCommand(new Vector2(1, 0)));
-            padbinds.Add(new PadInfo(Buttons.LeftThumbstickUp), new MoveCommand(new Vector2(0, -1)));
-            padbinds.Add(new PadInfo(Buttons.LeftThumbstickDown), new MoveCommand(new Vector2(0, 1)));
         }
 
         public void Execute(Character character)
         {
-            KeyboardState keyState = Keyboard.GetState();
 
-            //check the device for player one
-            GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
-
-            //if there is a controller attached, handle it
-            if (capabilities.IsConnected)
+            if(character.CharacterId == 1)
             {
-                //get the current state of Controller1
-                GamePadState padState = GamePad.GetState(PlayerIndex.One);
+                //check the device for player one
+                GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
 
-                // You can check explicitly if a gamepad has support for a certain feature
-                if (capabilities.HasLeftXThumbStick)
+                //if there is a controller attached, handle it
+                if (capabilities.IsConnected)
                 {
-                    foreach (PadInfo padInfo in padbinds.Keys)
+                    //get the current state of Controller1
+                    GamePadState padState = GamePad.GetState(PlayerIndex.One);
+
+                    // You can check explicitly if a gamepad has support for a certain feature
+                    if (capabilities.HasLeftXThumbStick)
                     {
-                        //if (padState.IsButtonDown(padInfo.Button))
-                        //{
-                        //    if (padInfo.Button == Buttons.LeftThumbstickLeft && padState.ThumbSticks.Left.X < -0.5f)
-                        //    {
-                        //        character.PlayerDirection = character.Direction.Left;
-                        //    }
-                        //    if (padInfo.Button == Buttons.LeftThumbstickRight && padState.ThumbSticks.Left.X > 0.5f)
-                        //    {
-                        //        character.PlayerDirection = character.Direction.Right;
-                        //    }
-                        //    if (padInfo.Button == Buttons.LeftThumbstickUp && padState.ThumbSticks.Left.Y > 0.5f)
-                        //    {
-                        //        character.PlayerDirection = character.Direction.Up;
-                        //    }
-                        //    if (padInfo.Button == Buttons.LeftThumbstickDown && padState.ThumbSticks.Left.Y < -0.5f)
-                        //    {
-                        //        character.PlayerDirection = character.Direction.Down;
-                        //    }
+                        foreach (PadInfo padInfo in padbinds.Keys)
+                        {
+                            if (padState.IsButtonDown(padInfo.Button))
+                            {
+                                //    if (padInfo.Button == Buttons.LeftThumbstickLeft && padState.ThumbSticks.Left.X < -0.5f)
+                                //    {
+                                //        character.PlayerDirection = character.Direction.Left;
+                                //    }
+                                //    if (padInfo.Button == Buttons.LeftThumbstickRight && padState.ThumbSticks.Left.X > 0.5f)
+                                //    {
+                                //        character.PlayerDirection = character.Direction.Right;
+                                //    }
+                                //    if (padInfo.Button == Buttons.LeftThumbstickUp && padState.ThumbSticks.Left.Y > 0.5f)
+                                //    {
+                                //        character.PlayerDirection = character.Direction.Up;
+                                //    }
+                                //    if (padInfo.Button == Buttons.LeftThumbstickDown && padState.ThumbSticks.Left.Y < -0.5f)
+                                //    {
+                                //        character.PlayerDirection = character.Direction.Down;
+                                //    }
 
-                        //    padbinds[padInfo].Execute(character);
-                        //    padInfo.IsDown = true;
-                        //    character.IsWalking = true;
-                        //}
+                                padbinds[padInfo].Execute(character);
+                                padInfo.IsDown = true;
+                                //    character.IsWalking = true;
+                            }
 
-                        //if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)
-                        //{
-                        //    padInfo.IsDown = false;
-                        //    character.IsWalking = false;
-                        //}
+                            //if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)
+                            //{
+                            //    padInfo.IsDown = false;
+                            //    character.IsWalking = false;
+                            //}
+                        }
                     }
                 }
             }
+
+            if (character.CharacterId == 2)
+            {
+                //check the device for player one
+                GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.Two);
+
+                //if there is a controller attached, handle it
+                if (capabilities.IsConnected)
+                {
+                    //get the current state of Controller1
+                    GamePadState padState = GamePad.GetState(PlayerIndex.Two);
+
+                    // You can check explicitly if a gamepad has support for a certain feature
+                    if (capabilities.HasLeftXThumbStick)
+                    {
+                        foreach (PadInfo padInfo in padbinds.Keys)
+                        {
+                            if (padState.IsButtonDown(padInfo.Button))
+                            {
+                                //    if (padInfo.Button == Buttons.LeftThumbstickLeft && padState.ThumbSticks.Left.X < -0.5f)
+                                //    {
+                                //        character.PlayerDirection = character.Direction.Left;
+                                //    }
+                                //    if (padInfo.Button == Buttons.LeftThumbstickRight && padState.ThumbSticks.Left.X > 0.5f)
+                                //    {
+                                //        character.PlayerDirection = character.Direction.Right;
+                                //    }
+                                //    if (padInfo.Button == Buttons.LeftThumbstickUp && padState.ThumbSticks.Left.Y > 0.5f)
+                                //    {
+                                //        character.PlayerDirection = character.Direction.Up;
+                                //    }
+                                //    if (padInfo.Button == Buttons.LeftThumbstickDown && padState.ThumbSticks.Left.Y < -0.5f)
+                                //    {
+                                //        character.PlayerDirection = character.Direction.Down;
+                                //    }
+
+                                padbinds[padInfo].Execute(character);
+                                padInfo.IsDown = true;
+                                //    character.IsWalking = true;
+                            }
+
+                            //if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)
+                            //{
+                            //    padInfo.IsDown = false;
+                            //    character.IsWalking = false;
+                            //}
+                        }
+                    }
+                }
+            }
+
         }
     }
 }

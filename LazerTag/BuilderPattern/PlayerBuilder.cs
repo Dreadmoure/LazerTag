@@ -1,18 +1,22 @@
 ﻿using LazerTag.ComponentPattern;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LazerTag.BuilderPattern
 {
-    /// <summary>
-    /// Class for building the Background
-    /// </summary>
-    public class BackgroundBuilder : IBuilder
+    public class PlayerBuilder : IBuilder
     {
         private GameObject gameObject;
+        private int id;
+
+        public PlayerBuilder(int id)
+        {
+            this.id = id;
+        }
 
         public void BuildGameObject()
         {
@@ -26,8 +30,8 @@ namespace LazerTag.BuilderPattern
         /// </summary>
         private void BuildComponents()
         {
-            Background background = (Background)gameObject.AddComponent(new Background());
-            gameObject.AddComponent(new SpriteRenderer());
+            Player player = (Player)gameObject.AddComponent(new Player());
+            player.Id = id;
         }
 
         /// <summary>

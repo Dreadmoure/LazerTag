@@ -54,7 +54,7 @@ namespace LazerTag.ComponentPattern
         /// updates each frame
         /// </summary>
         /// <param name="gameTime">we can acces the renderer through this</param>
-        public override void Update(GameTime gameTime)
+        public override void Update()
         {
             //UpdatePixelCollider();
             CheckCollision();

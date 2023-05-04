@@ -1,4 +1,6 @@
-﻿using LazerTag.ComponentPattern;
+﻿using LazerTag.BuilderPattern;
+using LazerTag.ComponentPattern;
+using LazerTag.CreationalPattern;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -72,6 +74,12 @@ namespace LazerTag
         {
             // TODO: Add your initialization logic here
 
+            Director playerDirector1 = new Director(new PlayerBuilder(1));
+            gameObjects.Add(playerDirector1.Construct());
+
+            Director playerDirector2 = new Director(new PlayerBuilder(2));
+            gameObjects.Add(playerDirector2.Construct());
+
             //loop that calls awake on all GameObjects
             for (int i = 0; i < gameObjects.Count; i++)
             {
@@ -101,6 +109,8 @@ namespace LazerTag
             {
                 gameObjects[i].Start();
             }
+
+            //SpawnCharacters();
         }
 
         protected override void Update(GameTime gameTime)
@@ -113,10 +123,13 @@ namespace LazerTag
             //updates the gametime
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
+            //Update the UI
+            UI.Instance.Update();
+
             //calls update on all gameobjects
             for (int i = 0; i < gameObjects.Count; i++)
             {
-                gameObjects[i].Update(gameTime);
+                gameObjects[i].Update();
             }
 
             base.Update(gameTime);
@@ -224,5 +237,27 @@ namespace LazerTag
             }
             return null;
         }
+
+        public GameObject FindObjectByTag(string tag) 
+        {
+            foreach(GameObject gameObject in gameObjects)
+            {
+                if(gameObject.Tag == tag)
+                {
+                    return gameObject;
+                }
+
+            }
+            return null;
+        }
+
+        //public void SpawnCharacters()
+        //{
+        //    GameObject character1 = CharacterFactory.Instance.Create(PlayerIndex.One);
+        //    GameObject character2 = CharacterFactory.Instance.Create(PlayerIndex.Two);
+
+        //    Instantiate(character1);
+        //    Instantiate(character2);
+        //}
     }
 }

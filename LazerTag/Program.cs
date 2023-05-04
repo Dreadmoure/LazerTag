@@ -1,3 +1,5 @@
 ﻿
-using var game = new LazerTag.GameWorld();
+using LazerTag;
+
+using var game = GameWorld.Instance;
 game.Run();

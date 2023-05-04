@@ -41,19 +41,16 @@ namespace LazerTag.CreationalPattern
         private void CreatePrototypeP1()
         {
             GameObject gameObject = new GameObject();
-
             
             Character character = gameObject.AddComponent(new Character()) as Character;
-
             character.CharacterId = 1;
 
             SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;
-            
-
-            spriteRenderer.SetSprite("Characters\\Red\\Idle\\RedIdle0");
-
+            spriteRenderer.SetSprite("test");
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.5f;
+
+            gameObject.AddComponent(new Collider()); 
 
             prototypes.Add(gameObject);
         }
@@ -90,6 +87,8 @@ namespace LazerTag.CreationalPattern
         public override GameObject Create(Enum type)
         {
             GameObject gameObject = new GameObject();
+            Collider collider;
+            Character character; 
 
             switch (type)
             {
@@ -97,12 +96,28 @@ namespace LazerTag.CreationalPattern
                     gameObject = (GameObject)prototypes[0].Clone();
 
                     gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 3, GameWorld.ScreenSize.Y / 2);
+
+                    character = gameObject.GetComponent<Character>() as Character; 
+                    collider = gameObject.GetComponent<Collider>() as Collider;
+                    collider.CollisionEvent.Attach(character);
+                    collider.TopCollisionEvent.Attach(character);
+                    collider.BottomCollisionEvent.Attach(character);
+                    collider.LeftCollisionEvent.Attach(character);
+                    collider.RightCollisionEvent.Attach(character);
                                         
                     break;
                 case PlayerIndex.Two:
                     gameObject = (GameObject)prototypes[1].Clone();
 
                     gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 1.5f, GameWorld.ScreenSize.Y / 2);
+
+                    character = gameObject.GetComponent<Character>() as Character;
+                    collider = gameObject.GetComponent<Collider>() as Collider;
+                    collider.CollisionEvent.Attach(character);
+                    collider.TopCollisionEvent.Attach(character);
+                    collider.BottomCollisionEvent.Attach(character);
+                    collider.LeftCollisionEvent.Attach(character);
+                    collider.RightCollisionEvent.Attach(character);
 
                     break;
 

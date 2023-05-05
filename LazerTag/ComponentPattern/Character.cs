@@ -35,6 +35,7 @@ namespace LazerTag.ComponentPattern
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer; 
             AmmoCount = 5;
             speed = 250;
+            // set gravity, remember to multiply with speed 
             gravity = new Vector2(0, 0.9f) * speed;
         }
 
@@ -74,21 +75,32 @@ namespace LazerTag.ComponentPattern
             {
                 GameObject other = (gameEvent as CollisionEvent).Other; 
 
-                if(other.Tag == "Platform")
+                // check for pixel collision here 
+
+                // check for other characters projectiles 
+                if(other.Tag == "Projectile")
                 {
-                    //Debug.WriteLine("collide"); 
+
+                }
+
+                // check for pick ups 
+                if(other.Tag == "PickUp")
+                {
+
                 }
             }
+
+            // platform side collision events 
             if(gameEvent is TopCollisionEvent)
             {
                 GameObject other = (gameEvent as TopCollisionEvent).Other;
 
                 if(other.Tag == "Platform")
                 {
-                    Debug.WriteLine("top");
-
+                    // get the platforms spriterenderer 
                     SpriteRenderer otherSpriteRenderer = other.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
+                    // set character to be on top of the platform, so it does not fall through 
                     GameObject.Transform.Position = new Vector2(GameObject.Transform.Position.X, 
                                                                 other.Transform.Position.Y - (otherSpriteRenderer.Origin.Y + spriteRenderer.Origin.Y));
                 }
@@ -99,10 +111,10 @@ namespace LazerTag.ComponentPattern
 
                 if (other.Tag == "Platform")
                 {
-                    Debug.WriteLine("bottom");
-
+                    // get the platforms spriterenderer 
                     SpriteRenderer otherSpriteRenderer = other.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
+                    // make sure character can not get up through platform 
                     GameObject.Transform.Position = new Vector2(GameObject.Transform.Position.X,
                                                                 other.Transform.Position.Y + (otherSpriteRenderer.Origin.Y + spriteRenderer.Origin.Y));
                 }
@@ -113,10 +125,10 @@ namespace LazerTag.ComponentPattern
 
                 if (other.Tag == "Platform")
                 {
-                    Debug.WriteLine("left");
-
+                    // get the platforms spriterenderer 
                     SpriteRenderer otherSpriteRenderer = other.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
+                    // make sure character can not move right into platform 
                     GameObject.Transform.Position = new Vector2(other.Transform.Position.X - (otherSpriteRenderer.Origin.X + spriteRenderer.Origin.X),
                                                                 GameObject.Transform.Position.Y);
                 }
@@ -127,10 +139,10 @@ namespace LazerTag.ComponentPattern
 
                 if (other.Tag == "Platform")
                 {
-                    Debug.WriteLine("right");
-
+                    // get the platforms spriterenderer 
                     SpriteRenderer otherSpriteRenderer = other.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
+                    // make sure character can not move left into platform 
                     GameObject.Transform.Position = new Vector2(other.Transform.Position.X + (otherSpriteRenderer.Origin.X + spriteRenderer.Origin.X),
                                                                 GameObject.Transform.Position.Y);
                 }

@@ -100,6 +100,7 @@ namespace LazerTag.CreationalPattern
                     character = gameObject.GetComponent<Character>() as Character; 
                     collider = gameObject.GetComponent<Collider>() as Collider;
                     collider.CollisionEvent.Attach(character);
+                    // attach platform side collisionevents 
                     collider.TopCollisionEvent.Attach(character);
                     collider.BottomCollisionEvent.Attach(character);
                     collider.LeftCollisionEvent.Attach(character);
@@ -114,6 +115,7 @@ namespace LazerTag.CreationalPattern
                     character = gameObject.GetComponent<Character>() as Character;
                     collider = gameObject.GetComponent<Collider>() as Collider;
                     collider.CollisionEvent.Attach(character);
+                    // attach platform side collisionevents 
                     collider.TopCollisionEvent.Attach(character);
                     collider.BottomCollisionEvent.Attach(character);
                     collider.LeftCollisionEvent.Attach(character);

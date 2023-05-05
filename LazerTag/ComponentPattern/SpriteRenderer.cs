@@ -30,6 +30,8 @@ namespace LazerTag.ComponentPattern
         /// property for getting or setting the scale of the image
         /// </summary>
         public float Scale { get; set; }
+
+        public SpriteEffects Flip { get; set; }
         #endregion
 
         #region methods
@@ -39,6 +41,7 @@ namespace LazerTag.ComponentPattern
         public override void Start()
         {
             Origin = new Vector2(Sprite.Width / 2, Sprite.Height / 2);
+            Flip = SpriteEffects.None;
         }
 
         /// <summary>
@@ -56,7 +59,7 @@ namespace LazerTag.ComponentPattern
         /// <param name="spriteBatch">passed in from gameworld so we can draw through it</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Sprite, GameObject.Transform.Position, null, Color.White, GameObject.Transform.Rotation, Origin, Scale, SpriteEffects.None, LayerDepth);
+            spriteBatch.Draw(Sprite, GameObject.Transform.Position, null, Color.White, GameObject.Transform.Rotation, Origin, Scale, Flip, LayerDepth);
         }
         #endregion
     }

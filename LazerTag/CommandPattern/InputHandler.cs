@@ -63,33 +63,26 @@ namespace LazerTag.CommandPattern
                         {
                             if (padState.IsButtonDown(padInfo.Button))
                             {
-                                //    if (padInfo.Button == Buttons.LeftThumbstickLeft && padState.ThumbSticks.Left.X < -0.5f)
-                                //    {
-                                //        character.PlayerDirection = character.Direction.Left;
-                                //    }
-                                //    if (padInfo.Button == Buttons.LeftThumbstickRight && padState.ThumbSticks.Left.X > 0.5f)
-                                //    {
-                                //        character.PlayerDirection = character.Direction.Right;
-                                //    }
-                                //    if (padInfo.Button == Buttons.LeftThumbstickUp && padState.ThumbSticks.Left.Y > 0.5f)
-                                //    {
-                                //        character.PlayerDirection = character.Direction.Up;
-                                //    }
-                                //    if (padInfo.Button == Buttons.LeftThumbstickDown && padState.ThumbSticks.Left.Y < -0.5f)
-                                //    {
-                                //        character.PlayerDirection = character.Direction.Down;
-                                //    }
+                                if (padInfo.Button == Buttons.LeftThumbstickLeft && padState.ThumbSticks.Left.X < -0.02f)
+                                {
+                                    character.CharacterDirection = Character.Direction.Left;
+                                }
+                                if (padInfo.Button == Buttons.LeftThumbstickRight && padState.ThumbSticks.Left.X > 0.02f)
+                                {
+                                    character.CharacterDirection = Character.Direction.Right;
+                                }
+
 
                                 padbinds[padInfo].Execute(character);
                                 padInfo.IsDown = true;
-                                //    character.IsWalking = true;
+                                character.IsWalking = true;
                             }
 
-                            //if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)
-                            //{
-                            //    padInfo.IsDown = false;
-                            //    character.IsWalking = false;
-                            //}
+                            if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)
+                            {
+                                padInfo.IsDown = false;
+                                character.IsWalking = false;
+                            }
                         }
                     }
                 }

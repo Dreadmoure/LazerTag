@@ -2,6 +2,7 @@
 using LazerTag.ObserverPattern;
 using LazerTag.ObserverPattern.PlatformCollisionEvents;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,6 +16,10 @@ namespace LazerTag.ComponentPattern
     {
         #region fields
         private SpriteRenderer spriteRenderer;
+        private Animator animator;
+
+
+        public enum Direction { Left, Right };
 
         private float speed;
         private bool canShoot;
@@ -29,12 +34,21 @@ namespace LazerTag.ComponentPattern
 
         public int CharacterId { get; set; }
 
+        public bool IsWalking { get; set; } = false;
+        public Direction CharacterDirection { get; set; }
+
+        //animation sprites
+        public string[] walkSprites { get; set; }
+        public string[] idleSprites { get; set; }
+
         #region methods
         public override void Start()
         {
-            spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer; 
+            spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
+            animator = GameObject.GetComponent<Animator>() as Animator;
             AmmoCount = 5;
             speed = 250;
+
             // set gravity, remember to multiply with speed 
             gravity = new Vector2(0, 0.9f) * speed;
         }
@@ -43,6 +57,32 @@ namespace LazerTag.ComponentPattern
         {
             //handles input
             InputHandler.Instance.Execute(this);
+            spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
+
+            //walking animations
+            if (IsWalking && CharacterDirection == Direction.Left)
+            {
+                animator.PlayAnimation("Walk");
+                spriteRenderer.Flip = SpriteEffects.FlipHorizontally;
+            }
+            if (IsWalking && CharacterDirection == Direction.Right)
+            {
+                animator.PlayAnimation("Walk");
+                spriteRenderer.Flip = SpriteEffects.None;
+                
+                //needs to flip
+            }
+
+            //idle animations
+            if (!IsWalking && CharacterDirection == Direction.Left)
+            {
+                animator.PlayAnimation("Idle");
+            }
+            if (!IsWalking && CharacterDirection == Direction.Right)
+            {
+                animator.PlayAnimation("Idle");
+                //needs to flip
+            }
 
             // make character fall using gravity 
             GameObject.Transform.Translate(gravity * GameWorld.DeltaTime); 
@@ -148,6 +188,20 @@ namespace LazerTag.ComponentPattern
                                                                 GameObject.Transform.Position.Y);
                 }
             }
+        }
+
+        public Animation BuildAnimation(int fps, string animationName, string[] spriteNames)
+        {
+            Texture2D[] sprites = new Texture2D[spriteNames.Length];
+
+            for (int i = 0; i < spriteNames.Length; i++)
+            {
+                sprites[i] = GameWorld.Instance.Content.Load<Texture2D>(spriteNames[i]);
+            }
+
+            Animation animation = new Animation(fps, animationName, sprites);
+
+            return animation;
         }
         #endregion
     }

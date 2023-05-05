@@ -172,7 +172,7 @@ namespace LazerTag.ComponentPattern
         /// <returns>true, if side has been touched</returns>
         private bool TouchRightOf(Rectangle r1, Rectangle r2)
         {
-            return (r1.Left >= r2.Right - 5 &&
+            return (r1.Left >= r2.Right - 7 &&
                     r1.Left <= r2.Right + 5 &&
                     r1.Top <= r2.Bottom - 5 &&
                     r1.Bottom >= r2.Top + 5);

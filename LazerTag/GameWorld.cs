@@ -26,7 +26,6 @@ namespace LazerTag
         }
         #endregion
 
-
         #region fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -77,8 +76,11 @@ namespace LazerTag
             Director playerDirector1 = new Director(new PlayerBuilder(1));
             gameObjects.Add(playerDirector1.Construct());
 
-            Director playerDirector2 = new Director(new PlayerBuilder(2));
-            gameObjects.Add(playerDirector2.Construct());
+            //Director playerDirector2 = new Director(new PlayerBuilder(2));
+            //gameObjects.Add(playerDirector2.Construct());
+
+            // call add platforms method 
+            AddPlatforms(); 
 
             //loop that calls awake on all GameObjects
             for (int i = 0; i < gameObjects.Count; i++)
@@ -93,6 +95,51 @@ namespace LazerTag
             }
 
             base.Initialize();
+        }
+
+        /// <summary>
+        /// method for setting up the level with platforms 
+        /// </summary>
+        private void AddPlatforms()
+        {
+            // the entire level is laid out in a 2 diemtional int array, where each 1 is a platform 
+            int[,] tileIds = new int[,]
+            {
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 },
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 }
+            };
+
+            // loop through the 2d array 
+            for (int i = 0; i < tileIds.GetLength(0); i++)
+            {
+                for (int j = 0; j < tileIds.GetLength(1); j++)
+                {
+                    // check if each int is 1 
+                    if (tileIds[i, j] == 1)
+                    {
+                        // create platform 
+                        Director platformDirector = new Director(new PlatformBuilder(j, i));
+                        gameObjects.Add(platformDirector.Construct());
+                    }
+                }
+            }
         }
 
         protected override void LoadContent()
@@ -250,14 +297,5 @@ namespace LazerTag
             }
             return null;
         }
-
-        //public void SpawnCharacters()
-        //{
-        //    GameObject character1 = CharacterFactory.Instance.Create(PlayerIndex.One);
-        //    GameObject character2 = CharacterFactory.Instance.Create(PlayerIndex.Two);
-
-        //    Instantiate(character1);
-        //    Instantiate(character2);
-        //}
     }
 }

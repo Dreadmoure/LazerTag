@@ -1,4 +1,5 @@
 ﻿using LazerTag.ObserverPattern;
+using LazerTag.ObserverPattern.PlatformCollisionEvents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -21,6 +22,10 @@ namespace LazerTag.ComponentPattern
         /// used to get or set the collsion event
         /// </summary>
         public CollisionEvent CollisionEvent { get; private set; } = new CollisionEvent();
+        public TopCollisionEvent TopCollisionEvent { get; private set; } = new TopCollisionEvent();
+        public BottomCollisionEvent BottomCollisionEvent { get; private set; } = new BottomCollisionEvent();
+        public LeftCollisionEvent LeftCollisionEvent { get; private set; } = new LeftCollisionEvent();
+        public RightCollisionEvent RightCollisionEvent { get; private set; } = new RightCollisionEvent();
 
         /// <summary>
         /// used to return a rectangle based on the objects position and its sprite
@@ -47,7 +52,7 @@ namespace LazerTag.ComponentPattern
         public override void Start()
         {
             spriteRenderer = (SpriteRenderer)GameObject.GetComponent<SpriteRenderer>();
-            texture = GameWorld.Instance.Content.Load<Texture2D>("Sprites\\Pixel");
+            texture = GameWorld.Instance.Content.Load<Texture2D>("Pixel");
         }
 
         /// <summary>
@@ -61,10 +66,28 @@ namespace LazerTag.ComponentPattern
         }
 
         //use this if you want to draw the collisionboxes
-        //public override void Draw(SpriteBatch spriteBatch)
-        //{
-        //    DrawRectangle(CollisionBox, spriteBatch);
-        //}
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            DrawRectangle(CollisionBox, spriteBatch);
+        }
+
+        /// <summary>
+        /// method for drawing the rectangle collision box 
+        /// </summary>
+        /// <param name="collisionBox">the box of the object</param>
+        /// <param name="spriteBatch">for drawing the pixel sprite</param>
+        public void DrawRectangle(Rectangle collisionBox, SpriteBatch spriteBatch)
+        {
+            Rectangle topLine = new Rectangle(collisionBox.X, collisionBox.Y, collisionBox.Width, 1);
+            Rectangle bottomLine = new Rectangle(collisionBox.X, collisionBox.Y + collisionBox.Height, collisionBox.Width, 1);
+            Rectangle rightLine = new Rectangle(collisionBox.X + collisionBox.Width, collisionBox.Y, 1, collisionBox.Height);
+            Rectangle leftLine = new Rectangle(collisionBox.X, collisionBox.Y, 1, collisionBox.Height);
+
+            spriteBatch.Draw(texture, topLine, null, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.Draw(texture, bottomLine, null, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.Draw(texture, rightLine, null, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
+            spriteBatch.Draw(texture, leftLine, null, Color.Red, 0f, Vector2.Zero, SpriteEffects.None, 1);
+        }
 
         /// <summary>
         /// method for checking if objects collide
@@ -73,11 +96,86 @@ namespace LazerTag.ComponentPattern
         {
             foreach (Collider other in GameWorld.Instance.Colliders)
             {
-                if (other != this && other.CollisionBox.Contains(CollisionBox))
+                if (other != this && other.CollisionBox.Intersects(CollisionBox))
                 {
+                    // use collisionevent only for pixelcollision detection 
                     CollisionEvent.Notify(other.GameObject);
+
+                    // check if platform sides are touched 
+                    if(TouchTopOf(CollisionBox, other.CollisionBox))
+                    {
+                        TopCollisionEvent.Notify(other.GameObject); 
+                    }
+                    if (TouchBottomOf(CollisionBox, other.CollisionBox))
+                    {
+                        BottomCollisionEvent.Notify(other.GameObject);
+                    }
+                    if (TouchLeftOf(CollisionBox, other.CollisionBox))
+                    {
+                        LeftCollisionEvent.Notify(other.GameObject);
+                    }
+                    if (TouchRightOf(CollisionBox, other.CollisionBox))
+                    {
+                        RightCollisionEvent.Notify(other.GameObject);
+                    }
                 }
             }
+        }
+
+        /// <summary>
+        /// method for detecting if top of platform has been touched by character 
+        /// </summary>
+        /// <param name="r1">the characters rectangle</param>
+        /// <param name="r2">the platform rectangle</param>
+        /// <returns>true, if side has been touched</returns>
+        private bool TouchTopOf(Rectangle r1, Rectangle r2)
+        {
+            return (r1.Bottom >= r2.Top - 5 &&
+                    r1.Bottom <= r2.Top + 5 &&
+                    r1.Right >= r2.Left &&
+                    r1.Left <= r2.Right); 
+        }
+
+        /// <summary>
+        /// method for detecting if bottom of platform has been touched by character 
+        /// </summary>
+        /// <param name="r1">the characters rectangle</param>
+        /// <param name="r2">the platform rectangle</param>
+        /// <returns>true, if side has been touched</returns>
+        private bool TouchBottomOf(Rectangle r1, Rectangle r2)
+        {
+            return (r1.Top <= r2.Bottom + 10 &&
+                    r1.Top >= r2.Bottom - 10 &&
+                    r1.Right >= r2.Left + 7 &&
+                    r1.Left <= r2.Right - 7);
+        }
+
+        /// <summary>
+        /// method for detecting if left of platform has been touched by character 
+        /// </summary>
+        /// <param name="r1">the characters rectangle</param>
+        /// <param name="r2">the platform rectangle</param>
+        /// <returns>true, if side has been touched</returns>
+        private bool TouchLeftOf(Rectangle r1, Rectangle r2)
+        {
+            return (r1.Right <= r2.Left + 5 &&
+                    r1.Right >= r2.Left - 5 &&
+                    r1.Top <= r2.Bottom - 5 &&
+                    r1.Bottom >= r2.Top + 5);
+        }
+
+        /// <summary>
+        /// method for detecting if right of platform has been touched by character 
+        /// </summary>
+        /// <param name="r1">the characters rectangle</param>
+        /// <param name="r2">the platform rectangle</param>
+        /// <returns>true, if side has been touched</returns>
+        private bool TouchRightOf(Rectangle r1, Rectangle r2)
+        {
+            return (r1.Left >= r2.Right - 5 &&
+                    r1.Left <= r2.Right + 5 &&
+                    r1.Top <= r2.Bottom - 5 &&
+                    r1.Bottom >= r2.Top + 5);
         }
         #endregion
     }

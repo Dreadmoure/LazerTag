@@ -16,15 +16,17 @@ namespace LazerTag.ComponentPattern
         #region fields 
         private SpriteRenderer spriteRenderer;
         private Vector2 position;
+        private int platformID;
         #endregion
 
         /// <summary>
         /// constructor, gets the positon of the platform 
         /// </summary>
         /// <param name="position">the placement of the platform</param>
-        public Platform(Vector2 position)
+        public Platform(Vector2 position, int platformID)
         {
-            this.position = position; 
+            this.position = position;
+            this.platformID = platformID;
         }
 
         #region methods 
@@ -32,7 +34,17 @@ namespace LazerTag.ComponentPattern
         {
             // set the sprite for the platform 
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
-            spriteRenderer.SetSprite("Platforms\\tile1");
+
+            if(platformID == 1)
+            {
+                spriteRenderer.SetSprite("Platforms\\Dirt");
+            }
+            else if(platformID == 2)
+            {
+                spriteRenderer.SetSprite("Platforms\\DirtWithGrass");
+            }
+
+            
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.5f;
 

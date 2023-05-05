@@ -66,7 +66,8 @@ namespace LazerTag.ComponentPattern
 
         public void Jump()
         {
-
+            Vector2 jumpVelocity = new Vector2(0, -1) * speed;
+            GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
         }
 
         public void Notify(GameEvent gameEvent)

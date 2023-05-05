@@ -39,6 +39,7 @@ namespace LazerTag.CommandPattern
 
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickLeft), new MoveCommand(new Vector2(-1, 0)));
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickRight), new MoveCommand(new Vector2(1, 0)));
+            padbinds.Add(new PadInfo(Buttons.LeftTrigger), new JumpCommand());
         }
 
         public void Execute(Character character)

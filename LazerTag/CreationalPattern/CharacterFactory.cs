@@ -45,8 +45,32 @@ namespace LazerTag.CreationalPattern
             Character character = gameObject.AddComponent(new Character()) as Character;
             character.CharacterId = 1;
 
+            //add animator
+            gameObject.AddComponent(new Animator());
+            Animator animator = gameObject.GetComponent<Animator>() as Animator;
+
+            character.walkSprites = new string[8];
+
+            //sets the sprites used for the animations
+            for (int i = 0; i < character.walkSprites.Length; i++)
+            {
+                character.walkSprites[i] = $"Characters\\Red\\Walk\\RedWalk{i}";
+            }
+
+            character.idleSprites = new string[6];
+
+            for (int i = 0; i < character.idleSprites.Length; i++)
+            {
+                character.idleSprites[i] = $"Characters\\Red\\Idle\\RedIdle{i}";
+            }
+
+            //ads animations
+            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.walkSprites));
+            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.idleSprites));
+
+
             SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;
-            spriteRenderer.SetSprite("test");
+            spriteRenderer.SetSprite("Characters\\Red\\Idle\\RedIdle0");
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.5f;
 
@@ -66,7 +90,7 @@ namespace LazerTag.CreationalPattern
             SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;
             
 
-            spriteRenderer.SetSprite("Characters\\Red\\Idle\\RedIdle0");
+            spriteRenderer.SetSprite("Characters\\Blue\\Idle\\BlueIdle0");
 
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.5f;
@@ -76,12 +100,40 @@ namespace LazerTag.CreationalPattern
 
         private void CreatePrototypeP3()
         {
+            GameObject gameObject = new GameObject();
 
+            Character character = gameObject.AddComponent(new Character()) as Character;
+
+            character.CharacterId = 3;
+
+            SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;
+
+
+            spriteRenderer.SetSprite("Characters\\Green\\Idle\\GreenIdle0");
+
+            spriteRenderer.Scale = 1;
+            spriteRenderer.LayerDepth = 0.5f;
+
+            prototypes.Add(gameObject);
         }
 
         private void CreatePrototypeP4()
         {
+            GameObject gameObject = new GameObject();
 
+            Character character = gameObject.AddComponent(new Character()) as Character;
+
+            character.CharacterId = 4;
+
+            SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;
+
+
+            spriteRenderer.SetSprite("Characters\\Pink\\Idle\\PinkIdle0");
+
+            spriteRenderer.Scale = 1;
+            spriteRenderer.LayerDepth = 0.5f;
+
+            prototypes.Add(gameObject);
         }
 
         public override GameObject Create(Enum type)

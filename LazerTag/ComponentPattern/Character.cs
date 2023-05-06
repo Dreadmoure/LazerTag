@@ -26,6 +26,9 @@ namespace LazerTag.ComponentPattern
         private float shootTimer;
 
         private Vector2 gravity;
+        private bool canJump;
+        private bool isJumping;
+        private float jumpTime; 
 
         //private Weapon weapon;
         #endregion
@@ -85,7 +88,22 @@ namespace LazerTag.ComponentPattern
             }
 
             // make character fall using gravity 
-            GameObject.Transform.Translate(gravity * GameWorld.DeltaTime); 
+            GameObject.Transform.Translate(gravity * GameWorld.DeltaTime);
+
+            // when character has jumped 
+            if (isJumping)
+            {
+                jumpTime += GameWorld.DeltaTime; 
+                if (jumpTime <= 0.15f)
+                {
+                    Vector2 jumpVelocity = new Vector2(0, -5) * speed;
+                    GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
+                }
+                else
+                {
+                    isJumping = false; 
+                }
+            }
         }
 
         public void Move(Vector2 velocity)
@@ -106,8 +124,13 @@ namespace LazerTag.ComponentPattern
 
         public void Jump()
         {
-            Vector2 jumpVelocity = new Vector2(0, -1) * speed;
-            GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
+            if (canJump)
+            {
+                isJumping = true;
+                jumpTime = 0;
+
+                canJump = false; 
+            }
         }
 
         public void Notify(GameEvent gameEvent)
@@ -138,6 +161,9 @@ namespace LazerTag.ComponentPattern
 
                 if(other.Tag == "Platform")
                 {
+                    // when character touches the top a platform, it can jump 
+                    canJump = true; 
+
                     // get the platforms spriterenderer 
                     SpriteRenderer otherSpriteRenderer = other.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
@@ -152,6 +178,9 @@ namespace LazerTag.ComponentPattern
 
                 if (other.Tag == "Platform")
                 {
+                    // make sure character can not jump through platform 
+                    isJumping = false; 
+
                     // get the platforms spriterenderer 
                     SpriteRenderer otherSpriteRenderer = other.GetComponent<SpriteRenderer>() as SpriteRenderer;
 

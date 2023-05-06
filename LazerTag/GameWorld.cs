@@ -131,17 +131,11 @@ namespace LazerTag
             {
                 for (int j = 0; j < tileIds.GetLength(1); j++)
                 {
-                    // check if each int is 1 
-                    if (tileIds[i, j] == 1)
+                    // check if there should be a platform, meaning id is not 0
+                    if (tileIds[i, j] != 0)
                     {
                         // create platform 
-                        Director platformDirector = new Director(new PlatformBuilder(j, i, 1));
-                        gameObjects.Add(platformDirector.Construct());
-                    }
-                    if (tileIds[i, j] == 2)
-                    {
-                        // create platform 
-                        Director platformDirector = new Director(new PlatformBuilder(j, i, 2));
+                        Director platformDirector = new Director(new PlatformBuilder(j, i, tileIds[i, j]));
                         gameObjects.Add(platformDirector.Construct());
                     }
                 }

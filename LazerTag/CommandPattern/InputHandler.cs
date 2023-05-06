@@ -66,22 +66,25 @@ namespace LazerTag.CommandPattern
                                 if (padInfo.Button == Buttons.LeftThumbstickLeft && padState.ThumbSticks.Left.X < -0.02f)
                                 {
                                     character.CharacterDirection = Character.Direction.Left;
+                                    character.IsWalking = true;
                                 }
                                 if (padInfo.Button == Buttons.LeftThumbstickRight && padState.ThumbSticks.Left.X > 0.02f)
                                 {
                                     character.CharacterDirection = Character.Direction.Right;
+                                    character.IsWalking = true;
                                 }
 
 
                                 padbinds[padInfo].Execute(character);
                                 padInfo.IsDown = true;
-                                character.IsWalking = true;
+                                
                             }
 
                             if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)
                             {
                                 padInfo.IsDown = false;
                                 character.IsWalking = false;
+                                character.IsJumping = false;
                             }
                         }
                     }

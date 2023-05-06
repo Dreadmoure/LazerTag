@@ -74,10 +74,8 @@ namespace LazerTag.CommandPattern
                                     character.IsWalking = true;
                                 }
 
-
                                 padbinds[padInfo].Execute(character);
                                 padInfo.IsDown = true;
-                                
                             }
 
                             if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)

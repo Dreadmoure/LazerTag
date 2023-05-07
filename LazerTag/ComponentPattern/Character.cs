@@ -27,7 +27,7 @@ namespace LazerTag.ComponentPattern
 
         private Vector2 gravity;
         private bool canJump;
-        private bool isJumping;
+        //private bool isJumping;
         private float jumpTime; 
 
         //private Weapon weapon;
@@ -38,6 +38,7 @@ namespace LazerTag.ComponentPattern
         public int CharacterId { get; set; }
 
         public bool IsWalking { get; set; } = false;
+        public bool IsJumping { get; set; } = false;
         public Direction CharacterDirection { get; set; }
 
         //animation sprites
@@ -72,8 +73,6 @@ namespace LazerTag.ComponentPattern
             {
                 animator.PlayAnimation("Walk");
                 spriteRenderer.Flip = SpriteEffects.None;
-                
-                //needs to flip
             }
 
             //idle animations
@@ -84,14 +83,13 @@ namespace LazerTag.ComponentPattern
             if (!IsWalking && CharacterDirection == Direction.Right)
             {
                 animator.PlayAnimation("Idle");
-                //needs to flip
             }
 
             // make character fall using gravity 
             GameObject.Transform.Translate(gravity * GameWorld.DeltaTime);
 
             // when character has jumped 
-            if (isJumping)
+            if (IsJumping)
             {
                 jumpTime += GameWorld.DeltaTime; 
                 if (jumpTime <= 0.15f)
@@ -99,10 +97,10 @@ namespace LazerTag.ComponentPattern
                     Vector2 jumpVelocity = new Vector2(0, -5) * speed;
                     GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
                 }
-                else
-                {
-                    isJumping = false; 
-                }
+                //else
+                //{
+                //    IsJumping = false; 
+                //}
             }
         }
 
@@ -126,7 +124,7 @@ namespace LazerTag.ComponentPattern
         {
             if (canJump)
             {
-                isJumping = true;
+                IsJumping = true;
                 jumpTime = 0;
 
                 canJump = false; 
@@ -179,7 +177,7 @@ namespace LazerTag.ComponentPattern
                 if (other.Tag == "Platform")
                 {
                     // make sure character can not jump through platform 
-                    isJumping = false; 
+                    IsJumping = false; 
 
                     // get the platforms spriterenderer 
                     SpriteRenderer otherSpriteRenderer = other.GetComponent<SpriteRenderer>() as SpriteRenderer;

@@ -22,11 +22,10 @@ namespace LazerTag.ComponentPattern
         public override void Awake()
         {
             Score = 0;
-            Life = 4;
+            //Life = 4;
         }
         public override void Start()
         {
-
         }
         public override void Update()
         {

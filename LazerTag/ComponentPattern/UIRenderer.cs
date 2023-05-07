@@ -95,10 +95,10 @@ namespace LazerTag.ComponentPattern
         /// method for setting the sprite based on the input string
         /// </summary>
         /// <param name="spriteName">path and name of the file</param>
-        public void SetSprite(string spriteName)
+        public void SetSprite(string spriteName, Vector2 position)
         {
             Sprite = GameWorld.Instance.Content.Load<Texture2D>(spriteName);
-            SpritePosition = new Vector2(GameWorld.ScreenSize.X / 2, GameWorld.ScreenSize.Y / 8);
+            SpritePosition = position;
         }
 
         /// <summary>

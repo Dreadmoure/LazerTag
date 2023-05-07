@@ -685,6 +685,13 @@
 /processorParam:TextureFormat=Color
 /build:Characters/Red/Walk/RedWalk7.png
 
+#begin Fonts/LifeFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/LifeFont.spritefont
+
 #begin Pixel.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -732,6 +739,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Platforms/tile1.png
+
+#begin PlayerBoxes/BluePlayerBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerBoxes/BluePlayerBox.png
+
+#begin PlayerBoxes/GreenPlayerBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerBoxes/GreenPlayerBox.png
+
+#begin PlayerBoxes/PinkPlayerBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerBoxes/PinkPlayerBox.png
+
+#begin PlayerBoxes/RedPlayerBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PlayerBoxes/RedPlayerBox.png
 
 #begin Projectiles/Projectile1.png
 /importer:TextureImporter

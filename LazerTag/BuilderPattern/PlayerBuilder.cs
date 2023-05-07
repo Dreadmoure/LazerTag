@@ -42,13 +42,24 @@ namespace LazerTag.BuilderPattern
                 uIRenderer.SetSprite("PlayerBoxes\\RedPlayerBox");
                 
             }
-            //add players
+            else if (player.Id == 2)
+            {
+                uIRenderer.SetSprite("PlayerBoxes\\BluePlayerBox");
+
+            }
+            else if (player.Id == 3)
+            {
+                uIRenderer.SetSprite("PlayerBoxes\\GreenPlayerBox");
+
+            }
+            else if (player.Id == 4)
+            {
+                uIRenderer.SetSprite("PlayerBoxes\\PinkPlayerBox");
+
+            }
 
             uIRenderer.SetLifeText(player.Life);
             uIRenderer.SetScoreText(player.Score);
-
-
-
         }
 
         /// <summary>

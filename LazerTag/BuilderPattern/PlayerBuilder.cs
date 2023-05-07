@@ -1,4 +1,5 @@
 ﻿using LazerTag.ComponentPattern;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -32,6 +33,22 @@ namespace LazerTag.BuilderPattern
         {
             Player player = (Player)gameObject.AddComponent(new Player());
             player.Id = id;
+            player.Life = 4;
+
+            UIRenderer uIRenderer = (UIRenderer)gameObject.AddComponent(new UIRenderer());
+
+            if(player.Id == 1)
+            {
+                uIRenderer.SetSprite("PlayerBoxes\\RedPlayerBox");
+                
+            }
+            //add players
+
+            uIRenderer.SetLifeText(player.Life);
+            uIRenderer.SetScoreText(player.Score);
+
+
+
         }
 
         /// <summary>

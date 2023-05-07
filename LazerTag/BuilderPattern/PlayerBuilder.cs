@@ -39,22 +39,22 @@ namespace LazerTag.BuilderPattern
 
             if(player.Id == 1)
             {
-                uIRenderer.SetSprite("PlayerBoxes\\RedPlayerBox");
+                uIRenderer.SetSprite("PlayerBoxes\\RedPlayerBox", new Vector2(GameWorld.ScreenSize.X / 8, GameWorld.ScreenSize.Y / 12));
                 
             }
             else if (player.Id == 2)
             {
-                uIRenderer.SetSprite("PlayerBoxes\\BluePlayerBox");
+                uIRenderer.SetSprite("PlayerBoxes\\BluePlayerBox", new Vector2(GameWorld.ScreenSize.X / 3, GameWorld.ScreenSize.Y / 12));
 
             }
             else if (player.Id == 3)
             {
-                uIRenderer.SetSprite("PlayerBoxes\\GreenPlayerBox");
+                uIRenderer.SetSprite("PlayerBoxes\\GreenPlayerBox", new Vector2(GameWorld.ScreenSize.X / 1.8f, GameWorld.ScreenSize.Y / 12));
 
             }
             else if (player.Id == 4)
             {
-                uIRenderer.SetSprite("PlayerBoxes\\PinkPlayerBox");
+                uIRenderer.SetSprite("PlayerBoxes\\PinkPlayerBox", new Vector2(GameWorld.ScreenSize.X / 1.3f, GameWorld.ScreenSize.Y / 12));
 
             }
 

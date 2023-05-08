@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LazerTag.ComponentPattern;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace LazerTag.CreationalPattern
         }
         #endregion
 
+        private GameObject prototype1;
+
         private ProjectileFactory()
         {
             CreatePrototype1();
@@ -30,12 +33,20 @@ namespace LazerTag.CreationalPattern
 
         private void CreatePrototype1()
         {
+            prototype1 = new GameObject();
+            prototype1.AddComponent(new Projectile());
 
+            SpriteRenderer spriteRenderer = prototype1.AddComponent(new SpriteRenderer()) as SpriteRenderer;
+
+            spriteRenderer.SetSprite("Projectiles\\Projectile1");
+
+            spriteRenderer.Scale = 1;
+            spriteRenderer.LayerDepth = 0.50f;
         }
 
         public override GameObject Create(Enum type)
         {
-            GameObject gameObject = new GameObject();
+            GameObject gameObject = (GameObject)prototype1.Clone();
 
             return gameObject;
         }

@@ -49,8 +49,6 @@ namespace LazerTag.CreationalPattern
         {
             GameObject gameObject = (GameObject)prototype1.Clone();
 
-
-
             return gameObject;
         }
     }

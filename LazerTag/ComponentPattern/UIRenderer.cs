@@ -51,12 +51,12 @@ namespace LazerTag.ComponentPattern
         /// <summary>
         /// property for getting or setting the text
         /// </summary>
-        public string LifeText { get; set; }
+        public string LifeText { get; private set; }
 
         /// <summary>
         /// property for getting or setting the text
         /// </summary>
-        public string ScoreText { get; set; }
+        public string ScoreText { get; private set; }
         #endregion
 
         #region methods

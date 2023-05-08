@@ -33,7 +33,7 @@ namespace LazerTag.BuilderPattern
         {
             Player player = (Player)gameObject.AddComponent(new Player());
             player.Id = id;
-            player.Life = 4;
+            
 
             UIRenderer uIRenderer = (UIRenderer)gameObject.AddComponent(new UIRenderer());
 

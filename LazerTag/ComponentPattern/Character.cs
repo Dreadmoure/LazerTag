@@ -1,4 +1,5 @@
 ﻿using LazerTag.CommandPattern;
+using LazerTag.CreationalPattern;
 using LazerTag.ObserverPattern;
 using LazerTag.ObserverPattern.PlatformCollisionEvents;
 using Microsoft.Xna.Framework;
@@ -12,14 +13,13 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
+    public enum Direction { Left, Right };
+
     public class Character : Component, IGameListener
     {
         #region fields
         private SpriteRenderer spriteRenderer;
         private Animator animator;
-
-
-        public enum Direction { Left, Right };
 
         private float speed;
         private bool canShoot;
@@ -30,7 +30,8 @@ namespace LazerTag.ComponentPattern
         //private bool isJumping;
         private float jumpTime; 
 
-        //private Weapon weapon;
+
+        public GameObject WeaponObject { get; private set; }
         #endregion
 
         public int AmmoCount { get; set; }
@@ -55,6 +56,10 @@ namespace LazerTag.ComponentPattern
 
             // set gravity, remember to multiply with speed 
             gravity = new Vector2(0, 0.9f) * speed;
+
+            CharacterDirection = Direction.Right;
+
+            SpawnWeapon();
         }
 
         public override void Update()
@@ -102,6 +107,11 @@ namespace LazerTag.ComponentPattern
                 //    IsJumping = false; 
                 //}
             }
+
+            //weapon position
+            Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
+
+            weapon.Move(GameObject.Transform.Position);
         }
 
         public void Move(Vector2 velocity)
@@ -113,6 +123,15 @@ namespace LazerTag.ComponentPattern
 
             velocity *= speed;
             GameObject.Transform.Translate(velocity * GameWorld.DeltaTime);
+
+
+        }
+
+        public void Aim(Vector2 aimDirection)
+        {
+            Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
+
+            weapon.Aim(aimDirection);
         }
 
         public void Shoot()
@@ -229,6 +248,16 @@ namespace LazerTag.ComponentPattern
             Animation animation = new Animation(fps, animationName, sprites);
 
             return animation;
+        }
+
+        private void SpawnWeapon()
+        {
+            WeaponObject = WeaponFactory.Instance.Create(PlayerIndex.One);
+
+            WeaponObject.Transform.Position = GameObject.Transform.Position;
+
+            GameWorld.Instance.Instantiate(WeaponObject);
+
         }
         #endregion
     }

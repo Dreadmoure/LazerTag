@@ -10,6 +10,8 @@ namespace LazerTag.ComponentPattern
 {
     public class Player : Component
     {
+        private UIRenderer uiRenderer;
+
         #region properties
         public int Score { get; set; }
         public int Id { get; set; }
@@ -21,8 +23,13 @@ namespace LazerTag.ComponentPattern
         #region methods
         public override void Awake()
         {
+            Life = 4;
             Score = 0;
-            //Life = 4;
+
+            uiRenderer = GameObject.GetComponent<UIRenderer>() as UIRenderer;
+
+            uiRenderer.SetLifeText(Life);
+            uiRenderer.SetScoreText(Score);
         }
         public override void Start()
         {
@@ -33,6 +40,10 @@ namespace LazerTag.ComponentPattern
             {
                 SpawnCharacter();
             }
+
+            uiRenderer.SetLifeText(Life);
+            uiRenderer.SetScoreText(Score);
+
         }
 
         public void SpawnCharacter()
@@ -48,6 +59,22 @@ namespace LazerTag.ComponentPattern
             else if (Id == 2)
             {
                 GameObject character = CharacterFactory.Instance.Create(PlayerIndex.Two);
+
+                GameWorld.Instance.Instantiate(character);
+
+                Character = character;
+            }
+            else if (Id == 3)
+            {
+                GameObject character = CharacterFactory.Instance.Create(PlayerIndex.Three);
+
+                GameWorld.Instance.Instantiate(character);
+
+                Character = character;
+            }
+            else if (Id == 4)
+            {
+                GameObject character = CharacterFactory.Instance.Create(PlayerIndex.Four);
 
                 GameWorld.Instance.Instantiate(character);
 

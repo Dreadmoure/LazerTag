@@ -202,6 +202,8 @@ namespace LazerTag.ComponentPattern
                 if(other.GetComponent<Projectile>() != null && other.Tag != GameObject.Tag)
                 {
                     GameWorld.Instance.Destroy(WeaponObject);
+
+                    // destroy projectile 
                     GameWorld.Instance.Destroy(other);
 
                     // update other players score 

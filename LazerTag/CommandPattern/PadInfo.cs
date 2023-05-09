@@ -18,6 +18,8 @@ namespace LazerTag.CommandPattern
         /// property for getting or setting a key
         /// </summary>
         public Buttons Button { get; set; }
+        public Buttons Button1 { get; set; }
+        public Buttons Button2 { get; set; }
 
         /// <summary>
         /// constructor which takes an argument so we can define a key
@@ -26,6 +28,12 @@ namespace LazerTag.CommandPattern
         public PadInfo(Buttons button)
         {
             this.Button = button;
+        }
+
+        public PadInfo(Buttons button1, Buttons button2)
+        {
+            Button = button1;
+            Button2 = button2; 
         }
     }
 }

@@ -24,6 +24,7 @@ namespace LazerTag.ComponentPattern
         private float speed;
         private bool canShoot;
         private float shootTimer;
+        private float shootTime; 
 
         private Vector2 gravity;
         private bool canJump;
@@ -52,6 +53,9 @@ namespace LazerTag.ComponentPattern
             animator = GameObject.GetComponent<Animator>() as Animator;
             AmmoCount = 5;
             speed = 250;
+
+            canShoot = true;
+            shootTime = 0.5f;
 
             // set gravity, remember to multiply with speed 
             gravity = new Vector2(0, 0.9f) * speed;
@@ -111,6 +115,10 @@ namespace LazerTag.ComponentPattern
             Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
 
             weapon.Move(GameObject.Transform.Position);
+
+            
+            shootTimer += GameWorld.DeltaTime;
+            
         }
 
         public void Move(Vector2 velocity)
@@ -135,19 +143,40 @@ namespace LazerTag.ComponentPattern
 
         public void Shoot()
         {
-            Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
+            // instead of canShoot, use ammo count 
+            if (canShoot)
+            {
+                if (shootTimer > shootTime)
+                {
+                    Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
 
-            // create projectile 
-            GameObject projectileObject = ProjectileFactory.Instance.Create(PlayerIndex.One);
+                    GameObject projectileObject = new GameObject();
 
-            // set position 
-            projectileObject.Transform.Position = weapon.ProjectileSpawnPosition;
+                    if (weapon.ProjectileDirection == ProjectileDirection.Horizontal)
+                    {
+                        projectileObject = ProjectileFactory.Instance.Create(ProjectileDirection.Horizontal);
+                    }
+                    else
+                    {
+                        projectileObject = ProjectileFactory.Instance.Create(ProjectileDirection.Vertical);
+                    }
 
-            Projectile projectile = projectileObject.GetComponent<Projectile>() as Projectile;
-            projectile.Velocity = weapon.ProjectileVelocity; 
+                    projectileObject.Tag = GameObject.Tag;
 
-            // instantiate projectile in GameWorld 
-            GameWorld.Instance.Instantiate(projectileObject);
+                    // set position 
+                    projectileObject.Transform.Position = weapon.ProjectileSpawnPosition;
+
+                    // set velocity 
+                    Projectile projectile = projectileObject.GetComponent<Projectile>() as Projectile;
+                    projectile.Velocity = weapon.ProjectileVelocity;
+
+                    // instantiate projectile in GameWorld 
+                    GameWorld.Instance.Instantiate(projectileObject);
+
+                    canShoot = true; // ammocount -1
+                    shootTimer = 0; 
+                }
+            }
         }
 
         public void Jump()
@@ -172,10 +201,17 @@ namespace LazerTag.ComponentPattern
                 // check for other characters projectiles 
                 if(other.GetComponent<Projectile>() != null && other.Tag != GameObject.Tag)
                 {
-
-
                     GameWorld.Instance.Destroy(WeaponObject);
                     GameWorld.Instance.Destroy(other);
+
+                    // update other players score 
+                    Player otherPlayer = GameWorld.Instance.FindPlayerByTag(other.Tag);
+                    otherPlayer.Score += 100; 
+
+                    // remove character from player 
+                    Player player = GameWorld.Instance.FindPlayerByTag(GameObject.Tag);
+                    player.RemoveCharacter(); 
+
                     GameWorld.Instance.Destroy(GameObject);
                 }
 

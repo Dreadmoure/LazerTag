@@ -73,16 +73,16 @@ namespace LazerTag
         {
             // TODO: Add your initialization logic here
 
-            Director playerDirector1 = new Director(new PlayerBuilder(1));
+            Director playerDirector1 = new Director(new PlayerBuilder(0));
             gameObjects.Add(playerDirector1.Construct());
 
-            Director playerDirector2 = new Director(new PlayerBuilder(2));
+            Director playerDirector2 = new Director(new PlayerBuilder(1));
             gameObjects.Add(playerDirector2.Construct());
 
-            Director playerDirector3 = new Director(new PlayerBuilder(3));
+            Director playerDirector3 = new Director(new PlayerBuilder(2));
             gameObjects.Add(playerDirector3.Construct());
 
-            Director playerDirector4 = new Director(new PlayerBuilder(4));
+            Director playerDirector4 = new Director(new PlayerBuilder(3));
             gameObjects.Add(playerDirector4.Construct());
 
             // call add platforms method 

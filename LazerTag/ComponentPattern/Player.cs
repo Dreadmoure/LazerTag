@@ -13,11 +13,10 @@ namespace LazerTag.ComponentPattern
         private UIRenderer uiRenderer;
 
         #region properties
+        public PlayerIndex Type { get; set; }
         public int Score { get; set; }
-        public int Id { get; set; }
         public int Life { get; set; }
         public GameObject Character { get; set; }
-        //public Character Character { get; set; }
         #endregion
 
         #region methods
@@ -48,40 +47,11 @@ namespace LazerTag.ComponentPattern
 
         public void SpawnCharacter()
         {
-            if(Id == 1)
-            {
-                GameObject character = CharacterFactory.Instance.Create(PlayerIndex.One);
+            GameObject character = CharacterFactory.Instance.Create(Type);
 
-                GameWorld.Instance.Instantiate(character);
+            GameWorld.Instance.Instantiate(character);
 
-                Character = character;
-            }
-            else if (Id == 2)
-            {
-                GameObject character = CharacterFactory.Instance.Create(PlayerIndex.Two);
-
-                GameWorld.Instance.Instantiate(character);
-
-                Character = character;
-            }
-            else if (Id == 3)
-            {
-                GameObject character = CharacterFactory.Instance.Create(PlayerIndex.Three);
-
-                GameWorld.Instance.Instantiate(character);
-
-                Character = character;
-            }
-            else if (Id == 4)
-            {
-                GameObject character = CharacterFactory.Instance.Create(PlayerIndex.Four);
-
-                GameWorld.Instance.Instantiate(character);
-
-                Character = character;
-            }
-
-
+            Character = character;
         }
         #endregion
     }

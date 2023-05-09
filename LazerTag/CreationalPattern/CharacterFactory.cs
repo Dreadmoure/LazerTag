@@ -223,7 +223,8 @@ namespace LazerTag.CreationalPattern
                     collider.BottomCollisionEvent.Attach(character);
                     collider.LeftCollisionEvent.Attach(character);
                     collider.RightCollisionEvent.Attach(character);
-                                        
+
+                    gameObject.Tag = type.ToString(); 
                     break;
                 case PlayerIndex.Two:
                     gameObject = (GameObject)prototypes[1].Clone();
@@ -239,6 +240,7 @@ namespace LazerTag.CreationalPattern
                     collider.LeftCollisionEvent.Attach(character);
                     collider.RightCollisionEvent.Attach(character);
 
+                    gameObject.Tag = type.ToString();
                     break;
                 case PlayerIndex.Three:
                     gameObject = (GameObject)prototypes[2].Clone();
@@ -254,6 +256,7 @@ namespace LazerTag.CreationalPattern
                     collider.LeftCollisionEvent.Attach(character);
                     collider.RightCollisionEvent.Attach(character);
 
+                    gameObject.Tag = type.ToString();
                     break;
                 case PlayerIndex.Four:
                     gameObject = (GameObject)prototypes[3].Clone();
@@ -269,6 +272,7 @@ namespace LazerTag.CreationalPattern
                     collider.LeftCollisionEvent.Attach(character);
                     collider.RightCollisionEvent.Attach(character);
 
+                    gameObject.Tag = type.ToString();
                     break;
 
             }

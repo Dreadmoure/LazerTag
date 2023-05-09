@@ -28,11 +28,10 @@ namespace LazerTag.ComponentPattern
         private Vector2 gravity;
         private bool canJump;
         //private bool isJumping;
-        private float jumpTime; 
-
+        private float jumpTime;
+        #endregion
 
         public GameObject WeaponObject { get; private set; }
-        #endregion
 
         public int AmmoCount { get; set; }
 
@@ -136,7 +135,19 @@ namespace LazerTag.ComponentPattern
 
         public void Shoot()
         {
+            Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
 
+            // create projectile 
+            GameObject projectileObject = ProjectileFactory.Instance.Create(PlayerIndex.One);
+
+            // set position 
+            projectileObject.Transform.Position = weapon.ProjectileSpawnPosition;
+
+            Projectile projectile = projectileObject.GetComponent<Projectile>() as Projectile;
+            projectile.Velocity = weapon.ProjectileVelocity; 
+
+            // instantiate projectile in GameWorld 
+            GameWorld.Instance.Instantiate(projectileObject);
         }
 
         public void Jump()
@@ -159,9 +170,13 @@ namespace LazerTag.ComponentPattern
                 // check for pixel collision here 
 
                 // check for other characters projectiles 
-                if(other.Tag == "Projectile")
+                if(other.GetComponent<Projectile>() != null && other.Tag != GameObject.Tag)
                 {
 
+
+                    GameWorld.Instance.Destroy(WeaponObject);
+                    GameWorld.Instance.Destroy(other);
+                    GameWorld.Instance.Destroy(GameObject);
                 }
 
                 // check for pick ups 

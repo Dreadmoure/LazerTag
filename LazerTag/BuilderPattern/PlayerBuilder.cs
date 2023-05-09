@@ -39,22 +39,22 @@ namespace LazerTag.BuilderPattern
 
             if(player.Type == PlayerIndex.One)
             {
-                uIRenderer.SetSprite("PlayerBoxes\\RedPlayerBox", new Vector2(GameWorld.ScreenSize.X / 8, GameWorld.ScreenSize.Y / 12));
+                uIRenderer.SetSprite("PlayerBoxes\\RedPlayerBox", new Vector2(GameWorld.ScreenSize.X / 5, GameWorld.ScreenSize.Y / 12));
                 
             }
             else if (player.Type == PlayerIndex.Two)
             {
-                uIRenderer.SetSprite("PlayerBoxes\\BluePlayerBox", new Vector2(GameWorld.ScreenSize.X / 3, GameWorld.ScreenSize.Y / 12));
+                uIRenderer.SetSprite("PlayerBoxes\\BluePlayerBox", new Vector2((GameWorld.ScreenSize.X / 5)*2, GameWorld.ScreenSize.Y / 12));
 
             }
             else if (player.Type == PlayerIndex.Three)
             {
-                uIRenderer.SetSprite("PlayerBoxes\\GreenPlayerBox", new Vector2(GameWorld.ScreenSize.X / 1.8f, GameWorld.ScreenSize.Y / 12));
+                uIRenderer.SetSprite("PlayerBoxes\\GreenPlayerBox", new Vector2((GameWorld.ScreenSize.X / 5)*3, GameWorld.ScreenSize.Y / 12));
 
             }
             else if (player.Type == PlayerIndex.Four)
             {
-                uIRenderer.SetSprite("PlayerBoxes\\PinkPlayerBox", new Vector2(GameWorld.ScreenSize.X / 1.3f, GameWorld.ScreenSize.Y / 12));
+                uIRenderer.SetSprite("PlayerBoxes\\PinkPlayerBox", new Vector2((GameWorld.ScreenSize.X / 5)*4, GameWorld.ScreenSize.Y / 12));
 
             }
 

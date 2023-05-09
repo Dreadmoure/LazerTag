@@ -19,9 +19,19 @@ namespace LazerTag.ComponentPattern
         public Texture2D Sprite { get; private set; }
 
         /// <summary>
+        /// Property for getting or setting the AmmoCountSprite
+        /// </summary>
+        public Texture2D AmmoCountSprite { get; private set; }
+
+        /// <summary>
         /// Property for setting the position of the sprite
         /// </summary>
         public Vector2 SpritePosition { get; private set; }
+
+        /// <summary>
+        /// Property for setting the position of the sprite
+        /// </summary>
+        public Vector2 AmmoCountSpritePosition { get; private set; }
 
         /// <summary>
         /// Property for setting the position of the text
@@ -70,6 +80,11 @@ namespace LazerTag.ComponentPattern
                 Origin = new Vector2(Sprite.Width / 2, Sprite.Height / 2);
                 Scale = 1f;
             }
+            if (AmmoCountSprite != null)
+            {
+                Origin = new Vector2(AmmoCountSprite.Width / 2, AmmoCountSprite.Height / 2);
+                Scale = 1f;
+            }
 
             LayerDepth = 0.98f;
             spriteFont = GameWorld.Instance.Content.Load<SpriteFont>("Fonts\\LifeFont");
@@ -104,6 +119,71 @@ namespace LazerTag.ComponentPattern
             SpritePosition = position;
         }
 
+        public void SetAmmoCountSprite(int ammoCount, Vector2 position)
+        {
+            if(ammoCount == 5)
+            {
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount5");
+
+                float newPosX = position.X + 142;
+                float newPosY = position.Y - 5;
+
+                Vector2 newPos = new Vector2(newPosX, newPosY);
+
+                AmmoCountSpritePosition = newPos;
+            }
+            else if(ammoCount == 4)
+            {
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount4");
+
+                float newPosX = position.X + 147;
+                float newPosY = position.Y - 5;
+
+                Vector2 newPos = new Vector2(newPosX, newPosY);
+
+                AmmoCountSpritePosition = newPos;
+
+            }
+            else if (ammoCount == 3)
+            {
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount3");
+
+                float newPosX = position.X + 152;
+                float newPosY = position.Y - 5;
+
+                Vector2 newPos = new Vector2(newPosX, newPosY);
+
+                AmmoCountSpritePosition = newPos;
+            }
+            else if (ammoCount == 2)
+            {
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount2");
+
+                float newPosX = position.X + 157;
+                float newPosY = position.Y - 5;
+
+                Vector2 newPos = new Vector2(newPosX, newPosY);
+
+                AmmoCountSpritePosition = newPos;
+            }
+            else if (ammoCount == 1)
+            {
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount1");
+
+                float newPosX = position.X + 162;
+                float newPosY = position.Y - 5;
+
+                Vector2 newPos = new Vector2(newPosX, newPosY);
+
+                AmmoCountSpritePosition = newPos;
+            }
+            else
+            {
+                AmmoCountSprite = null;
+            }
+        }
+
+
         /// <summary>
         /// method for drawing a sprite to the screen
         /// </summary>
@@ -125,7 +205,11 @@ namespace LazerTag.ComponentPattern
             {
                 spriteBatch.Draw(Sprite, SpritePosition, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth);
             }
-            
+            if (AmmoCountSprite != null)
+            {
+                spriteBatch.Draw(AmmoCountSprite, AmmoCountSpritePosition, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth);
+            }
+
             //draw lifeText
             spriteBatch.DrawString(spriteFont, LifeText, LifeTextPosition, Color.White, 0f, lifeTextOrigin, 1f, SpriteEffects.None, LayerDepth + 0.01f);
             //draw scoreText

@@ -81,6 +81,7 @@ namespace LazerTag.ComponentPattern
             InputHandler.Instance.Execute(this);
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
+
             //walking animations
             if (IsWalking && CharacterDirection == Direction.Left)
             {
@@ -155,7 +156,7 @@ namespace LazerTag.ComponentPattern
         public void Shoot()
         {
             // instead of canShoot, use ammo count 
-            if (canShoot)
+            if (AmmoCount > 0)
             {
                 if (shootTimer > shootTime)
                 {
@@ -184,7 +185,8 @@ namespace LazerTag.ComponentPattern
                     // instantiate projectile in GameWorld 
                     GameWorld.Instance.Instantiate(projectileObject);
 
-                    canShoot = true; // ammocount -1
+                    //canShoot = true; // ammocount -1
+                    AmmoCount--;
                     shootTimer = 0; 
                 }
             }

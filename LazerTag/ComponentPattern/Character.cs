@@ -30,8 +30,13 @@ namespace LazerTag.ComponentPattern
         private bool canJump;
         //private bool isJumping;
         private float jumpTime;
+
+        // iframes 
+        private float iframeTimer;
+        private float iframeTime; 
         #endregion
 
+        #region properties
         public GameObject WeaponObject { get; private set; }
 
         public int AmmoCount { get; set; }
@@ -45,6 +50,7 @@ namespace LazerTag.ComponentPattern
         //animation sprites
         public string[] walkSprites { get; set; }
         public string[] idleSprites { get; set; }
+        #endregion
 
         #region methods
         public override void Start()
@@ -56,6 +62,10 @@ namespace LazerTag.ComponentPattern
 
             canShoot = true;
             shootTime = 0.5f;
+
+            // iframes 
+            iframeTime = 0.7f;
+            iframeTimer = 0; 
 
             // set gravity, remember to multiply with speed 
             gravity = new Vector2(0, 0.9f) * speed;
@@ -118,7 +128,8 @@ namespace LazerTag.ComponentPattern
 
             
             shootTimer += GameWorld.DeltaTime;
-            
+            iframeTimer += GameWorld.DeltaTime;
+
         }
 
         public void Move(Vector2 velocity)
@@ -201,20 +212,25 @@ namespace LazerTag.ComponentPattern
                 // check for other characters projectiles 
                 if(other.GetComponent<Projectile>() != null && other.Tag != GameObject.Tag)
                 {
-                    GameWorld.Instance.Destroy(WeaponObject);
-
                     // destroy projectile 
                     GameWorld.Instance.Destroy(other);
 
-                    // update other players score 
-                    Player otherPlayer = GameWorld.Instance.FindPlayerByTag(other.Tag);
-                    otherPlayer.Score += 100; 
+                    // only destroy self, when iframe is over 
+                    if (iframeTimer > iframeTime)
+                    {
+                        // update other players score 
+                        Player otherPlayer = GameWorld.Instance.FindPlayerByTag(other.Tag);
+                        otherPlayer.Score += 100;
 
-                    // remove character from player 
-                    Player player = GameWorld.Instance.FindPlayerByTag(GameObject.Tag);
-                    player.RemoveCharacter(); 
+                        // remove character from player 
+                        Player player = GameWorld.Instance.FindPlayerByTag(GameObject.Tag);
+                        player.RemoveCharacter();
 
-                    GameWorld.Instance.Destroy(GameObject);
+                        // destroy weapon 
+                        GameWorld.Instance.Destroy(WeaponObject);
+
+                        GameWorld.Instance.Destroy(GameObject);
+                    }
                 }
 
                 // check for pick ups 

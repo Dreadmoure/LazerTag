@@ -261,6 +261,19 @@ namespace LazerTag
                 //remove collider
                 Collider collider = (Collider)destroyGameObjects[i].GetComponent<Collider>();
 
+                if (destroyGameObjects[i].GetComponent<Projectile>() != null)
+                {
+                    Projectile projectile = destroyGameObjects[i].GetComponent<Projectile>() as Projectile;
+                    collider.CollisionEvent.Detach(projectile);
+                }
+                if (destroyGameObjects[i].GetComponent<Character>() != null)
+                {
+                    Character character = destroyGameObjects[i].GetComponent<Character>() as Character;
+                    collider.CollisionEvent.Detach(character);
+                }
+
+
+
                 if (collider != null)
                 {
                     Colliders.Remove(collider);
@@ -289,6 +302,31 @@ namespace LazerTag
                 }
             }
             return null;
+        }
+
+        public Player FindPlayerByTag(string tag)
+        {
+            List<Player> players = new List<Player>();
+
+            foreach (GameObject gameObject in gameObjects)
+            {
+                Player p = gameObject.GetComponent<Player>() as Player;
+
+                if (p != null)
+                {
+                    players.Add(p); 
+                }
+            }
+
+            foreach (Player p in players)
+            {
+                if(p.Type.ToString() == tag)
+                {
+                    return p; 
+                }
+            }
+
+            return null; 
         }
 
         //public GameObject FindObjectByTag(string tag) 

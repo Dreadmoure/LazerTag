@@ -8,6 +8,12 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CreationalPattern
 {
+    public enum ProjectileDirection
+    {
+        Horizontal, 
+        Vertical 
+    }
+
     public class ProjectileFactory : Factory
     {
         #region singleton
@@ -26,10 +32,12 @@ namespace LazerTag.CreationalPattern
         #endregion
 
         private GameObject prototype1;
+        private GameObject prototype2;
 
         private ProjectileFactory()
         {
             CreatePrototype1();
+            CreatePrototype2();
         }
 
         private void CreatePrototype1()
@@ -43,16 +51,35 @@ namespace LazerTag.CreationalPattern
 
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.50f;
+        }
 
-            prototype1.Transform.Rotate(0.3f); 
+        private void CreatePrototype2()
+        {
+            prototype2 = new GameObject();
+            prototype2.AddComponent(new Projectile());
+
+            SpriteRenderer spriteRenderer = prototype2.AddComponent(new SpriteRenderer()) as SpriteRenderer;
+
+            spriteRenderer.SetSprite("Projectiles\\Projectile2");
+
+            spriteRenderer.Scale = 1;
+            spriteRenderer.LayerDepth = 0.50f;
         }
 
         public override GameObject Create(Enum type)
         {
-            GameObject gameObject = (GameObject)prototype1.Clone();
-            gameObject.Tag = type.ToString();
+            GameObject gameObject = new GameObject();
 
-            gameObject.Transform.Rotate(0.9f);
+            switch (type)
+            {
+                case ProjectileDirection.Horizontal:
+                    gameObject = (GameObject)prototype1.Clone();
+                    break;
+                case ProjectileDirection.Vertical:
+                    gameObject = (GameObject)prototype2.Clone();
+                    break; 
+            }
+
 
             Projectile projectile = gameObject.GetComponent<Projectile>() as Projectile; 
             Collider collider = gameObject.AddComponent(new Collider()) as Collider;

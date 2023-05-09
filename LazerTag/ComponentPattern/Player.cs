@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,12 +31,14 @@ namespace LazerTag.ComponentPattern
             uiRenderer.SetLifeText(Life);
             uiRenderer.SetScoreText(Score);
         }
+
         public override void Start()
         {
         }
+
         public override void Update()
         {
-            if(Character == null)
+            if(Character == null && Life > 0)
             {
                 SpawnCharacter();
             }
@@ -47,11 +50,15 @@ namespace LazerTag.ComponentPattern
 
         public void SpawnCharacter()
         {
-            GameObject character = CharacterFactory.Instance.Create(Type);
+            Character = CharacterFactory.Instance.Create(Type);
 
-            GameWorld.Instance.Instantiate(character);
+            GameWorld.Instance.Instantiate(Character);
+        }
 
-            Character = character;
+        public void RemoveCharacter()
+        {
+            Life--; 
+            Character = null; 
         }
         #endregion
     }

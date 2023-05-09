@@ -73,6 +73,9 @@ namespace LazerTag.ComponentPattern
 
             LayerDepth = 0.98f;
             spriteFont = GameWorld.Instance.Content.Load<SpriteFont>("Fonts\\LifeFont");
+
+            // ammo counter 
+
         }
 
         /// <summary>

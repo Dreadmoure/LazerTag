@@ -63,7 +63,7 @@ namespace LazerTag.CommandPattern
                 if (capabilities.IsConnected)
                 {
                     //get the current state of Controller1
-                    GamePadState padState = GamePad.GetState(PlayerIndex.One);
+                    GamePadState padState = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.IndependentAxes);
 
                     ExecuteCommands(capabilities, padState, character);
                 }
@@ -78,7 +78,7 @@ namespace LazerTag.CommandPattern
                 if (capabilities.IsConnected)
                 {
                     //get the current state of Controller2
-                    GamePadState padState = GamePad.GetState(PlayerIndex.Two);
+                    GamePadState padState = GamePad.GetState(PlayerIndex.Two, GamePadDeadZone.IndependentAxes);
 
                     ExecuteCommands(capabilities, padState, character);
                 }
@@ -94,7 +94,7 @@ namespace LazerTag.CommandPattern
                 if (capabilities.IsConnected)
                 {
                     //get the current state of Controller2
-                    GamePadState padState = GamePad.GetState(PlayerIndex.Three);
+                    GamePadState padState = GamePad.GetState(PlayerIndex.Three, GamePadDeadZone.IndependentAxes);
 
                     ExecuteCommands(capabilities, padState, character);
                 }
@@ -110,7 +110,7 @@ namespace LazerTag.CommandPattern
                 if (capabilities.IsConnected)
                 {
                     //get the current state of Controller2
-                    GamePadState padState = GamePad.GetState(PlayerIndex.Four);
+                    GamePadState padState = GamePad.GetState(PlayerIndex.Four, GamePadDeadZone.IndependentAxes);
 
                     ExecuteCommands(capabilities, padState, character);
                 }
@@ -120,8 +120,8 @@ namespace LazerTag.CommandPattern
 
         private void ExecuteCommands(GamePadCapabilities capabilities, GamePadState padState, Character character)
         {
-            // You can check explicitly if a gamepad has support for a certain feature
-            if (capabilities.HasLeftXThumbStick)
+            // checks to see if the connected device is a GamePad
+            if (capabilities.GamePadType == GamePadType.GamePad)
             {
                 foreach (PadInfo padInfo in padbinds.Keys)
                 {

@@ -10,6 +10,7 @@ namespace LazerTag.ComponentPattern
 {
     public class Projectile : Component, IGameListener
     {
+        private SpriteRenderer spriteRenderer;
         private float speed;
         private Vector2 velocity;
 
@@ -20,7 +21,7 @@ namespace LazerTag.ComponentPattern
 
         public override void Start()
         {
-            
+            spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
         }
 
         public override void Update()

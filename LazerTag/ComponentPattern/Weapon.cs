@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LazerTag.CreationalPattern;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace LazerTag.ComponentPattern
         private Vector2 aimDirection; //maybe enum
         public Vector2 ProjectileSpawnPosition { get; private set; }
         public Vector2 ProjectileVelocity { get; private set; }
+        public ProjectileDirection ProjectileDirection { get; private set; }
 
         public override void Start()
         {
@@ -67,7 +69,10 @@ namespace LazerTag.ComponentPattern
                 spriteRenderer.Flip = SpriteEffects.None;
                 GameObject.Transform.Position = position + new Vector2(0, -30);
                 GameObject.Transform.Rotation = -1.6f;
+
+                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35); 
                 ProjectileVelocity = new Vector2(0, -1);
+                ProjectileDirection = ProjectileDirection.Vertical; 
             }
             else if (aimDirection.Y == 1)
             {
@@ -75,7 +80,10 @@ namespace LazerTag.ComponentPattern
                 spriteRenderer.Flip = SpriteEffects.None;
                 GameObject.Transform.Position = position + new Vector2(0, 30);
                 GameObject.Transform.Rotation = 1.6f;
+
+                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, 35);
                 ProjectileVelocity = new Vector2(0, 1);
+                ProjectileDirection = ProjectileDirection.Vertical;
             }
             else if (aimDirection.X == -1)
             {
@@ -83,7 +91,10 @@ namespace LazerTag.ComponentPattern
                 spriteRenderer.Flip = SpriteEffects.FlipHorizontally;
                 GameObject.Transform.Position = position + new Vector2(-30, 0);
                 GameObject.Transform.Rotation = 0f;
+
+                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(-35, 0);
                 ProjectileVelocity = new Vector2(-1, 0);
+                ProjectileDirection = ProjectileDirection.Horizontal;
             }
             else
             {
@@ -91,7 +102,10 @@ namespace LazerTag.ComponentPattern
                 spriteRenderer.Flip = SpriteEffects.None;
                 GameObject.Transform.Position = position + new Vector2(30, 0);
                 GameObject.Transform.Rotation = 0f;
+
+                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(35, 0);
                 ProjectileVelocity = new Vector2(1, 0);
+                ProjectileDirection = ProjectileDirection.Horizontal;
             }
 
         }

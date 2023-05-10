@@ -19,6 +19,7 @@ namespace LazerTag.ComponentPattern
     {
         #region fields
         private SpriteRenderer spriteRenderer;
+        private Collider collider; 
         private Animator animator;
 
         private float speed;
@@ -73,6 +74,15 @@ namespace LazerTag.ComponentPattern
             CharacterDirection = Direction.Right;
 
             SpawnWeapon();
+
+            // set CollisionBox 
+            collider = GameObject.GetComponent<Collider>() as Collider;
+            collider.CollisionBox = new Rectangle(
+                                                  (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
+                                                  (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
+                                                  (int)spriteRenderer.Sprite.Width,
+                                                  (int)spriteRenderer.Sprite.Height
+                                                  );
         }
 
         public override void Update()
@@ -131,6 +141,18 @@ namespace LazerTag.ComponentPattern
             shootTimer += GameWorld.DeltaTime;
             iframeTimer += GameWorld.DeltaTime;
 
+
+            // update CollisionBox 
+            if(collider.CollisionBox.X != GameObject.Transform.Position.X + spriteRenderer.Sprite.Width / 2 ||
+               collider.CollisionBox.Y != GameObject.Transform.Position.Y + spriteRenderer.Sprite.Height / 2)
+            {
+                collider.CollisionBox = new Rectangle(
+                                                  (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
+                                                  (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
+                                                  (int)spriteRenderer.Sprite.Width,
+                                                  (int)spriteRenderer.Sprite.Height
+                                                  );
+            }
         }
 
         public void Move(Vector2 velocity)

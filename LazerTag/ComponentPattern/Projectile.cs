@@ -12,6 +12,7 @@ namespace LazerTag.ComponentPattern
     public class Projectile : Component, IGameListener
     {
         private SpriteRenderer spriteRenderer;
+        private Collider collider; 
         private float speed;
         public Vector2 Velocity { get; set; }
 
@@ -23,12 +24,33 @@ namespace LazerTag.ComponentPattern
         public override void Start()
         {
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
-            speed = 500; 
+            speed = 500;
+
+            // set CollisionBox 
+            collider = GameObject.GetComponent<Collider>() as Collider;
+            collider.CollisionBox = new Rectangle(
+                                                  (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
+                                                  (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
+                                                  (int)spriteRenderer.Sprite.Width,
+                                                  (int)spriteRenderer.Sprite.Height
+                                                  );
         }
 
         public override void Update()
         {
-            Move(); 
+            Move();
+
+            // update CollisionBox 
+            if (collider.CollisionBox.X != GameObject.Transform.Position.X + spriteRenderer.Sprite.Width / 2 ||
+               collider.CollisionBox.Y != GameObject.Transform.Position.Y + spriteRenderer.Sprite.Height / 2)
+            {
+                collider.CollisionBox = new Rectangle(
+                                                  (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
+                                                  (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
+                                                  (int)spriteRenderer.Sprite.Width,
+                                                  (int)spriteRenderer.Sprite.Height
+                                                  );
+            }
         }
 
         private void Move()

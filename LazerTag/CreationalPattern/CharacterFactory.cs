@@ -213,7 +213,7 @@ namespace LazerTag.CreationalPattern
                 case PlayerIndex.One:
                     gameObject = (GameObject)prototypes[0].Clone();
 
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 3, GameWorld.ScreenSize.Y / 2);
+                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 8, GameWorld.ScreenSize.Y / 4);
 
                     character = gameObject.GetComponent<Character>() as Character; 
                     collider = gameObject.GetComponent<Collider>() as Collider;
@@ -229,7 +229,7 @@ namespace LazerTag.CreationalPattern
                 case PlayerIndex.Two:
                     gameObject = (GameObject)prototypes[1].Clone();
 
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 1.5f, GameWorld.ScreenSize.Y / 2);
+                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 1.09f, GameWorld.ScreenSize.Y / 1.2f);
 
                     character = gameObject.GetComponent<Character>() as Character;
                     collider = gameObject.GetComponent<Collider>() as Collider;
@@ -245,7 +245,7 @@ namespace LazerTag.CreationalPattern
                 case PlayerIndex.Three:
                     gameObject = (GameObject)prototypes[2].Clone();
 
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 4, GameWorld.ScreenSize.Y / 2);
+                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 1.07f, GameWorld.ScreenSize.Y / 4);
 
                     character = gameObject.GetComponent<Character>() as Character;
                     collider = gameObject.GetComponent<Collider>() as Collider;
@@ -261,7 +261,7 @@ namespace LazerTag.CreationalPattern
                 case PlayerIndex.Four:
                     gameObject = (GameObject)prototypes[3].Clone();
 
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 7, GameWorld.ScreenSize.Y / 2);
+                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 11, GameWorld.ScreenSize.Y / 1.2f);
 
                     character = gameObject.GetComponent<Character>() as Character;
                     collider = gameObject.GetComponent<Collider>() as Collider;

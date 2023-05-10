@@ -111,7 +111,7 @@ namespace LazerTag.ComponentPattern
             if (IsJumping)
             {
                 jumpTime += GameWorld.DeltaTime; 
-                if (jumpTime <= 0.15f)
+                if (jumpTime <= 0.185f)
                 {
                     Vector2 jumpVelocity = new Vector2(0, -5) * speed;
                     GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);

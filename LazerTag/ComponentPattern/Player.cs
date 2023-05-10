@@ -43,11 +43,20 @@ namespace LazerTag.ComponentPattern
                 SpawnCharacter();
             }
 
-            Character character = Character.GetComponent<Character>() as Character;
+            if(Character != null)
+            {
+                Character character = Character.GetComponent<Character>() as Character;
+                uiRenderer.SetAmmoCountSprite(character.AmmoCount, Character.Transform.Position);
+            }
+            else
+            {
+                uiRenderer.SetAmmoCountSprite(0, new Vector2(0, 0));
+            }
+            
 
             uiRenderer.SetLifeText(Life);
             uiRenderer.SetScoreText(Score);
-            uiRenderer.SetAmmoCountSprite(character.AmmoCount, Character.Transform.Position);
+            
 
         }
 

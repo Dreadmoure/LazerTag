@@ -30,19 +30,21 @@ namespace LazerTag.ComponentPattern
         /// <summary>
         /// used to return a rectangle based on the objects position and its sprite
         /// </summary>
-        public Rectangle CollisionBox
-        {
-            get
-            {
-                return new Rectangle
-                    (
-                        (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
-                        (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
-                        spriteRenderer.Sprite.Width,
-                        spriteRenderer.Sprite.Height
-                    );
-            }
-        }
+        /// 
+        //public Rectangle CollisionBox
+        //{
+        //    get
+        //    {
+        //        return new Rectangle
+        //            (
+        //                (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
+        //                (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
+        //                spriteRenderer.Sprite.Width,
+        //                spriteRenderer.Sprite.Height
+        //            );
+        //    }
+        //}
+        public Rectangle CollisionBox { get; set; }
         #endregion
 
         #region methods

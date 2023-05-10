@@ -236,9 +236,15 @@ namespace LazerTag.ComponentPattern
                 }
 
                 // check for pick ups 
-                if(other.Tag == "PickUp")
+                if(other.Tag == "Battery")
                 {
+                    if(AmmoCount < 5)
+                    {
+                        AmmoCount = 5;
 
+                        GameWorld.Instance.Destroy(other);
+                    }
+                    
                 }
             }
 

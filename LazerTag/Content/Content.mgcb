@@ -752,6 +752,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/LifeFont.spritefont
 
+#begin PickUps/PickUpBattery.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PickUps/PickUpBattery.png
+
 #begin Pixel.png
 /importer:TextureImporter
 /processor:TextureProcessor

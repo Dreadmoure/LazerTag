@@ -78,7 +78,6 @@ namespace LazerTag
         /// <summary>
         /// calls update on all the components
         /// </summary>
-        /// <param name="gameTime"></param>
         public void Update()
         {
             for (int i = 0; i < components.Count; i++)

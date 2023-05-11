@@ -49,24 +49,24 @@ namespace LazerTag.CreationalPattern
             gameObject.AddComponent(new Animator());
             Animator animator = gameObject.GetComponent<Animator>() as Animator;
 
-            character.walkSprites = new string[8];
+            character.WalkSprites = new string[8];
 
             //sets the sprites used for the animations
-            for (int i = 0; i < character.walkSprites.Length; i++)
+            for (int i = 0; i < character.WalkSprites.Length; i++)
             {
-                character.walkSprites[i] = $"Characters\\Red\\Walk\\RedWalk{i}";
+                character.WalkSprites[i] = $"Characters\\Red\\Walk\\RedWalk{i}";
             }
 
-            character.idleSprites = new string[6];
+            character.IdleSprites = new string[6];
 
-            for (int i = 0; i < character.idleSprites.Length; i++)
+            for (int i = 0; i < character.IdleSprites.Length; i++)
             {
-                character.idleSprites[i] = $"Characters\\Red\\Idle\\RedIdle{i}";
+                character.IdleSprites[i] = $"Characters\\Red\\Idle\\RedIdle{i}";
             }
 
             //ads animations
-            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.walkSprites));
-            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.idleSprites));
+            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.WalkSprites));
+            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.IdleSprites));
 
 
             SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;
@@ -90,24 +90,24 @@ namespace LazerTag.CreationalPattern
             gameObject.AddComponent(new Animator());
             Animator animator = gameObject.GetComponent<Animator>() as Animator;
 
-            character.walkSprites = new string[8];
+            character.WalkSprites = new string[8];
 
             //sets the sprites used for the animations
-            for (int i = 0; i < character.walkSprites.Length; i++)
+            for (int i = 0; i < character.WalkSprites.Length; i++)
             {
-                character.walkSprites[i] = $"Characters\\Blue\\Walk\\BlueWalk{i}";
+                character.WalkSprites[i] = $"Characters\\Blue\\Walk\\BlueWalk{i}";
             }
 
-            character.idleSprites = new string[6];
+            character.IdleSprites = new string[6];
 
-            for (int i = 0; i < character.idleSprites.Length; i++)
+            for (int i = 0; i < character.IdleSprites.Length; i++)
             {
-                character.idleSprites[i] = $"Characters\\Blue\\Idle\\BlueIdle{i}";
+                character.IdleSprites[i] = $"Characters\\Blue\\Idle\\BlueIdle{i}";
             }
 
             //ads animations
-            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.walkSprites));
-            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.idleSprites));
+            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.WalkSprites));
+            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.IdleSprites));
 
 
             SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;
@@ -131,24 +131,24 @@ namespace LazerTag.CreationalPattern
             gameObject.AddComponent(new Animator());
             Animator animator = gameObject.GetComponent<Animator>() as Animator;
 
-            character.walkSprites = new string[8];
+            character.WalkSprites = new string[8];
 
             //sets the sprites used for the animations
-            for (int i = 0; i < character.walkSprites.Length; i++)
+            for (int i = 0; i < character.WalkSprites.Length; i++)
             {
-                character.walkSprites[i] = $"Characters\\Green\\Walk\\GreenWalk{i}";
+                character.WalkSprites[i] = $"Characters\\Green\\Walk\\GreenWalk{i}";
             }
 
-            character.idleSprites = new string[6];
+            character.IdleSprites = new string[6];
 
-            for (int i = 0; i < character.idleSprites.Length; i++)
+            for (int i = 0; i < character.IdleSprites.Length; i++)
             {
-                character.idleSprites[i] = $"Characters\\Green\\Idle\\GreenIdle{i}";
+                character.IdleSprites[i] = $"Characters\\Green\\Idle\\GreenIdle{i}";
             }
 
             //ads animations
-            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.walkSprites));
-            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.idleSprites));
+            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.WalkSprites));
+            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.IdleSprites));
 
 
             SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;
@@ -172,24 +172,24 @@ namespace LazerTag.CreationalPattern
             gameObject.AddComponent(new Animator());
             Animator animator = gameObject.GetComponent<Animator>() as Animator;
 
-            character.walkSprites = new string[8];
+            character.WalkSprites = new string[8];
 
             //sets the sprites used for the animations
-            for (int i = 0; i < character.walkSprites.Length; i++)
+            for (int i = 0; i < character.WalkSprites.Length; i++)
             {
-                character.walkSprites[i] = $"Characters\\Pink\\Walk\\PinkWalk{i}";
+                character.WalkSprites[i] = $"Characters\\Pink\\Walk\\PinkWalk{i}";
             }
 
-            character.idleSprites = new string[6];
+            character.IdleSprites = new string[6];
 
-            for (int i = 0; i < character.idleSprites.Length; i++)
+            for (int i = 0; i < character.IdleSprites.Length; i++)
             {
-                character.idleSprites[i] = $"Characters\\Pink\\Idle\\PinkIdle{i}";
+                character.IdleSprites[i] = $"Characters\\Pink\\Idle\\PinkIdle{i}";
             }
 
             //ads animations
-            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.walkSprites));
-            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.idleSprites));
+            animator.AddAnimation(character.BuildAnimation(16, "Walk", character.WalkSprites));
+            animator.AddAnimation(character.BuildAnimation(6, "Idle", character.IdleSprites));
 
 
             SpriteRenderer spriteRenderer = gameObject.AddComponent(new SpriteRenderer()) as SpriteRenderer;

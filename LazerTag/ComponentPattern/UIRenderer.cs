@@ -10,7 +10,9 @@ namespace LazerTag.ComponentPattern
 {
     public class UIRenderer : Component
     {
+        #region fields
         private SpriteFont spriteFont;
+        #endregion
 
         #region properties
         /// <summary>
@@ -29,7 +31,7 @@ namespace LazerTag.ComponentPattern
         public Vector2 SpritePosition { get; private set; }
 
         /// <summary>
-        /// Property for setting the position of the sprite
+        /// Property for setting the position of AmmoCountSprite
         /// </summary>
         public Vector2 AmmoCountSpritePosition { get; private set; }
 
@@ -94,7 +96,7 @@ namespace LazerTag.ComponentPattern
         }
 
         /// <summary>
-        /// method for updating the UI elements
+        /// method for updating the LifeText
         /// </summary>
         /// <param name="playerLife">Updates the life of the player</param>
         public void SetLifeText(int life)
@@ -103,6 +105,10 @@ namespace LazerTag.ComponentPattern
             LifeTextPosition = new Vector2(SpritePosition.X - 110, SpritePosition.Y - 5);
         }
 
+        /// <summary>
+        /// method for updating the ScoreText
+        /// </summary>
+        /// <param name="score"></param>
         public void SetScoreText(int score)
         {
             ScoreText = score.ToString();
@@ -110,15 +116,21 @@ namespace LazerTag.ComponentPattern
         }
 
         /// <summary>
-        /// method for setting the sprite based on the input string
+        /// method for setting the sprite based on the input string and a position
         /// </summary>
-        /// <param name="spriteName">path and name of the file</param>
+        /// <param name="spriteName">the path of the sprite</param>
+        /// <param name="position">the position it needs to be at</param>
         public void SetSprite(string spriteName, Vector2 position)
         {
             Sprite = GameWorld.Instance.Content.Load<Texture2D>(spriteName);
             SpritePosition = position;
         }
 
+        /// <summary>
+        /// method for setting the sprite based on the input string and a position
+        /// </summary>
+        /// <param name="ammoCount">the path of the sprite</param>
+        /// <param name="position">the position it needs to be at</param>
         public void SetAmmoCountSprite(int ammoCount, Vector2 position)
         {
             if(ammoCount == 5)

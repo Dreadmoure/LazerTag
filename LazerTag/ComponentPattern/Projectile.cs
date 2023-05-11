@@ -11,16 +11,23 @@ namespace LazerTag.ComponentPattern
 {
     public class Projectile : Component, IGameListener
     {
+        #region fields
         private SpriteRenderer spriteRenderer;
         private Collider collider; 
         private float speed;
+        #endregion
+
+        #region properties
+        /// <summary>
+        /// Property used for getting and setting the velocity of the projectile
+        /// </summary>
         public Vector2 Velocity { get; set; }
+        #endregion
 
-        public Projectile()
-        {
-
-        }
-
+        #region methods
+        /// <summary>
+        /// method for setting properties and loading stuff from the start
+        /// </summary>
         public override void Start()
         {
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
@@ -36,6 +43,9 @@ namespace LazerTag.ComponentPattern
                                                   );
         }
 
+        /// <summary>
+        /// method which runs every frame
+        /// </summary>
         public override void Update()
         {
             Move();
@@ -53,6 +63,9 @@ namespace LazerTag.ComponentPattern
             }
         }
 
+        /// <summary>
+        /// method used to move the projectile
+        /// </summary>
         private void Move()
         {
             Vector2 velocity = Velocity; 
@@ -66,6 +79,10 @@ namespace LazerTag.ComponentPattern
             GameObject.Transform.Translate(velocity * GameWorld.DeltaTime);
         }
 
+        /// <summary>
+        /// Method for checking if an event happens
+        /// </summary>
+        /// <param name="gameEvent">the gameevent type</param>
         public void Notify(GameEvent gameEvent)
         {
             if(gameEvent is CollisionEvent)
@@ -78,21 +95,8 @@ namespace LazerTag.ComponentPattern
                     // remove self 
                     GameWorld.Instance.Destroy(GameObject);
                 }
-
-                // only collide with character if character is not own 
-                if(other.GetComponent<Character>() != null && other.Tag != GameObject.Tag)
-                {
-                    // update score on player that the projectile came from 
-
-                    // update health on player that was hit 
-
-                    // remove character that was hit
-                    //GameWorld.Instance.Destroy(other);
-
-                    // remove self 
-                    //GameWorld.Instance.Destroy(GameObject); 
-                }
             }
         }
+        #endregion
     }
 }

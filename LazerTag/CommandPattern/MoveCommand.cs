@@ -22,9 +22,9 @@ namespace LazerTag.CommandPattern
         }
 
         /// <summary>
-        /// calls the move command on the player
+        /// calls the move command on the character
         /// </summary>
-        /// <param name="character">the player we need to execute the method on</param>
+        /// <param name="character">the character we need to execute the method on</param>
         public void Execute(Character character)
         {
             character.Move(velocity);

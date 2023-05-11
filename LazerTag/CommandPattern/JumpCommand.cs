@@ -9,6 +9,10 @@ namespace LazerTag.CommandPattern
 {
     public class JumpCommand : ICommand
     {
+        /// <summary>
+        /// method for executing command jump on character 
+        /// </summary>
+        /// <param name="character">the character the command should be executed on</param>
         public void Execute(Character character)
         {
             character.Jump(); 

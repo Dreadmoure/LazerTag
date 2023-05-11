@@ -14,11 +14,18 @@ namespace LazerTag.BuilderPattern
         private GameObject gameObject;
         private int id;
 
+        /// <summary>
+        /// constructor which takes 1 parameter
+        /// </summary>
+        /// <param name="id">the id for which player it should be</param>
         public PlayerBuilder(int id)
         {
             this.id = id;
         }
 
+        /// <summary>
+        /// method for building the gameobject 
+        /// </summary>
         public void BuildGameObject()
         {
             gameObject = new GameObject();

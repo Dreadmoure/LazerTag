@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
+    /// <summary>
+    /// superclass for all pickup types 
+    /// </summary>
     public abstract class PickUp : Component
     {
         protected SpriteRenderer spriteRenderer; 
         private Collider collider; 
 
+        /// <summary>
+        /// method run when first initialized 
+        /// </summary>
         public override void Start()
         {
             // set CollisionBox 
@@ -22,22 +28,6 @@ namespace LazerTag.ComponentPattern
                                                   spriteRenderer.Sprite.Width,
                                                   spriteRenderer.Sprite.Height
                                                   );
-        }
-
-        public override void Update()
-        {
-            // if we want the pickups to fall with gravity, uncomment this 
-            // update CollisionBox 
-            //if (collider.CollisionBox.X != GameObject.Transform.Position.X + spriteRenderer.Sprite.Width / 2 ||
-            //   collider.CollisionBox.Y != GameObject.Transform.Position.Y + spriteRenderer.Sprite.Height / 2)
-            //{
-            //    collider.CollisionBox = new Rectangle(
-            //                                      (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
-            //                                      (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
-            //                                      spriteRenderer.Sprite.Width,
-            //                                      spriteRenderer.Sprite.Height
-            //                                      );
-            //}
         }
     }
 }

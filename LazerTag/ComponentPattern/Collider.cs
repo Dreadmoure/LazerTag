@@ -19,37 +19,36 @@ namespace LazerTag.ComponentPattern
 
         #region properties
         /// <summary>
-        /// used to get or set the collsion event
+        /// property used to get or set the collsion event
         /// </summary>
         public CollisionEvent CollisionEvent { get; private set; } = new CollisionEvent();
+        /// <summary>
+        /// property used to get or set the top collsion event
+        /// </summary>
         public TopCollisionEvent TopCollisionEvent { get; private set; } = new TopCollisionEvent();
+        /// <summary>
+        /// property used to get or set the bottom collsion event
+        /// </summary>
         public BottomCollisionEvent BottomCollisionEvent { get; private set; } = new BottomCollisionEvent();
+        /// <summary>
+        /// property used to get or set the left collsion event
+        /// </summary>
         public LeftCollisionEvent LeftCollisionEvent { get; private set; } = new LeftCollisionEvent();
+        /// <summary>
+        /// property used to get or set the right collsion event
+        /// </summary>
         public RightCollisionEvent RightCollisionEvent { get; private set; } = new RightCollisionEvent();
 
         /// <summary>
-        /// used to return a rectangle based on the objects position and its sprite
+        /// property used to get and set the CollisionBox rectangle based on the objects position and its sprite
         /// </summary>
         /// 
-        //public Rectangle CollisionBox
-        //{
-        //    get
-        //    {
-        //        return new Rectangle
-        //            (
-        //                (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
-        //                (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
-        //                spriteRenderer.Sprite.Width,
-        //                spriteRenderer.Sprite.Height
-        //            );
-        //    }
-        //}
         public Rectangle CollisionBox { get; set; }
         #endregion
 
         #region methods
         /// <summary>
-        /// runs at the begining
+        /// runs at the beginning
         /// </summary>
         public override void Start()
         {
@@ -67,7 +66,10 @@ namespace LazerTag.ComponentPattern
             CheckCollision();
         }
 
-        //use this if you want to draw the collisionboxes
+        /// <summary>
+        /// used to draw the collision boxes 
+        /// </summary>
+        /// <param name="spriteBatch">SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             DrawRectangle(CollisionBox, spriteBatch);

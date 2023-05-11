@@ -13,25 +13,25 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
+    /// <summary>
+    /// enum Direction, for defining which direction the player should be turning 
+    /// </summary>
     public enum Direction { Left, Right };
 
     public class Character : Component, IGameListener
     {
         #region fields
         private SpriteRenderer spriteRenderer;
+        private Vector2 spriteSize;
         private Collider collider; 
         private Animator animator;
 
-        private Vector2 spriteSize; 
-
         private float speed;
-        private bool canShoot;
         private float shootTimer;
         private float shootTime; 
 
         private Vector2 gravity;
         private bool canJump;
-        //private bool isJumping;
         private float jumpTime;
 
         // iframes 
@@ -40,22 +40,52 @@ namespace LazerTag.ComponentPattern
         #endregion
 
         #region properties
+        /// <summary>
+        /// property for getting, and privately setting, a weapon gameobject 
+        /// </summary>
         public GameObject WeaponObject { get; private set; }
 
+        /// <summary>
+        /// property for getting and setting the characters ammocount 
+        /// </summary>
         public int AmmoCount { get; set; }
 
+        /// <summary>
+        /// property for getting and setting the characters id 
+        /// </summary>
         public int CharacterId { get; set; }
 
+        /// <summary>
+        /// property for getting and setting whether a character is walking
+        /// </summary>
         public bool IsWalking { get; set; } = false;
+
+        /// <summary>
+        /// property for getting and setting whether a character is jumping
+        /// </summary>
         public bool IsJumping { get; set; } = false;
+
+        /// <summary>
+        /// property for getting and setting the direction the character is turning 
+        /// </summary>
         public Direction CharacterDirection { get; set; }
 
         //animation sprites
-        public string[] walkSprites { get; set; }
-        public string[] idleSprites { get; set; }
+        /// <summary>
+        /// property for getting and setting the walking sprites 
+        /// </summary>
+        public string[] WalkSprites { get; set; }
+
+        /// <summary>
+        /// property for getting and setting the idle sprites 
+        /// </summary>
+        public string[] IdleSprites { get; set; }
         #endregion
 
         #region methods
+        /// <summary>
+        /// first method to run when character is initialized, sets all the common start parameters for the character 
+        /// </summary>
         public override void Start()
         {
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
@@ -66,7 +96,6 @@ namespace LazerTag.ComponentPattern
             AmmoCount = 5;
             speed = 250;
 
-            canShoot = true;
             shootTime = 0.5f;
 
             // iframes 
@@ -90,12 +119,14 @@ namespace LazerTag.ComponentPattern
                                                   );
         }
 
+        /// <summary>
+        /// method for updating the character during runtime 
+        /// </summary>
         public override void Update()
         {
             //handles input
             InputHandler.Instance.Execute(this);
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
-
 
             //walking animations
             if (IsWalking && CharacterDirection == Direction.Left)
@@ -131,21 +162,15 @@ namespace LazerTag.ComponentPattern
                     Vector2 jumpVelocity = new Vector2(0, -5) * speed;
                     GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
                 }
-                //else
-                //{
-                //    IsJumping = false; 
-                //}
             }
 
-            //weapon position
+            // update characters weapon position
             Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
-
             weapon.Move(GameObject.Transform.Position);
-
             
+            // update timers 
             shootTimer += GameWorld.DeltaTime;
             iframeTimer += GameWorld.DeltaTime;
-
 
             // update CollisionBox 
             if(collider.CollisionBox.X != GameObject.Transform.Position.X + spriteRenderer.Sprite.Width / 2 ||
@@ -155,6 +180,9 @@ namespace LazerTag.ComponentPattern
             }
         }
 
+        /// <summary>
+        /// private method for updating the characters collisionbox 
+        /// </summary>
         private void UpdateCollisionBox()
         {
             collider.CollisionBox = new Rectangle(
@@ -165,6 +193,10 @@ namespace LazerTag.ComponentPattern
                                                   );
         }
 
+        /// <summary>
+        /// method for handling the move command given as input 
+        /// </summary>
+        /// <param name="velocity">the direction the character should move in</param>
         public void Move(Vector2 velocity)
         {
             if (velocity != Vector2.Zero)
@@ -174,22 +206,28 @@ namespace LazerTag.ComponentPattern
 
             velocity *= speed;
             GameObject.Transform.Translate(velocity * GameWorld.DeltaTime);
-
-
         }
 
+        /// <summary>
+        /// method for handling the aim command given as input 
+        /// </summary>
+        /// <param name="aimDirection">the direction the weapon should aim</param>
         public void Aim(Vector2 aimDirection)
         {
+            // parse info along to the weapon 
             Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
-
             weapon.Aim(aimDirection);
         }
 
+        /// <summary>
+        /// method for handling the shoot command given as input 
+        /// </summary>
         public void Shoot()
         {
-            // instead of canShoot, use ammo count 
+            // character can only shoot when they have ammo
             if (AmmoCount > 0)
             {
+                // only shoot after a given time 
                 if (shootTimer > shootTime)
                 {
                     Weapon weapon = WeaponObject.GetComponent<Weapon>() as Weapon;
@@ -207,25 +245,30 @@ namespace LazerTag.ComponentPattern
 
                     projectileObject.Tag = GameObject.Tag;
 
-                    // set position 
+                    // set projectiles position 
                     projectileObject.Transform.Position = weapon.ProjectileSpawnPosition;
 
-                    // set velocity 
+                    // set projectiles velocity 
                     Projectile projectile = projectileObject.GetComponent<Projectile>() as Projectile;
                     projectile.Velocity = weapon.ProjectileVelocity;
 
                     // instantiate projectile in GameWorld 
                     GameWorld.Instance.Instantiate(projectileObject);
 
-                    //canShoot = true; // ammocount -1
+                    // decrease ammo, and reset timer 
                     AmmoCount--;
                     shootTimer = 0; 
                 }
             }
         }
 
+        /// <summary>
+        /// method for handling the jump command given as input
+        /// </summary>
         public void Jump()
         {
+            // just check if the character can jump, if they are on the top of a platform 
+            // the actual jump happens in Update method 
             if (canJump)
             {
                 IsJumping = true;
@@ -235,13 +278,15 @@ namespace LazerTag.ComponentPattern
             }
         }
 
+        /// <summary>
+        /// method for checking if an event happens that the character listens to 
+        /// </summary>
+        /// <param name="gameEvent">the gameevent that happened</param>
         public void Notify(GameEvent gameEvent)
         {
             if(gameEvent is CollisionEvent)
             {
                 GameObject other = (gameEvent as CollisionEvent).Other; 
-
-                // check for pixel collision here 
 
                 // check for other characters projectiles 
                 if(other.GetComponent<Projectile>() != null && other.Tag != GameObject.Tag)
@@ -263,6 +308,7 @@ namespace LazerTag.ComponentPattern
                         // destroy weapon 
                         GameWorld.Instance.Destroy(WeaponObject);
 
+                        // destroy self lastly
                         GameWorld.Instance.Destroy(GameObject);
                     }
                 }
@@ -276,7 +322,6 @@ namespace LazerTag.ComponentPattern
 
                         GameWorld.Instance.Destroy(other);
                     }
-                    
                 }
             }
 
@@ -296,6 +341,8 @@ namespace LazerTag.ComponentPattern
                     // set character to be on top of the platform, so it does not fall through 
                     GameObject.Transform.Position = new Vector2(GameObject.Transform.Position.X, 
                                                                 other.Transform.Position.Y - (otherSpriteRenderer.Origin.Y + spriteRenderer.Origin.Y));
+                    
+                    // since the character is moved, remember to update its collisionbox 
                     UpdateCollisionBox();
                 }
             }
@@ -314,6 +361,8 @@ namespace LazerTag.ComponentPattern
                     // make sure character can not get up through platform 
                     GameObject.Transform.Position = new Vector2(GameObject.Transform.Position.X,
                                                                 other.Transform.Position.Y + (otherSpriteRenderer.Origin.Y + spriteRenderer.Origin.Y));
+
+                    // since the character is moved, remember to update its collisionbox 
                     UpdateCollisionBox();
                 }
             }
@@ -329,6 +378,8 @@ namespace LazerTag.ComponentPattern
                     // make sure character can not move right into platform 
                     GameObject.Transform.Position = new Vector2(other.Transform.Position.X - (otherSpriteRenderer.Origin.X + spriteRenderer.Origin.X),
                                                                 GameObject.Transform.Position.Y);
+
+                    // since the character is moved, remember to update its collisionbox 
                     UpdateCollisionBox();
                 }
             }
@@ -344,11 +395,20 @@ namespace LazerTag.ComponentPattern
                     // make sure character can not move left into platform 
                     GameObject.Transform.Position = new Vector2(other.Transform.Position.X + (otherSpriteRenderer.Origin.X + spriteRenderer.Origin.X),
                                                                 GameObject.Transform.Position.Y);
+
+                    // since the character is moved, remember to update its collisionbox 
                     UpdateCollisionBox();
                 }
             }
         }
 
+        /// <summary>
+        /// method for building the characters animation 
+        /// </summary>
+        /// <param name="fps">frames per second</param>
+        /// <param name="animationName">the string name of the animation</param>
+        /// <param name="spriteNames">the sprites that should be used</param>
+        /// <returns>returns the animation that was build</returns>
         public Animation BuildAnimation(int fps, string animationName, string[] spriteNames)
         {
             Texture2D[] sprites = new Texture2D[spriteNames.Length];
@@ -363,6 +423,9 @@ namespace LazerTag.ComponentPattern
             return animation;
         }
 
+        /// <summary>
+        /// method for spawning weapon for character 
+        /// </summary>
         private void SpawnWeapon()
         {
             WeaponObject = WeaponFactory.Instance.Create(PlayerIndex.One);
@@ -370,7 +433,6 @@ namespace LazerTag.ComponentPattern
             WeaponObject.Transform.Position = GameObject.Transform.Position;
 
             GameWorld.Instance.Instantiate(WeaponObject);
-
         }
         #endregion
     }

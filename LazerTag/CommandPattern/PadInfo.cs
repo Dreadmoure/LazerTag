@@ -10,30 +10,22 @@ namespace LazerTag.CommandPattern
     public class PadInfo
     {
         /// <summary>
-        /// property for getting or setting wether a key is down
+        /// property for getting or setting wether a button is down
         /// </summary>
         public bool IsDown { get; set; }
 
         /// <summary>
-        /// property for getting or setting a key
+        /// property for getting or setting a button
         /// </summary>
         public Buttons Button { get; set; }
-        public Buttons Button1 { get; set; }
-        public Buttons Button2 { get; set; }
 
         /// <summary>
-        /// constructor which takes an argument so we can define a key
+        /// constructor which takes an argument so we can define a button
         /// </summary>
-        /// <param name="button">the button we want as a keybind</param>
+        /// <param name="button">the button we want as a padbind</param>
         public PadInfo(Buttons button)
         {
             this.Button = button;
-        }
-
-        public PadInfo(Buttons button1, Buttons button2)
-        {
-            Button = button1;
-            Button2 = button2; 
         }
     }
 }

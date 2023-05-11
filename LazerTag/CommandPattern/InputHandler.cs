@@ -32,13 +32,11 @@ namespace LazerTag.CommandPattern
 
         private Dictionary<PadInfo, ICommand> padbinds = new Dictionary<PadInfo, ICommand>();
 
+        /// <summary>
+        /// constructor, used for setting the padbinds
+        /// </summary>
         private InputHandler()
         {
-            //Character character = GameWorld.Instance.FindObjectOfType<Character>() as Character;
-            //GameObject gameObject = GameWorld.Instance.FindObjectByTag("Player1");
-            //GamePadState padState = GamePad.GetState(PlayerIndex.One);
-
-
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickLeft), new MoveCommand(new Vector2(-1, 0)));
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickRight), new MoveCommand(new Vector2(1, 0)));
             padbinds.Add(new PadInfo(Buttons.LeftTrigger), new JumpCommand());
@@ -47,17 +45,15 @@ namespace LazerTag.CommandPattern
             padbinds.Add(new PadInfo(Buttons.RightThumbstickRight), new AimCommand(new Vector2(1, 0)));
             padbinds.Add(new PadInfo(Buttons.RightThumbstickUp), new AimCommand(new Vector2(0, -1)));
             padbinds.Add(new PadInfo(Buttons.RightThumbstickDown), new AimCommand(new Vector2(0, 1)));
-            //padbinds.Add(new PadInfo(Buttons.RightThumbstickLeft, Buttons.RightThumbstickUp), new AimCommand(new Vector2(-1, -1)));
-            //padbinds.Add(new PadInfo(Buttons.RightThumbstickLeft, Buttons.RightThumbstickDown), new AimCommand(new Vector2(-1, 1)));
-            //padbinds.Add(new PadInfo(Buttons.RightThumbstickRight, Buttons.RightThumbstickUp), new AimCommand(new Vector2(1, -1)));
-            //padbinds.Add(new PadInfo(Buttons.RightThumbstickRight, Buttons.RightThumbstickDown), new AimCommand(new Vector2(1, 1)));
-
             padbinds.Add(new PadInfo(Buttons.RightTrigger), new ShootCommand());
         }
 
+        /// <summary>
+        /// method for executing any commands on a character 
+        /// </summary>
+        /// <param name="character">the character the command should be executed on</param>
         public void Execute(Character character)
         {
-
             if(character.CharacterId == 1)
             {
                 //check the device for player one
@@ -67,7 +63,7 @@ namespace LazerTag.CommandPattern
                 if (capabilities.IsConnected)
                 {
                     //get the current state of Controller1
-                    GamePadState padState = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.Circular);
+                    GamePadState padState = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.IndependentAxes);
 
                     ExecuteCommands(capabilities, padState, character);
                 }
@@ -88,7 +84,6 @@ namespace LazerTag.CommandPattern
                 }
             }
 
-            //player 3
             if (character.CharacterId == 3)
             {
                 //check the device for player two
@@ -104,7 +99,6 @@ namespace LazerTag.CommandPattern
                 }
             }
 
-            //player 4
             if (character.CharacterId == 4)
             {
                 //check the device for player two
@@ -119,9 +113,14 @@ namespace LazerTag.CommandPattern
                     ExecuteCommands(capabilities, padState, character);
                 }
             }
-
         }
 
+        /// <summary>
+        /// method for executing commands 
+        /// </summary>
+        /// <param name="capabilities">GamePadCapabilities</param>
+        /// <param name="padState">GamePadState</param>
+        /// <param name="character">the character the command should be executed on</param>
         private void ExecuteCommands(GamePadCapabilities capabilities, GamePadState padState, Character character)
         {
             // checks to see if the connected device is a GamePad
@@ -165,36 +164,6 @@ namespace LazerTag.CommandPattern
                             padbinds[padInfo].Execute(character);
                             padInfo.IsDown = true;
                         }
-                        //if((padInfo.Button == Buttons.RightThumbstickLeft && padInfo.Button2 == Buttons.RightThumbstickUp) ||
-                        //   (padInfo.Button == Buttons.RightThumbstickLeft && padInfo.Button2 == Buttons.RightThumbstickDown) ||
-                        //   (padInfo.Button == Buttons.RightThumbstickRight && padInfo.Button2 == Buttons.RightThumbstickUp) ||
-                        //   (padInfo.Button == Buttons.RightThumbstickRight && padInfo.Button2 == Buttons.RightThumbstickDown) ||
-                        //   padInfo.Button == Buttons.RightThumbstickLeft || padInfo.Button == Buttons.RightThumbstickRight ||
-                        //   padInfo.Button == Buttons.RightThumbstickUp || padInfo.Button == Buttons.RightThumbstickDown)
-                        //{
-                        //    padbinds[padInfo].Execute(character);
-                        //    padInfo.IsDown = true;
-                        //}
-                        //if (padInfo.Button == Buttons.RightThumbstickLeft && padState.ThumbSticks.Right.X < -0.02f)
-                        //{
-                        //    padbinds[padInfo].Execute(character);
-                        //    padInfo.IsDown = true;
-                        //}
-                        //if (padInfo.Button == Buttons.RightThumbstickRight && padState.ThumbSticks.Right.X > 0.02f)
-                        //{
-                        //    padbinds[padInfo].Execute(character);
-                        //    padInfo.IsDown = true;
-                        //}
-                        //if (padInfo.Button == Buttons.RightThumbstickUp && padState.ThumbSticks.Right.Y > -0.02f)
-                        //{
-                        //    padbinds[padInfo].Execute(character);
-                        //    padInfo.IsDown = true;
-                        //}
-                        //if (padInfo.Button == Buttons.RightThumbstickDown && padState.ThumbSticks.Right.Y < 0.02f)
-                        //{
-                        //    padbinds[padInfo].Execute(character);
-                        //    padInfo.IsDown = true;
-                        //}
                     }
 
                     if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)

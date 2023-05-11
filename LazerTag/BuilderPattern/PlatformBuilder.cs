@@ -14,12 +14,21 @@ namespace LazerTag.BuilderPattern
         private Vector2 position;
         private int platformID;
 
+        /// <summary>
+        /// constructor which takes 3 parameters 
+        /// </summary>
+        /// <param name="x">the x coordinate for the poisition</param>
+        /// <param name="y">the y coordinate for the poisition</param>
+        /// <param name="platformID">the id for which type of platform to create</param>
         public PlatformBuilder(int x, int y, int platformID)
         {
             position = new Vector2(x, y);
             this.platformID = platformID;
         }
 
+        /// <summary>
+        /// method for building the gameobject 
+        /// </summary>
         public void BuildGameObject()
         {
             gameObject = new GameObject();
@@ -39,11 +48,14 @@ namespace LazerTag.BuilderPattern
             {
                 Collider collider = gameObject.AddComponent(new Collider()) as Collider;
             }
-            
 
             gameObject.Tag = "Platform"; 
         }
 
+        /// <summary>
+        /// method for getting the built gameobject 
+        /// </summary>
+        /// <returns>the gameobject that was built</returns>
         public GameObject GetResult()
         {
             return gameObject; 

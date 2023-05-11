@@ -35,7 +35,11 @@ namespace LazerTag.BuilderPattern
             gameObject.AddComponent(new SpriteRenderer()); 
 
             Platform platform = gameObject.AddComponent(new Platform(position, platformID)) as Platform;
-            Collider collider = gameObject.AddComponent(new Collider()) as Collider;
+            if(platformID == 1 || platformID == 2)
+            {
+                Collider collider = gameObject.AddComponent(new Collider()) as Collider;
+            }
+            
 
             gameObject.Tag = "Platform"; 
         }

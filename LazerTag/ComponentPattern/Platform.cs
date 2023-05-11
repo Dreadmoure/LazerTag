@@ -43,6 +43,10 @@ namespace LazerTag.ComponentPattern
             {
                 spriteRenderer.SetSprite("Platforms\\DirtWithGrass");
             }
+            else
+            {
+                spriteRenderer.SetSprite("Platforms\\Dirt");
+            }
             
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.5f;

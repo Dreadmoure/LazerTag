@@ -26,8 +26,11 @@ namespace LazerTag.CreationalPattern
         }
         #endregion
 
+        #region fields
         private List<GameObject> prototypes = new List<GameObject>();
+        #endregion
 
+        #region constructor
         private CharacterFactory()
         {
             CreatePrototypeP1();
@@ -35,9 +38,12 @@ namespace LazerTag.CreationalPattern
             CreatePrototypeP3();
             CreatePrototypeP4();
         }
+        #endregion
 
         #region methods
-
+        /// <summary>
+        /// Method for creating prototype1
+        /// </summary>
         private void CreatePrototypeP1()
         {
             GameObject gameObject = new GameObject();
@@ -79,6 +85,9 @@ namespace LazerTag.CreationalPattern
             prototypes.Add(gameObject);
         }
 
+        /// <summary>
+        /// Method for creating prototype2
+        /// </summary>
         private void CreatePrototypeP2()
         {
             GameObject gameObject = new GameObject();
@@ -120,6 +129,9 @@ namespace LazerTag.CreationalPattern
             prototypes.Add(gameObject);
         }
 
+        /// <summary>
+        /// Method for creating prototype3
+        /// </summary>
         private void CreatePrototypeP3()
         {
             GameObject gameObject = new GameObject();
@@ -161,6 +173,9 @@ namespace LazerTag.CreationalPattern
             prototypes.Add(gameObject);
         }
 
+        /// <summary>
+        /// Method for creating prototype4
+        /// </summary>
         private void CreatePrototypeP4()
         {
             GameObject gameObject = new GameObject();
@@ -202,6 +217,11 @@ namespace LazerTag.CreationalPattern
             prototypes.Add(gameObject);
         }
 
+        /// <summary>
+        /// Method for creating a gameobject, by cloning it
+        /// </summary>
+        /// <param name="type">type</param>
+        /// <returns>GameObject</returns>
         public override GameObject Create(Enum type)
         {
             GameObject gameObject = new GameObject();

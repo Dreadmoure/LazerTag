@@ -8,6 +8,9 @@ using System.Collections.Generic;
 
 namespace LazerTag
 {
+    /// <summary>
+    /// class for the gameworld which inherits from game
+    /// </summary>
     public class GameWorld : Game
     {
         #region singleton
@@ -71,6 +74,10 @@ namespace LazerTag
         }
         #endregion
 
+        #region methods
+        /// <summary>
+        /// method which runs first when the program is executed
+        /// </summary>
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -112,7 +119,7 @@ namespace LazerTag
         /// </summary>
         private void AddPlatforms()
         {
-            // the entire level is laid out in a 2 diemtional int array, where each 1 is a platform 
+            // the entire level is laid out in a 2 dimentional int array, where each 1 is a platform 
             int[,] tileIds = new int[,]
             {
                 {3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3 },
@@ -156,14 +163,14 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// method which is used to load the content
+        /// </summary>
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-
-            //loads the content in the UI
-            UI.Instance.LoadContent(Content);
 
             //calls start on all gameobjects
             for (int i = 0; i < gameObjects.Count; i++)
@@ -174,6 +181,10 @@ namespace LazerTag
             //SpawnCharacters();
         }
 
+        /// <summary>
+        /// method for updating objects each frame
+        /// </summary>
+        /// <param name="gameTime">Time in the game</param>
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -183,9 +194,6 @@ namespace LazerTag
 
             //updates the gametime
             DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            //Update the UI
-            UI.Instance.Update();
 
             //calls update on all gameobjects
             for (int i = 0; i < gameObjects.Count; i++)
@@ -199,9 +207,13 @@ namespace LazerTag
             Cleanup();
         }
 
+        /// <summary>
+        /// method used to draw objects to the screen
+        /// </summary>
+        /// <param name="gameTime"></param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.CornflowerBlue); //default backgroundcolor
 
             // TODO: Add your drawing code here
 
@@ -213,9 +225,6 @@ namespace LazerTag
             {
                 gameObjects[i].Draw(_spriteBatch);
             }
-
-            //draw the ui
-            UI.Instance.Draw(_spriteBatch);
 
             //we stop drawing
             _spriteBatch.End();
@@ -312,6 +321,11 @@ namespace LazerTag
             return null;
         }
 
+        /// <summary>
+        /// method for finding a player based on its tag
+        /// </summary>
+        /// <param name="tag">the tag of the player we want to find</param>
+        /// <returns></returns>
         public Player FindPlayerByTag(string tag)
         {
             List<Player> players = new List<Player>();
@@ -336,18 +350,6 @@ namespace LazerTag
 
             return null; 
         }
-
-        //public GameObject FindObjectByTag(string tag) 
-        //{
-        //    foreach(GameObject gameObject in gameObjects)
-        //    {
-        //        if(gameObject.Tag == tag)
-        //        {
-        //            return gameObject;
-        //        }
-
-        //    }
-        //    return null;
-        //}
+        #endregion
     }
 }

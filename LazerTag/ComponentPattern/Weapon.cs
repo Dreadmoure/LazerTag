@@ -13,56 +13,45 @@ namespace LazerTag.ComponentPattern
 {
     public class Weapon : Component
     {
+        #region fields
         private SpriteRenderer spriteRenderer;
-        private Vector2 aimDirection; //maybe enum
-        public Vector2 ProjectileSpawnPosition { get; private set; }
-        public Vector2 ProjectileVelocity { get; private set; }
-        public ProjectileDirection ProjectileDirection { get; private set; }
+        private Vector2 aimDirection;
+        #endregion
 
+        #region properties
+        /// <summary>
+        /// method for getting and setting the spawn position of the projectile
+        /// </summary>
+        public Vector2 ProjectileSpawnPosition { get; private set; }
+
+        /// <summary>
+        /// method for getting and setting the velocity of the projectile
+        /// </summary>
+        public Vector2 ProjectileVelocity { get; private set; }
+
+        /// <summary>
+        /// method for getting and setting the direction of the projectile
+        /// </summary>
+        public ProjectileDirection ProjectileDirection { get; private set; }
+        #endregion
+
+        #region methods
+        /// <summary>
+        /// Method that runs as the first when the program starts
+        /// </summary>
         public override void Start()
         {
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
-
         }
 
-        public override void Update()
-        {
-            
-        }
-
+        /// <summary>
+        /// Method used to move the weapon with the position of the character
+        /// </summary>
+        /// <param name="position">characters position</param>
         public void Move(Vector2 position)
         {
             ProjectileSpawnPosition = position; 
 
-            //if (aimDirection.X == -1 && aimDirection.Y == -1)
-            //{
-            //    // top left 
-            //    spriteRenderer.Flip = SpriteEffects.None;
-            //    GameObject.Transform.Position = position + new Vector2(0, -30);
-            //    GameObject.Transform.Rotation = -0.6f;
-            //}
-            //else if (aimDirection.X == 1 && aimDirection.Y == -1)
-            //{
-            //    // top right 
-            //    spriteRenderer.Flip = SpriteEffects.None;
-            //    GameObject.Transform.Position = position + new Vector2(0, -30);
-            //    GameObject.Transform.Rotation = 0.6f;
-            //}
-            //else if (aimDirection.X == -1 && aimDirection.Y == 1)
-            //{
-            //    // bottom left 
-            //    spriteRenderer.Flip = SpriteEffects.None;
-            //    GameObject.Transform.Position = position + new Vector2(0, -30);
-            //    GameObject.Transform.Rotation = -5.6f;
-            //}
-            //else if (aimDirection.X == 1 && aimDirection.Y == 1)
-            //{
-            //    // bottom right 
-            //    spriteRenderer.Flip = SpriteEffects.None;
-            //    GameObject.Transform.Position = position + new Vector2(0, -30);
-            //    GameObject.Transform.Rotation = -10.6f;
-            //}
-            //else
             if (aimDirection.Y == -1)
             {
                 // top 
@@ -110,9 +99,15 @@ namespace LazerTag.ComponentPattern
 
         }
 
+
+        /// <summary>
+        /// method used to determine which way the weapon is aiming
+        /// </summary>
+        /// <param name="aimDirection">the direction it is aiming</param>
         public void Aim(Vector2 aimDirection)
         {
             this.aimDirection = aimDirection;
         }
+        #endregion
     }
 }

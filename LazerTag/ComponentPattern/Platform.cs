@@ -19,23 +19,30 @@ namespace LazerTag.ComponentPattern
         private int platformID;
         #endregion
 
+        #region constructor
         /// <summary>
-        /// constructor, gets the positon of the platform 
+        /// constructor, gets the positon and ID of the platform 
         /// </summary>
-        /// <param name="position">the placement of the platform</param>
+        /// <param name="position">position of the platform</param>
+        /// <param name="platformID">ID of the platform</param>
         public Platform(Vector2 position, int platformID)
         {
             this.position = position;
             this.platformID = platformID;
         }
+        #endregion
 
         #region methods 
+        /// <summary>
+        /// Method that runs as the first thing
+        /// </summary>
         public override void Awake()
         {
-            // set the sprite for the platform 
+            
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
-            if(platformID == 1)
+            // set the sprite for the platform based on ID
+            if (platformID == 1)
             {
                 spriteRenderer.SetSprite("Platforms\\Dirt");
             }

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag
 {
+    /// <summary>
+    /// class for Transform which every gameobject gets
+    /// </summary>
     public class Transform
     {
         #region properties

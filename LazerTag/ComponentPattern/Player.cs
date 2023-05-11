@@ -11,16 +11,36 @@ namespace LazerTag.ComponentPattern
 {
     public class Player : Component
     {
+        #region fields
         private UIRenderer uiRenderer;
+        #endregion
 
         #region properties
+        /// <summary>
+        /// property for getting and setting the PlayerIndex
+        /// </summary>
         public PlayerIndex Type { get; set; }
+
+        /// <summary>
+        /// property for getting and setting the Players Score
+        /// </summary>
         public int Score { get; set; }
+
+        /// <summary>
+        /// property for getting and setting the Players Life
+        /// </summary>
         public int Life { get; set; }
+
+        /// <summary>
+        /// property for getting and setting the Players Character
+        /// </summary>
         public GameObject Character { get; set; }
         #endregion
 
         #region methods
+        /// <summary>
+        /// Method that runs as the first thing
+        /// </summary>
         public override void Awake()
         {
             Life = 4;
@@ -32,10 +52,9 @@ namespace LazerTag.ComponentPattern
             uiRenderer.SetScoreText(Score);
         }
 
-        public override void Start()
-        {
-        }
-
+        /// <summary>
+        /// method which runs every frame
+        /// </summary>
         public override void Update()
         {
             if(Character == null && Life > 0)
@@ -60,6 +79,9 @@ namespace LazerTag.ComponentPattern
 
         }
 
+        /// <summary>
+        /// method used for spawning a character
+        /// </summary>
         public void SpawnCharacter()
         {
             Character = CharacterFactory.Instance.Create(Type);
@@ -67,6 +89,9 @@ namespace LazerTag.ComponentPattern
             GameWorld.Instance.Instantiate(Character);
         }
 
+        /// <summary>
+        /// method used for removing a character
+        /// </summary>
         public void RemoveCharacter()
         {
             Life--; 

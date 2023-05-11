@@ -31,6 +31,9 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         public float Scale { get; set; }
 
+        /// <summary>
+        /// property for getting and setting the spriteeffects
+        /// </summary>
         public SpriteEffects Flip { get; set; }
         #endregion
 

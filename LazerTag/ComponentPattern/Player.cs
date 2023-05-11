@@ -82,7 +82,7 @@ namespace LazerTag.ComponentPattern
         /// <summary>
         /// method used for spawning a character
         /// </summary>
-        public void SpawnCharacter()
+        private void SpawnCharacter()
         {
             Character = CharacterFactory.Instance.Create(Type);
 

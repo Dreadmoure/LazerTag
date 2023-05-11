@@ -19,7 +19,10 @@ namespace LazerTag.ComponentPattern
     {
         #region fields
         private SpriteRenderer spriteRenderer;
+        private Collider collider; 
         private Animator animator;
+
+        private Vector2 spriteSize; 
 
         private float speed;
         private bool canShoot;
@@ -56,6 +59,9 @@ namespace LazerTag.ComponentPattern
         public override void Start()
         {
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
+
+            spriteSize = new Vector2(spriteRenderer.Sprite.Width, spriteRenderer.Sprite.Height);
+
             animator = GameObject.GetComponent<Animator>() as Animator;
             AmmoCount = 5;
             speed = 250;
@@ -73,6 +79,15 @@ namespace LazerTag.ComponentPattern
             CharacterDirection = Direction.Right;
 
             SpawnWeapon();
+
+            // set CollisionBox 
+            collider = GameObject.GetComponent<Collider>() as Collider;
+            collider.CollisionBox = new Rectangle(
+                                                  (int)(GameObject.Transform.Position.X - spriteSize.X / 2),
+                                                  (int)(GameObject.Transform.Position.Y - spriteSize.Y / 2),
+                                                  (int)spriteSize.X,
+                                                  (int)spriteSize.Y
+                                                  );
         }
 
         public override void Update()
@@ -131,6 +146,23 @@ namespace LazerTag.ComponentPattern
             shootTimer += GameWorld.DeltaTime;
             iframeTimer += GameWorld.DeltaTime;
 
+
+            // update CollisionBox 
+            if(collider.CollisionBox.X != GameObject.Transform.Position.X + spriteRenderer.Sprite.Width / 2 ||
+               collider.CollisionBox.Y != GameObject.Transform.Position.Y + spriteRenderer.Sprite.Height / 2)
+            {
+                UpdateCollisionBox(); 
+            }
+        }
+
+        private void UpdateCollisionBox()
+        {
+            collider.CollisionBox = new Rectangle(
+                                                  (int)(GameObject.Transform.Position.X - spriteSize.X / 2),
+                                                  (int)(GameObject.Transform.Position.Y - spriteSize.Y / 2),
+                                                  (int)spriteSize.X,
+                                                  (int)spriteSize.Y
+                                                  );
         }
 
         public void Move(Vector2 velocity)
@@ -264,6 +296,7 @@ namespace LazerTag.ComponentPattern
                     // set character to be on top of the platform, so it does not fall through 
                     GameObject.Transform.Position = new Vector2(GameObject.Transform.Position.X, 
                                                                 other.Transform.Position.Y - (otherSpriteRenderer.Origin.Y + spriteRenderer.Origin.Y));
+                    UpdateCollisionBox();
                 }
             }
             if (gameEvent is BottomCollisionEvent)
@@ -281,6 +314,7 @@ namespace LazerTag.ComponentPattern
                     // make sure character can not get up through platform 
                     GameObject.Transform.Position = new Vector2(GameObject.Transform.Position.X,
                                                                 other.Transform.Position.Y + (otherSpriteRenderer.Origin.Y + spriteRenderer.Origin.Y));
+                    UpdateCollisionBox();
                 }
             }
             if (gameEvent is LeftCollisionEvent)
@@ -295,6 +329,7 @@ namespace LazerTag.ComponentPattern
                     // make sure character can not move right into platform 
                     GameObject.Transform.Position = new Vector2(other.Transform.Position.X - (otherSpriteRenderer.Origin.X + spriteRenderer.Origin.X),
                                                                 GameObject.Transform.Position.Y);
+                    UpdateCollisionBox();
                 }
             }
             if (gameEvent is RightCollisionEvent)
@@ -309,6 +344,7 @@ namespace LazerTag.ComponentPattern
                     // make sure character can not move left into platform 
                     GameObject.Transform.Position = new Vector2(other.Transform.Position.X + (otherSpriteRenderer.Origin.X + spriteRenderer.Origin.X),
                                                                 GameObject.Transform.Position.Y);
+                    UpdateCollisionBox();
                 }
             }
         }

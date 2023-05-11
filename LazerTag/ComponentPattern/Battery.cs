@@ -8,7 +8,7 @@ namespace LazerTag.ComponentPattern
 {
     public class Battery : PickUp
     {
-        private SpriteRenderer spriteRenderer;
+        //private SpriteRenderer spriteRenderer;
 
         public override void Start()
         {
@@ -17,11 +17,13 @@ namespace LazerTag.ComponentPattern
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.5f;
             GameObject.Tag = "Battery";
+
+            base.Start(); 
         }
 
         public override void Update()
         {
-            
+            //base.Update(); 
         }
     }
 }

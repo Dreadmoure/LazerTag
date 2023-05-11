@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CreationalPattern
 {
+    /// <summary>
+    /// enum for the pickup types
+    /// </summary>
     public enum PickUpType { Battery }
 
     public class PickUpFactory : Factory
@@ -27,13 +30,24 @@ namespace LazerTag.CreationalPattern
         }
         #endregion
 
+        #region field
         private GameObject batteryPrototype;
+        #endregion
 
+        #region constructor
+        /// <summary>
+        /// private constructor for PickUpFactory
+        /// </summary>
         private PickUpFactory()
         {
             CreateBatteryPrototype();
         }
+        #endregion
 
+        #region methods
+        /// <summary>
+        /// Method for 
+        /// </summary>
         private void CreateBatteryPrototype()
         {
             batteryPrototype = new GameObject();
@@ -42,6 +56,11 @@ namespace LazerTag.CreationalPattern
             batteryPrototype.AddComponent(new Collider());
         }
 
+        /// <summary>
+        /// Method for creating a gameobject, by cloning it
+        /// </summary>
+        /// <param name="type">type</param>
+        /// <returns>GameObject</returns>
         public override GameObject Create(Enum type)
         {
             GameObject gameObject = new GameObject();
@@ -56,5 +75,6 @@ namespace LazerTag.CreationalPattern
 
             return gameObject;
         }
+        #endregion
     }
 }

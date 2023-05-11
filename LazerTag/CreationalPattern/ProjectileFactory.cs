@@ -8,12 +8,18 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CreationalPattern
 {
+    /// <summary>
+    /// enum for the direction of the projectile
+    /// </summary>
     public enum ProjectileDirection
     {
         Horizontal, 
         Vertical 
     }
 
+    /// <summary>
+    /// class for the ProjectileFactory which inherits from Factory
+    /// </summary>
     public class ProjectileFactory : Factory
     {
         #region singleton
@@ -31,15 +37,26 @@ namespace LazerTag.CreationalPattern
         }
         #endregion
 
+        #region fields
         private GameObject prototype1;
         private GameObject prototype2;
+        #endregion
 
+        #region constructor
+        /// <summary>
+        /// private constructor for ProjectileFactory
+        /// </summary>
         private ProjectileFactory()
         {
             CreatePrototype1();
             CreatePrototype2();
         }
+        #endregion
 
+        #region methods
+        /// <summary>
+        /// Method for creating prototype1
+        /// </summary>
         private void CreatePrototype1()
         {
             prototype1 = new GameObject();
@@ -53,6 +70,9 @@ namespace LazerTag.CreationalPattern
             spriteRenderer.LayerDepth = 0.50f;
         }
 
+        /// <summary>
+        /// Method for creating prototype2
+        /// </summary>
         private void CreatePrototype2()
         {
             prototype2 = new GameObject();
@@ -66,6 +86,11 @@ namespace LazerTag.CreationalPattern
             spriteRenderer.LayerDepth = 0.50f;
         }
 
+        /// <summary>
+        /// Method for creating a gameobject, by cloning it
+        /// </summary>
+        /// <param name="type">type</param>
+        /// <returns>GameObject</returns>
         public override GameObject Create(Enum type)
         {
             GameObject gameObject = new GameObject();
@@ -87,5 +112,6 @@ namespace LazerTag.CreationalPattern
 
             return gameObject;
         }
+        #endregion
     }
 }

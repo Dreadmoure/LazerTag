@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CreationalPattern
 {
+    /// <summary>
+    /// class for the WeaponFactory which inherits from Factory
+    /// </summary>
     public class WeaponFactory : Factory
     {
         #region singleton
@@ -25,13 +28,24 @@ namespace LazerTag.CreationalPattern
         }
         #endregion
 
+        #region fields
         private GameObject prototype1;
+        #endregion
 
+        #region constructor
+        /// <summary>
+        /// Private constructor for Weaponfactory
+        /// </summary>
         private WeaponFactory()
         {
             CreatePrototype1();
         }
+        #endregion
 
+        #region methods
+        /// <summary>
+        /// Method for making prototype1
+        /// </summary>
         private void CreatePrototype1()
         {
             prototype1 = new GameObject();
@@ -45,11 +59,17 @@ namespace LazerTag.CreationalPattern
             spriteRenderer.LayerDepth = 0.51f;
         }
 
+        /// <summary>
+        /// Method for creating a gameobject, by cloning it
+        /// </summary>
+        /// <param name="type">type</param>
+        /// <returns>GameObject</returns>
         public override GameObject Create(Enum type)
         {
             GameObject gameObject = (GameObject)prototype1.Clone();
 
             return gameObject;
         }
+        #endregion
     }
 }

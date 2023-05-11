@@ -54,15 +54,17 @@ namespace LazerTag.ComponentPattern
             // set the platforms position, depending on the sprite size 
             GameObject.Transform.Position = new Vector2(position.X * spriteRenderer.Sprite.Width, position.Y * spriteRenderer.Sprite.Height);
 
-
-            // set the CollisionBox 
-            Collider collider = GameObject.GetComponent<Collider>() as Collider;
-            collider.CollisionBox = new Rectangle(
-                                                  (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width/2), 
-                                                  (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2), 
-                                                  (int)spriteRenderer.Sprite.Width, 
-                                                  (int)spriteRenderer.Sprite.Height
-                                                  );
+            if (GameObject.GetComponent<Collider>() != null)
+            {
+                // set the CollisionBox 
+                Collider collider = GameObject.GetComponent<Collider>() as Collider;
+                collider.CollisionBox = new Rectangle(
+                                                      (int)(GameObject.Transform.Position.X - spriteRenderer.Sprite.Width / 2),
+                                                      (int)(GameObject.Transform.Position.Y - spriteRenderer.Sprite.Height / 2),
+                                                      (int)spriteRenderer.Sprite.Width,
+                                                      (int)spriteRenderer.Sprite.Height
+                                                      );
+            }
         }
         #endregion
     }

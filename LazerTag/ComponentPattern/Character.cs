@@ -41,6 +41,11 @@ namespace LazerTag.ComponentPattern
 
         #region properties
         /// <summary>
+        /// property for getting and setting the character index 
+        /// </summary>
+        public PlayerIndex CharacterIndex { get; set; }
+
+        /// <summary>
         /// property for getting, and privately setting, a weapon gameobject 
         /// </summary>
         public GameObject WeaponObject { get; private set; }
@@ -49,11 +54,6 @@ namespace LazerTag.ComponentPattern
         /// property for getting and setting the characters ammocount 
         /// </summary>
         public int AmmoCount { get; set; }
-
-        /// <summary>
-        /// property for getting and setting the characters id 
-        /// </summary>
-        public int CharacterId { get; set; }
 
         /// <summary>
         /// property for getting and setting whether a character is walking

@@ -22,6 +22,7 @@ namespace LazerTag.ComponentPattern
     {
         #region fields
         private SpriteRenderer spriteRenderer;
+        private InputHandler inputHandler;
         private Vector2 spriteSize;
         private Collider collider; 
         private Animator animator;
@@ -88,6 +89,8 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         public override void Start()
         {
+            inputHandler = new InputHandler();
+
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
             spriteSize = new Vector2(spriteRenderer.Sprite.Width, spriteRenderer.Sprite.Height);
@@ -125,7 +128,7 @@ namespace LazerTag.ComponentPattern
         public override void Update()
         {
             //handles input
-            InputHandler.Instance.Execute(this);
+            inputHandler.Execute(this);
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
 
             //walking animations

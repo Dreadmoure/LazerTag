@@ -149,7 +149,7 @@ namespace LazerTag.ComponentPattern
         private bool TouchBottomOf(Rectangle r1, Rectangle r2)
         {
             return (r1.Top <= r2.Bottom + 10 &&
-                    r1.Top >= r2.Bottom - 10 &&
+                    r1.Top >= r2.Bottom - 20 &&
                     r1.Right >= r2.Left + 7 &&
                     r1.Left <= r2.Right - 7);
         }
@@ -164,7 +164,7 @@ namespace LazerTag.ComponentPattern
         {
             return (r1.Right <= r2.Left + 7 &&
                     r1.Right >= r2.Left - 5 &&
-                    r1.Top <= r2.Bottom - 5 &&
+                    r1.Top <= r2.Bottom &&
                     r1.Bottom >= r2.Top + 5);
         }
 
@@ -178,7 +178,7 @@ namespace LazerTag.ComponentPattern
         {
             return (r1.Left >= r2.Right - 7 &&
                     r1.Left <= r2.Right + 5 &&
-                    r1.Top <= r2.Bottom - 5 &&
+                    r1.Top <= r2.Bottom &&
                     r1.Bottom >= r2.Top + 5);
         }
         #endregion

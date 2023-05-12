@@ -49,7 +49,7 @@ namespace LazerTag.CreationalPattern
             GameObject gameObject = new GameObject();
             
             Character character = gameObject.AddComponent(new Character()) as Character;
-            character.CharacterId = 1;
+            character.CharacterIndex = PlayerIndex.One;
 
             //add animator
             gameObject.AddComponent(new Animator());
@@ -93,7 +93,7 @@ namespace LazerTag.CreationalPattern
             GameObject gameObject = new GameObject();
 
             Character character = gameObject.AddComponent(new Character()) as Character;
-            character.CharacterId = 2;
+            character.CharacterIndex = PlayerIndex.Two;
 
             //add animator
             gameObject.AddComponent(new Animator());
@@ -137,7 +137,7 @@ namespace LazerTag.CreationalPattern
             GameObject gameObject = new GameObject();
 
             Character character = gameObject.AddComponent(new Character()) as Character;
-            character.CharacterId = 3;
+            character.CharacterIndex = PlayerIndex.Three;
 
             //add animator
             gameObject.AddComponent(new Animator());
@@ -181,7 +181,7 @@ namespace LazerTag.CreationalPattern
             GameObject gameObject = new GameObject();
 
             Character character = gameObject.AddComponent(new Character()) as Character;
-            character.CharacterId = 4;
+            character.CharacterIndex = PlayerIndex.Four;
 
             //add animator
             gameObject.AddComponent(new Animator());
@@ -244,7 +244,7 @@ namespace LazerTag.CreationalPattern
                     collider.LeftCollisionEvent.Attach(character);
                     collider.RightCollisionEvent.Attach(character);
 
-                    gameObject.Tag = type.ToString(); 
+                    gameObject.Tag = type.ToString();
                     break;
                 case PlayerIndex.Two:
                     gameObject = (GameObject)prototypes[1].Clone();
@@ -297,9 +297,6 @@ namespace LazerTag.CreationalPattern
 
             }
             return gameObject;
-
-
-            //use PlayerIndex enum as it is available
         }
         #endregion
     }

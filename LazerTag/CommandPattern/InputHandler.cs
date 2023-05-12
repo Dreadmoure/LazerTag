@@ -40,64 +40,16 @@ namespace LazerTag.CommandPattern
         /// <param name="character">the character the command should be executed on</param>
         public void Execute(Character character)
         {
-            if(character.CharacterId == 1)
+            //check the device for player one
+            GamePadCapabilities capabilities = GamePad.GetCapabilities(character.CharacterIndex);
+
+            //if there is a controller attached, handle it
+            if (capabilities.IsConnected)
             {
-                //check the device for player one
-                GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
+                //get the current state of Controller1
+                GamePadState padState = GamePad.GetState(character.CharacterIndex, GamePadDeadZone.IndependentAxes);
 
-                //if there is a controller attached, handle it
-                if (capabilities.IsConnected)
-                {
-                    //get the current state of Controller1
-                    GamePadState padState = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.IndependentAxes);
-
-                    ExecuteCommands(capabilities, padState, character);
-                }
-            }
-
-            if (character.CharacterId == 2)
-            {
-                //check the device for player two
-                GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.Two);
-
-                //if there is a controller attached, handle it
-                if (capabilities.IsConnected)
-                {
-                    //get the current state of Controller2
-                    GamePadState padState = GamePad.GetState(PlayerIndex.Two, GamePadDeadZone.IndependentAxes);
-
-                    ExecuteCommands(capabilities, padState, character);
-                }
-            }
-
-            if (character.CharacterId == 3)
-            {
-                //check the device for player two
-                GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.Three);
-
-                //if there is a controller attached, handle it
-                if (capabilities.IsConnected)
-                {
-                    //get the current state of Controller2
-                    GamePadState padState = GamePad.GetState(PlayerIndex.Three, GamePadDeadZone.IndependentAxes);
-
-                    ExecuteCommands(capabilities, padState, character);
-                }
-            }
-
-            if (character.CharacterId == 4)
-            {
-                //check the device for player two
-                GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.Four);
-
-                //if there is a controller attached, handle it
-                if (capabilities.IsConnected)
-                {
-                    //get the current state of Controller2
-                    GamePadState padState = GamePad.GetState(PlayerIndex.Four, GamePadDeadZone.IndependentAxes);
-
-                    ExecuteCommands(capabilities, padState, character);
-                }
+                ExecuteCommands(capabilities, padState, character);
             }
         }
 

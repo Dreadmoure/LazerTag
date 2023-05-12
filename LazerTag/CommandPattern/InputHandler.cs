@@ -14,28 +14,12 @@ namespace LazerTag.CommandPattern
 {
     public class InputHandler
     {
-        #region singleton
-        private static InputHandler instance;
-
-        public static InputHandler Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    instance = new InputHandler();
-                }
-                return instance;
-            }
-        }
-        #endregion
-
         private Dictionary<PadInfo, ICommand> padbinds = new Dictionary<PadInfo, ICommand>();
 
         /// <summary>
         /// constructor, used for setting the padbinds
         /// </summary>
-        private InputHandler()
+        public InputHandler()
         {
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickLeft), new MoveCommand(new Vector2(-1, 0)));
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickRight), new MoveCommand(new Vector2(1, 0)));
@@ -46,6 +30,8 @@ namespace LazerTag.CommandPattern
             padbinds.Add(new PadInfo(Buttons.RightThumbstickUp), new AimCommand(new Vector2(0, -1)));
             padbinds.Add(new PadInfo(Buttons.RightThumbstickDown), new AimCommand(new Vector2(0, 1)));
             padbinds.Add(new PadInfo(Buttons.RightTrigger), new ShootCommand());
+
+            
         }
 
         /// <summary>

@@ -17,7 +17,7 @@ namespace LazerTag.ComponentPattern
         public override void Start()
         {
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
-            spriteRenderer.SetSprite("PickUps\\PickUpBattery");
+            spriteRenderer.SetSprite("PickUps\\PickUpBatteryV2");
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.5f;
             GameObject.Tag = "Battery";

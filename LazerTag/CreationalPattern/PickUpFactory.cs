@@ -11,7 +11,7 @@ namespace LazerTag.CreationalPattern
     /// <summary>
     /// enum for the pickup types
     /// </summary>
-    public enum PickUpType { Battery, SpecialAmmo }
+    public enum PickUpType { Battery, SpecialAmmo, SolarUpgrade }
 
     public class PickUpFactory : Factory
     {
@@ -33,6 +33,7 @@ namespace LazerTag.CreationalPattern
         #region field
         private GameObject batteryPrototype;
         private GameObject specialAmmoPrototype;
+        private GameObject solarUpgradePrototype;
         #endregion
 
         #region constructor
@@ -43,6 +44,7 @@ namespace LazerTag.CreationalPattern
         {
             CreateBatteryPrototype();
             CreateSpecialAmmoPrototype();
+            CreateSolarUpgrade();
         }
         #endregion
 
@@ -58,12 +60,26 @@ namespace LazerTag.CreationalPattern
             batteryPrototype.AddComponent(new Collider());
         }
 
+        /// <summary>
+        /// Method for creating SpecialAmmoPrototype
+        /// </summary>
         private void CreateSpecialAmmoPrototype()
         {
             specialAmmoPrototype = new GameObject();
             specialAmmoPrototype.AddComponent(new SpecialAmmo());
             specialAmmoPrototype.AddComponent(new SpriteRenderer());
             specialAmmoPrototype.AddComponent(new Collider());
+        }
+
+        /// <summary>
+        /// Method for creating SolarUpgrade
+        /// </summary>
+        private void CreateSolarUpgrade()
+        {
+            solarUpgradePrototype = new GameObject();
+            solarUpgradePrototype.AddComponent(new SolarUpgrade());
+            solarUpgradePrototype.AddComponent(new SpriteRenderer());
+            solarUpgradePrototype.AddComponent(new Collider());
         }
 
         /// <summary>
@@ -84,6 +100,10 @@ namespace LazerTag.CreationalPattern
                 case PickUpType.SpecialAmmo:
                     gameObject = (GameObject)specialAmmoPrototype.Clone();
                     gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 4, GameWorld.ScreenSize.Y / 2);
+                    break;
+                case PickUpType.SolarUpgrade:
+                    gameObject = (GameObject)solarUpgradePrototype.Clone();
+                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 8, GameWorld.ScreenSize.Y / 2);
                     break;
             }
 

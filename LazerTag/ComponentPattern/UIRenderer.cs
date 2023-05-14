@@ -12,6 +12,9 @@ namespace LazerTag.ComponentPattern
     {
         #region fields
         private SpriteFont spriteFont;
+        private bool hasSolarUpgrade = false;
+        private Texture2D SolarUpgradeSprite;
+        private Vector2 SolarUpgradeSpritePos;
         #endregion
 
         #region properties
@@ -167,6 +170,32 @@ namespace LazerTag.ComponentPattern
             }
         }
 
+        public void SetSpecialAmmoSprite(Vector2 position)
+        {
+            float newPosX = position.X + 144;
+            float newPosY = position.Y - 5;
+
+            Vector2 newPos = new Vector2(newPosX, newPosY);
+
+            AmmoCountSpritePosition = newPos;
+
+            AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\SpecialAmmo");
+        }
+
+        public void SetSolarUpgradeSprite(bool hasSolarUpgrade, Vector2 position)
+        {
+            this.hasSolarUpgrade = hasSolarUpgrade;
+
+            float newPosX = position.X + 137;
+            float newPosY = position.Y - 10;
+
+            Vector2 newPos = new Vector2(newPosX, newPosY);
+
+            SolarUpgradeSpritePos = newPos;
+
+            SolarUpgradeSprite = GameWorld.Instance.Content.Load<Texture2D>("PickUps\\ChargeIcon");
+        }
+
 
         /// <summary>
         /// method for drawing a sprite to the screen
@@ -192,6 +221,11 @@ namespace LazerTag.ComponentPattern
             if (AmmoCountSprite != null)
             {
                 spriteBatch.Draw(AmmoCountSprite, AmmoCountSpritePosition, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth);
+            }
+
+            if (hasSolarUpgrade == true)
+            {
+                spriteBatch.Draw(SolarUpgradeSprite, SolarUpgradeSpritePos, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth + 0.01f);
             }
 
             //draw lifeText

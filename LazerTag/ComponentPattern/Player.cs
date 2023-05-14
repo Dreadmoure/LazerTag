@@ -65,7 +65,19 @@ namespace LazerTag.ComponentPattern
             if(Character != null)
             {
                 Character character = Character.GetComponent<Character>() as Character;
-                uiRenderer.SetAmmoCountSprite(character.AmmoCount, Character.Transform.Position);
+                
+                    uiRenderer.SetAmmoCountSprite(character.AmmoCount, Character.Transform.Position);
+
+                    if (character.HasSolarUpgrade)
+                    {
+                        uiRenderer.SetSolarUpgradeSprite(true, Character.Transform.Position);
+                    }
+                    if (character.HasSpecialAmmo)
+                    {
+                        uiRenderer.SetSpecialAmmoSprite(Character.Transform.Position);
+                    }
+
+                
             }
             else
             {

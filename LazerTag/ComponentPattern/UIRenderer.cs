@@ -88,7 +88,7 @@ namespace LazerTag.ComponentPattern
                 Scale = 1f;
             }
 
-            LayerDepth = 0.98f;
+            LayerDepth = 0.97f;
             spriteFont = GameWorld.Instance.Content.Load<SpriteFont>("Fonts\\LifeFont");
 
             // ammo counter 
@@ -133,65 +133,37 @@ namespace LazerTag.ComponentPattern
         /// <param name="position">the position it needs to be at</param>
         public void SetAmmoCountSprite(int ammoCount, Vector2 position)
         {
-            if(ammoCount == 5)
+            float newPosX = position.X + 144;
+            float newPosY = position.Y - 5;
+
+            Vector2 newPos = new Vector2(newPosX, newPosY);
+
+            AmmoCountSpritePosition = newPos;
+
+            if (ammoCount == 5)
             {
-                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount5");
-
-                float newPosX = position.X + 142;
-                float newPosY = position.Y - 5;
-
-                Vector2 newPos = new Vector2(newPosX, newPosY);
-
-                AmmoCountSpritePosition = newPos;
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount5v2");
             }
             else if(ammoCount == 4)
             {
-                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount4");
-
-                float newPosX = position.X + 147;
-                float newPosY = position.Y - 5;
-
-                Vector2 newPos = new Vector2(newPosX, newPosY);
-
-                AmmoCountSpritePosition = newPos;
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount4v2");
 
             }
             else if (ammoCount == 3)
             {
-                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount3");
-
-                float newPosX = position.X + 152;
-                float newPosY = position.Y - 5;
-
-                Vector2 newPos = new Vector2(newPosX, newPosY);
-
-                AmmoCountSpritePosition = newPos;
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount3v2");
             }
             else if (ammoCount == 2)
             {
-                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount2");
-
-                float newPosX = position.X + 157;
-                float newPosY = position.Y - 5;
-
-                Vector2 newPos = new Vector2(newPosX, newPosY);
-
-                AmmoCountSpritePosition = newPos;
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount2v2");
             }
             else if (ammoCount == 1)
             {
-                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount1");
-
-                float newPosX = position.X + 162;
-                float newPosY = position.Y - 5;
-
-                Vector2 newPos = new Vector2(newPosX, newPosY);
-
-                AmmoCountSpritePosition = newPos;
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount1v2");
             }
             else
             {
-                AmmoCountSprite = null;
+                AmmoCountSprite = GameWorld.Instance.Content.Load<Texture2D>("AmmoCounter\\AmmoCount0v2");
             }
         }
 

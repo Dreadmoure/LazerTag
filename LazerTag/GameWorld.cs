@@ -95,6 +95,7 @@ namespace LazerTag
             gameObjects.Add(playerDirector4.Construct());
 
             gameObjects.Add(PickUpFactory.Instance.Create(PickUpType.Battery));
+            gameObjects.Add(PickUpFactory.Instance.Create(PickUpType.SpecialAmmo));
 
             // call add platforms method 
             AddPlatforms(); 

@@ -56,7 +56,7 @@ namespace LazerTag.CreationalPattern
             spriteRenderer.SetSprite("Weapons\\Weapon1");
 
             spriteRenderer.Scale = 1;
-            spriteRenderer.LayerDepth = 0.51f;
+            spriteRenderer.LayerDepth = 0.98f;
         }
 
         /// <summary>

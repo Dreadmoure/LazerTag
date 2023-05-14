@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
-    /// <summary>
-    /// Battery is a subclass of PickUp 
-    /// </summary>
-    public class Battery : PickUp
+    public class SpecialAmmo : PickUp
     {
         /// <summary>
         /// first method to be run, when the object is first initialized in GameWorld 
@@ -17,13 +14,13 @@ namespace LazerTag.ComponentPattern
         public override void Start()
         {
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
-            spriteRenderer.SetSprite("PickUps\\PickUpBatteryV2");
+            spriteRenderer.SetSprite("PickUps\\SpecialAmmo");
             spriteRenderer.Scale = 1;
             spriteRenderer.LayerDepth = 0.5f;
-            GameObject.Tag = "Battery";
+            GameObject.Tag = "SpecialAmmo";
 
             // remember to run super class method Start 
-            base.Start(); 
+            base.Start();
         }
     }
 }

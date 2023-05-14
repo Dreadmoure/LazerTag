@@ -11,7 +11,7 @@ namespace LazerTag.CreationalPattern
     /// <summary>
     /// enum for the pickup types
     /// </summary>
-    public enum PickUpType { Battery }
+    public enum PickUpType { Battery, SpecialAmmo }
 
     public class PickUpFactory : Factory
     {
@@ -32,6 +32,7 @@ namespace LazerTag.CreationalPattern
 
         #region field
         private GameObject batteryPrototype;
+        private GameObject specialAmmoPrototype;
         #endregion
 
         #region constructor
@@ -41,12 +42,13 @@ namespace LazerTag.CreationalPattern
         private PickUpFactory()
         {
             CreateBatteryPrototype();
+            CreateSpecialAmmoPrototype();
         }
         #endregion
 
         #region methods
         /// <summary>
-        /// Method for 
+        /// Method for creating BatteryPrototype
         /// </summary>
         private void CreateBatteryPrototype()
         {
@@ -54,6 +56,14 @@ namespace LazerTag.CreationalPattern
             batteryPrototype.AddComponent(new Battery());
             batteryPrototype.AddComponent(new SpriteRenderer());
             batteryPrototype.AddComponent(new Collider());
+        }
+
+        private void CreateSpecialAmmoPrototype()
+        {
+            specialAmmoPrototype = new GameObject();
+            specialAmmoPrototype.AddComponent(new SpecialAmmo());
+            specialAmmoPrototype.AddComponent(new SpriteRenderer());
+            specialAmmoPrototype.AddComponent(new Collider());
         }
 
         /// <summary>
@@ -70,6 +80,10 @@ namespace LazerTag.CreationalPattern
                 case PickUpType.Battery:
                     gameObject = (GameObject)batteryPrototype.Clone();
                     gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X/2, GameWorld.ScreenSize.Y/2);
+                    break;
+                case PickUpType.SpecialAmmo:
+                    gameObject = (GameObject)specialAmmoPrototype.Clone();
+                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 4, GameWorld.ScreenSize.Y / 2);
                     break;
             }
 

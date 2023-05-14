@@ -37,7 +37,11 @@ namespace LazerTag.ComponentPattern
 
         // iframes 
         private float iframeTimer;
-        private float iframeTime; 
+        private float iframeTime;
+
+        private bool hasSpecialAmmo;
+        private float specialAmmoTimer;
+        private float specialAmmoTime;
         #endregion
 
         #region properties
@@ -97,13 +101,19 @@ namespace LazerTag.ComponentPattern
 
             animator = GameObject.GetComponent<Animator>() as Animator;
             AmmoCount = 5;
+            
             speed = 250;
 
             shootTime = 0.5f;
 
             // iframes 
             iframeTime = 0.7f;
-            iframeTimer = 0; 
+            iframeTimer = 0;
+
+            //special ammo
+            hasSpecialAmmo = false;
+            specialAmmoTime = 10;
+            specialAmmoTimer = 0;
 
             // set gravity, remember to multiply with speed 
             gravity = new Vector2(0, 0.9f) * speed;
@@ -175,8 +185,22 @@ namespace LazerTag.ComponentPattern
             shootTimer += GameWorld.DeltaTime;
             iframeTimer += GameWorld.DeltaTime;
 
+            
+            if(hasSpecialAmmo == true)
+            {
+                specialAmmoTimer += GameWorld.DeltaTime;
+
+                if (specialAmmoTimer > specialAmmoTime)
+                {
+                    hasSpecialAmmo = false;
+                }
+            }
+
+            
+
+
             // update CollisionBox 
-            if(collider.CollisionBox.X != GameObject.Transform.Position.X + spriteRenderer.Sprite.Width / 2 ||
+            if (collider.CollisionBox.X != GameObject.Transform.Position.X + spriteRenderer.Sprite.Width / 2 ||
                collider.CollisionBox.Y != GameObject.Transform.Position.Y + spriteRenderer.Sprite.Height / 2)
             {
                 UpdateCollisionBox(); 
@@ -258,8 +282,14 @@ namespace LazerTag.ComponentPattern
                     // instantiate projectile in GameWorld 
                     GameWorld.Instance.Instantiate(projectileObject);
 
-                    // decrease ammo, and reset timer 
-                    AmmoCount--;
+                    
+
+                    // decrease ammo, and reset timer
+                    if (hasSpecialAmmo == false)
+                    {
+                        AmmoCount--;
+                    }
+
                     shootTimer = 0; 
                 }
             }
@@ -325,6 +355,15 @@ namespace LazerTag.ComponentPattern
 
                         GameWorld.Instance.Destroy(other);
                     }
+                }
+                if (other.Tag == "SpecialAmmo")
+                {
+                    hasSpecialAmmo = true;
+                    AmmoCount = 5;
+                                      
+
+                    GameWorld.Instance.Destroy(other);     
+
                 }
             }
 

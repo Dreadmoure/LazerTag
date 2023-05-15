@@ -186,14 +186,18 @@ namespace LazerTag.ComponentPattern
         {
             this.hasSolarUpgrade = hasSolarUpgrade;
 
-            float newPosX = position.X + 137;
-            float newPosY = position.Y - 10;
+            if(hasSolarUpgrade == true)
+            {
+                float newPosX = position.X + 137;
+                float newPosY = position.Y - 10;
 
-            Vector2 newPos = new Vector2(newPosX, newPosY);
+                Vector2 newPos = new Vector2(newPosX, newPosY);
 
-            SolarUpgradeSpritePos = newPos;
+                SolarUpgradeSpritePos = newPos;
 
-            SolarUpgradeSprite = GameWorld.Instance.Content.Load<Texture2D>("PickUps\\ChargeIcon");
+                SolarUpgradeSprite = GameWorld.Instance.Content.Load<Texture2D>("PickUps\\ChargeIcon");
+            }
+            
         }
 
 

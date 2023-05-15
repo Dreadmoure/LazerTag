@@ -362,6 +362,9 @@ namespace LazerTag.ComponentPattern
                         Player otherPlayer = GameWorld.Instance.FindPlayerByTag(other.Tag);
                         otherPlayer.Score += 100;
 
+                        // if character hs solar upgrade, remove it 
+                        HasSolarUpgrade = false; 
+
                         // remove character from player 
                         Player player = GameWorld.Instance.FindPlayerByTag(GameObject.Tag);
                         player.RemoveCharacter();

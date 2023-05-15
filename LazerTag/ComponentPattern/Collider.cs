@@ -72,7 +72,7 @@ namespace LazerTag.ComponentPattern
         /// <param name="spriteBatch">SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            DrawRectangle(CollisionBox, spriteBatch);
+            //DrawRectangle(CollisionBox, spriteBatch);
         }
 
         /// <summary>

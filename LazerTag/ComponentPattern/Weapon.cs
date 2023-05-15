@@ -11,6 +11,15 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
+    /// <summary>
+    /// enum for the direction of the projectile
+    /// </summary>
+    public enum ProjectileDirection
+    {
+        Horizontal,
+        Vertical
+    }
+
     public class Weapon : Component
     {
         #region fields

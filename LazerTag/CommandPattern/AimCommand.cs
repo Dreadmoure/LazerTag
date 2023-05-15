@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LazerTag.CommandPattern
@@ -27,6 +28,12 @@ namespace LazerTag.CommandPattern
         /// <param name="character">the character the command should execute on</param>
         public void Execute(Character character)
         {
+            //ThreadCommand threadCommand = new ThreadCommand(character, aimDirection);
+
+            //Thread t = new Thread(threadCommand.ThreadWithParameter);
+            //t.IsBackground = true; 
+            //t.Start(); 
+
             character.Aim(aimDirection);
         }
     }

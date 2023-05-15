@@ -291,11 +291,11 @@ namespace LazerTag.ComponentPattern
 
                     if (weapon.ProjectileDirection == ProjectileDirection.Horizontal)
                     {
-                        projectileObject = ProjectileFactory.Instance.Create(ProjectileDirection.Horizontal);
+                        projectileObject = HorizontalProjectileFactory.Instance.Create(CharacterIndex);
                     }
                     else
                     {
-                        projectileObject = ProjectileFactory.Instance.Create(ProjectileDirection.Vertical);
+                        projectileObject = VerticalProjectileFactory.Instance.Create(CharacterIndex);
                     }
 
                     projectileObject.Tag = GameObject.Tag;

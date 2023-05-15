@@ -95,15 +95,12 @@ namespace LazerTag.CreationalPattern
             {
                 case PickUpType.Battery:
                     gameObject = (GameObject)batteryPrototype.Clone();
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X/2, GameWorld.ScreenSize.Y/2);
                     break;
                 case PickUpType.SpecialAmmo:
                     gameObject = (GameObject)specialAmmoPrototype.Clone();
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 4, GameWorld.ScreenSize.Y / 2);
                     break;
                 case PickUpType.SolarUpgrade:
                     gameObject = (GameObject)solarUpgradePrototype.Clone();
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 8, GameWorld.ScreenSize.Y / 2);
                     break;
             }
 

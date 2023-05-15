@@ -68,18 +68,12 @@ namespace LazerTag.ComponentPattern
                 
                 uiRenderer.SetAmmoCountSprite(character.AmmoCount, Character.Transform.Position);
 
-                if (character.HasSolarUpgrade)
-                {
-                    uiRenderer.SetSolarUpgradeSprite(character.HasSolarUpgrade, Character.Transform.Position);
-                }
+                uiRenderer.SetSolarUpgradeSprite(character.HasSolarUpgrade, Character.Transform.Position);
+
                 if (character.HasSpecialAmmo)
                 {
                     uiRenderer.SetSpecialAmmoSprite(Character.Transform.Position);
                 }
-
-                uiRenderer.SetSolarUpgradeSprite(character.HasSolarUpgrade, Character.Transform.Position);
-
-
             }
             else
             {
@@ -108,7 +102,11 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         public void RemoveCharacter()
         {
-            Life--; 
+            Life--;
+
+            Character character = Character.GetComponent<Character>() as Character;
+            uiRenderer.SetSolarUpgradeSprite(character.HasSolarUpgrade, Character.Transform.Position);
+
             Character = null; 
         }
         #endregion

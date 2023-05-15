@@ -13,7 +13,8 @@ namespace LazerTag.ComponentPattern
     public abstract class PickUp : Component
     {
         protected SpriteRenderer spriteRenderer; 
-        private Collider collider; 
+        private Collider collider;
+        private float removeTimer = 0;
 
         /// <summary>
         /// method run when first initialized 
@@ -28,6 +29,15 @@ namespace LazerTag.ComponentPattern
                                                   spriteRenderer.Sprite.Width,
                                                   spriteRenderer.Sprite.Height
                                                   );
+        }
+
+        public override void Update()
+        {
+            removeTimer += GameWorld.DeltaTime; 
+            if(removeTimer >= 15)
+            {
+                GameWorld.Instance.Destroy(GameObject);
+            }
         }
     }
 }

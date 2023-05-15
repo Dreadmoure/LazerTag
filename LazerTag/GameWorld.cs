@@ -257,7 +257,7 @@ namespace LazerTag
         /// <param name="gameTime"></param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue); //default backgroundcolor
+            GraphicsDevice.Clear(Color.DarkGray); //default backgroundcolor
 
             // TODO: Add your drawing code here
 

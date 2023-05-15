@@ -22,7 +22,7 @@ namespace LazerTag
         {
             get
             {
-                if(instance == null)
+                if (instance == null)
                 {
                     instance = new GameWorld();
                 }
@@ -41,7 +41,9 @@ namespace LazerTag
 
         private List<Vector2> pickupSpawnPos = new List<Vector2>();
         private float spawnTimer = 0;
-        private float spawnTime = 5; 
+        private float spawnTime = 5;
+
+        private Vector2[] previousPickupSpawnPos = new Vector2[3] { new Vector2(0,0), new Vector2(0, 0), new Vector2(0, 0) };
         #endregion
 
         #region properties
@@ -193,8 +195,31 @@ namespace LazerTag
             }
 
             // choose random position 
-            pickup.Transform.Position = pickupSpawnPos[random.Next(pickupSpawnPos.Count)];
+            while (previousPickupSpawnPos.Contains(pickup.Transform.Position))
+            {
+                pickup.Transform.Position = pickupSpawnPos[random.Next(pickupSpawnPos.Count)];
+            }
 
+            //add location to an array
+
+                if (previousPickupSpawnPos[0] != pickup.Transform.Position && previousPickupSpawnPos[0].X == 0 && previousPickupSpawnPos[0].Y == 0)
+                {
+                    previousPickupSpawnPos[0] = pickup.Transform.Position;
+                }
+                else if (previousPickupSpawnPos[1] != pickup.Transform.Position && previousPickupSpawnPos[1].X == 0 && previousPickupSpawnPos[1].Y == 0)
+                {
+                    previousPickupSpawnPos[1] = pickup.Transform.Position;
+                }
+                else if(previousPickupSpawnPos[2] != pickup.Transform.Position && previousPickupSpawnPos[2].X == 0 && previousPickupSpawnPos[2].Y == 0)
+                {
+                    previousPickupSpawnPos[2] = pickup.Transform.Position;
+                }
+                else
+                {
+                    Array.Clear(previousPickupSpawnPos);
+                }
+            
+            
             // add gameobject 
             Instantiate(pickup); 
         }

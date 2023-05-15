@@ -145,6 +145,18 @@
 /processorParam:TextureFormat=Color
 /build:AmmoCounter/AmmoCount5v2.png
 
+#begin AmmoCounter/SpecialAmmo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:AmmoCounter/SpecialAmmo.png
+
 #begin Characters/Blue/Idle/BlueIdle0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -824,6 +836,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/LifeFont.spritefont
 
+#begin PickUps/ChargeIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PickUps/ChargeIcon.png
+
 #begin PickUps/PickUpBattery.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -847,6 +871,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:PickUps/PickUpBatteryV2.png
+
+#begin PickUps/SolarUpgrade.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:PickUps/SolarUpgrade.png
 
 #begin PickUps/SpecialAmmo.png
 /importer:TextureImporter

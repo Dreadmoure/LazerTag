@@ -39,9 +39,11 @@ namespace LazerTag.ComponentPattern
         private float iframeTimer;
         private float iframeTime;
 
-        private bool hasSpecialAmmo;
         private float specialAmmoTimer;
         private float specialAmmoTime;
+
+        private float solarUpgradeTimer;
+        private float solarUpgradeTime;
         #endregion
 
         #region properties
@@ -69,6 +71,16 @@ namespace LazerTag.ComponentPattern
         /// property for getting and setting whether a character is jumping
         /// </summary>
         public bool IsJumping { get; set; } = false;
+
+        /// <summary>
+        /// property for getting and setting whether a character has the special ammo powerup
+        /// </summary>
+        public bool HasSpecialAmmo { get; set; } = false;
+
+        /// <summary>
+        /// property for getting and setting whether a character has the Solar upgrade
+        /// </summary>
+        public bool HasSolarUpgrade { get; set; } = false;
 
         /// <summary>
         /// property for getting and setting the direction the character is turning 
@@ -111,9 +123,13 @@ namespace LazerTag.ComponentPattern
             iframeTimer = 0;
 
             //special ammo
-            hasSpecialAmmo = false;
             specialAmmoTime = 10;
             specialAmmoTimer = 0;
+
+            //upgrade
+            //hasSolarUpgrade = false;
+            solarUpgradeTime = 3;
+            solarUpgradeTimer = 0;
 
             // set gravity, remember to multiply with speed 
             gravity = new Vector2(0, 0.9f) * speed;
@@ -186,17 +202,29 @@ namespace LazerTag.ComponentPattern
             iframeTimer += GameWorld.DeltaTime;
 
             
-            if(hasSpecialAmmo == true)
+            if(HasSpecialAmmo == true)
             {
                 specialAmmoTimer += GameWorld.DeltaTime;
 
                 if (specialAmmoTimer > specialAmmoTime)
                 {
-                    hasSpecialAmmo = false;
+                    HasSpecialAmmo = false;
                 }
             }
 
-            
+            if(HasSolarUpgrade == true)
+            {
+                solarUpgradeTimer += GameWorld.DeltaTime;
+
+                if(solarUpgradeTimer > solarUpgradeTime)
+                {
+                    if(AmmoCount < 5)
+                    {
+                        AmmoCount++;
+                    }
+                    solarUpgradeTimer = 0;
+                }
+            }
 
 
             // update CollisionBox 
@@ -285,7 +313,7 @@ namespace LazerTag.ComponentPattern
                     
 
                     // decrease ammo, and reset timer
-                    if (hasSpecialAmmo == false)
+                    if (HasSpecialAmmo == false)
                     {
                         AmmoCount--;
                     }
@@ -358,12 +386,18 @@ namespace LazerTag.ComponentPattern
                 }
                 if (other.Tag == "SpecialAmmo")
                 {
-                    hasSpecialAmmo = true;
+                    HasSpecialAmmo = true;
                     AmmoCount = 5;
                                       
 
                     GameWorld.Instance.Destroy(other);     
 
+                }
+                if(other.Tag == "SolarUpgrade")
+                {
+                    HasSolarUpgrade = true;
+
+                    GameWorld.Instance.Destroy(other);
                 }
             }
 

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace LazerTag
 {
@@ -235,8 +236,11 @@ namespace LazerTag
             spawnTimer += DeltaTime; 
             if(spawnTimer >= spawnTime)
             {
-                SpawnPickup();
-                spawnTimer = 0; 
+                spawnTimer = 0;
+
+                Thread t = new Thread(SpawnPickup);
+                t.IsBackground = true;
+                t.Start(); 
             }
 
             //calls update on all gameobjects

@@ -209,7 +209,9 @@ namespace LazerTag.ComponentPattern
                 if (specialAmmoTimer > specialAmmoTime)
                 {
                     HasSpecialAmmo = false;
+                    specialAmmoTimer = 0;
                 }
+                
             }
 
             if(HasSolarUpgrade == true)
@@ -384,6 +386,8 @@ namespace LazerTag.ComponentPattern
                     {
                         AmmoCount = 5;
 
+                        Battery pickUp = other.GetComponent<Battery>() as Battery;
+                        GameWorld.Instance.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
                         GameWorld.Instance.Destroy(other);
                     }
                 }
@@ -391,8 +395,9 @@ namespace LazerTag.ComponentPattern
                 {
                     HasSpecialAmmo = true;
                     AmmoCount = 5;
-                                      
 
+                    SpecialAmmo pickUp = other.GetComponent<SpecialAmmo>() as SpecialAmmo;
+                    GameWorld.Instance.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
                     GameWorld.Instance.Destroy(other);     
 
                 }
@@ -400,6 +405,8 @@ namespace LazerTag.ComponentPattern
                 {
                     HasSolarUpgrade = true;
 
+                    SolarUpgrade pickUp = other.GetComponent<SolarUpgrade>() as SolarUpgrade;
+                    GameWorld.Instance.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
                     GameWorld.Instance.Destroy(other);
                 }
             }

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 
 namespace LazerTag
 {
@@ -43,6 +44,7 @@ namespace LazerTag
         private float spawnTimer = 0;
         private float spawnTime = 5;
 
+        public bool[] isSpawnPosOccupied;
         private Vector2[] previousPickupSpawnPos = new Vector2[3] { new Vector2(0,0), new Vector2(0, 0), new Vector2(0, 0) };
         #endregion
 
@@ -171,12 +173,16 @@ namespace LazerTag
                     }
                 }
             }
+            //sets spawnoccupied array
+            isSpawnPosOccupied = new bool[pickupSpawnPos.Count];
+
         }
 
         private void SpawnPickup()
         {
             Random random = new Random();
             GameObject pickup = new GameObject();
+            PickUpType type;
 
             int r = random.Next(0, 100);
 
@@ -184,41 +190,49 @@ namespace LazerTag
             if (r >= 90)
             {
                 pickup = PickUpFactory.Instance.Create(PickUpType.SolarUpgrade);
+                type = PickUpType.SolarUpgrade;
             }
             else if (r >= 75)
             {
                 pickup = PickUpFactory.Instance.Create(PickUpType.SpecialAmmo);
+                type = PickUpType.SpecialAmmo;
             }
             else 
             {
                 pickup = PickUpFactory.Instance.Create(PickUpType.Battery);
+                type = PickUpType.Battery;
             }
 
-            // choose random position 
-            while (previousPickupSpawnPos.Contains(pickup.Transform.Position))
+            bool posNotFound = true;
+
+            while (posNotFound)
             {
-                pickup.Transform.Position = pickupSpawnPos[random.Next(pickupSpawnPos.Count)];
-            }
+                int randomNumber = random.Next(pickupSpawnPos.Count);
 
-            //add location to an array
+                if (!isSpawnPosOccupied[randomNumber])
+                {
+                    isSpawnPosOccupied[randomNumber] = true;
+                    pickup.Transform.Position = pickupSpawnPos[randomNumber];
 
-                if (previousPickupSpawnPos[0] != pickup.Transform.Position && previousPickupSpawnPos[0].X == 0 && previousPickupSpawnPos[0].Y == 0)
-                {
-                    previousPickupSpawnPos[0] = pickup.Transform.Position;
+                    if(type == PickUpType.SolarUpgrade)
+                    {
+                        SolarUpgrade p = pickup.GetComponent<SolarUpgrade>() as SolarUpgrade;
+                        p.OccupiedPos = randomNumber;
+                    }
+                    if (type == PickUpType.SpecialAmmo)
+                    {
+                        SpecialAmmo p = pickup.GetComponent<SpecialAmmo>() as SpecialAmmo;
+                        p.OccupiedPos = randomNumber;
+                    }
+                    if (type == PickUpType.Battery)
+                    {
+                        Battery p = pickup.GetComponent<Battery>() as Battery;
+                        p.OccupiedPos = randomNumber;
+                    }
+                    
+                    posNotFound = false;
                 }
-                else if (previousPickupSpawnPos[1] != pickup.Transform.Position && previousPickupSpawnPos[1].X == 0 && previousPickupSpawnPos[1].Y == 0)
-                {
-                    previousPickupSpawnPos[1] = pickup.Transform.Position;
-                }
-                else if(previousPickupSpawnPos[2] != pickup.Transform.Position && previousPickupSpawnPos[2].X == 0 && previousPickupSpawnPos[2].Y == 0)
-                {
-                    previousPickupSpawnPos[2] = pickup.Transform.Position;
-                }
-                else
-                {
-                    Array.Clear(previousPickupSpawnPos);
-                }
-            
+            }            
             
             // add gameobject 
             Instantiate(pickup); 

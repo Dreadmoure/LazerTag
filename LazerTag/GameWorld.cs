@@ -46,10 +46,17 @@ namespace LazerTag
         private float spawnTime = 5;
 
         public bool[] isSpawnPosOccupied;
-        private Vector2[] previousPickupSpawnPos = new Vector2[3] { new Vector2(0,0), new Vector2(0, 0), new Vector2(0, 0) };
+
+        private string gameOverString = "Press \"R\" for restart";
+        private SpriteFont gameOverFont;
         #endregion
 
         #region properties
+        /// <summary>
+        /// propertry for getting and setting the amount of players in the game
+        /// </summary>
+        public int PlayerCount { get; set; } = 4;
+
         /// <summary>
         /// property for getting the elapsed gametime
         /// </summary>
@@ -119,6 +126,8 @@ namespace LazerTag
                     Colliders.Add(collider);
                 }
             }
+
+            gameOverFont = Content.Load<SpriteFont>("Fonts\\GameOverFont");
 
             base.Initialize();
         }
@@ -288,6 +297,63 @@ namespace LazerTag
                 gameObjects[i].Update();
             }
 
+            if(PlayerCount <= 1)
+            {
+                KeyboardState keyboard = Keyboard.GetState();
+
+
+                if (keyboard.IsKeyDown(Keys.R))
+                {
+                    Player playerOne = FindPlayerByTag(PlayerIndex.One.ToString());
+                    Player playerTwo = FindPlayerByTag(PlayerIndex.Two.ToString());
+                    Player playerThree = FindPlayerByTag(PlayerIndex.Three.ToString());
+                    Player playerFour = FindPlayerByTag(PlayerIndex.Four.ToString());
+
+                    //kill remaining player
+                    if (playerOne.Character != null)
+                    {
+                        playerOne.Life = 0;
+                        Character character = playerOne.Character.GetComponent<Character>() as Character;
+                        character.RemoveCharacter();
+
+                    }
+                    if (playerTwo.Character != null)
+                    {
+                        playerTwo.Life = 0;
+                        Character character = playerTwo.Character.GetComponent<Character>() as Character;
+                        character.RemoveCharacter();
+                    }
+                    if (playerThree.Character != null)
+                    {
+                        playerThree.Life = 0;
+                        Character character = playerThree.Character.GetComponent<Character>() as Character;
+                        character.RemoveCharacter();
+                    }
+                    if (playerFour.Character != null)
+                    {
+                        playerFour.Life = 0;
+                        Character character = playerFour.Character.GetComponent<Character>() as Character;
+                        character.RemoveCharacter();
+                    }
+
+
+                    //reset life and scores
+                    playerOne.Life = 4;
+                    playerOne.Score = 0;
+
+                    playerTwo.Life = 4;
+                    playerTwo.Score = 0;
+                                        
+                    playerThree.Life = 4;
+                    playerThree.Score = 0;
+                                        
+                    playerFour.Life = 4;
+                    playerFour.Score = 0;
+
+                    PlayerCount = 4;
+                }
+            }
+
             base.Update(gameTime);
 
             //calls cleanup
@@ -311,6 +377,14 @@ namespace LazerTag
             for (int i = 0; i < gameObjects.Count; i++)
             {
                 gameObjects[i].Draw(_spriteBatch);
+            }
+
+            if(PlayerCount <= 1)
+            {
+                float gameOverStringX = gameOverFont.MeasureString(gameOverString).X/2;
+                float gameOverStringY = gameOverFont.MeasureString(gameOverString).Y/2;
+
+                _spriteBatch.DrawString(gameOverFont, gameOverString, new Vector2(ScreenSize.X / 2, ScreenSize.Y / 2), Color.White, 0f, new Vector2(gameOverStringX, gameOverStringY), 1f, SpriteEffects.None, 1f);
             }
 
             //we stop drawing

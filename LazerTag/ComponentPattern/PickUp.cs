@@ -17,6 +17,11 @@ namespace LazerTag.ComponentPattern
         private float removeTimer = 0;
 
         /// <summary>
+        /// property used to set or get the occupied position in the pickuparray
+        /// </summary>
+        public int OccupiedPos { get; set; } 
+
+        /// <summary>
         /// method run when first initialized 
         /// </summary>
         public override void Start()
@@ -36,6 +41,7 @@ namespace LazerTag.ComponentPattern
             removeTimer += GameWorld.DeltaTime; 
             if(removeTimer >= 15)
             {
+                GameWorld.Instance.isSpawnPosOccupied[OccupiedPos] = false;
                 GameWorld.Instance.Destroy(GameObject);
             }
         }

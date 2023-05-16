@@ -520,6 +520,22 @@ namespace LazerTag.ComponentPattern
 
             GameWorld.Instance.Instantiate(WeaponObject);
         }
+
+        public void RemoveCharacter()
+        {
+            // if character hs solar upgrade, remove it 
+            HasSolarUpgrade = false;
+
+            // remove character from player 
+            Player player = GameWorld.Instance.FindPlayerByTag(GameObject.Tag);
+            player.RemoveCharacter();
+
+            // destroy weapon 
+            GameWorld.Instance.Destroy(WeaponObject);
+
+            // destroy self lastly
+            GameWorld.Instance.Destroy(GameObject);
+        }
         #endregion
     }
 }

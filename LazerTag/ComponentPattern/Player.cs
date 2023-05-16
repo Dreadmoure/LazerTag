@@ -16,6 +16,7 @@ namespace LazerTag.ComponentPattern
         #endregion
 
         #region properties
+        
         /// <summary>
         /// property for getting and setting the PlayerIndex
         /// </summary>
@@ -57,6 +58,7 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         public override void Update()
         {
+            
             if(Character == null && Life > 0)
             {
                 SpawnCharacter();
@@ -103,6 +105,11 @@ namespace LazerTag.ComponentPattern
         public void RemoveCharacter()
         {
             Life--;
+
+            if (Life <= 0)
+            {
+                GameWorld.Instance.PlayerCount--;
+            }
 
             Character character = Character.GetComponent<Character>() as Character;
             uiRenderer.SetSolarUpgradeSprite(character.HasSolarUpgrade, Character.Transform.Position);

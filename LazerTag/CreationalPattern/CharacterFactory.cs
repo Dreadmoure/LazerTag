@@ -249,7 +249,7 @@ namespace LazerTag.CreationalPattern
                 case PlayerIndex.Two:
                     gameObject = (GameObject)prototypes[1].Clone();
 
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 1.09f, GameWorld.ScreenSize.Y / 1.2f);
+                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 1.09f, GameWorld.ScreenSize.Y / 1.16f);
 
                     character = gameObject.GetComponent<Character>() as Character;
                     collider = gameObject.GetComponent<Collider>() as Collider;
@@ -281,7 +281,7 @@ namespace LazerTag.CreationalPattern
                 case PlayerIndex.Four:
                     gameObject = (GameObject)prototypes[3].Clone();
 
-                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 11, GameWorld.ScreenSize.Y / 1.2f);
+                    gameObject.Transform.Position = new Vector2(GameWorld.ScreenSize.X / 11, GameWorld.ScreenSize.Y / 1.16f);
 
                     character = gameObject.GetComponent<Character>() as Character;
                     collider = gameObject.GetComponent<Collider>() as Collider;

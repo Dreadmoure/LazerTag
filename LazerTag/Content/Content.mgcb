@@ -829,6 +829,13 @@
 /processorParam:TextureFormat=Color
 /build:Characters/Red/Walk/RedWalk7.png
 
+#begin Fonts/GameOverFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/GameOverFont.spritefont
+
 #begin Fonts/LifeFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

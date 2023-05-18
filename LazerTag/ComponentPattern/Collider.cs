@@ -1,4 +1,5 @@
-﻿using LazerTag.ObserverPattern;
+﻿using LazerTag.MenuStates;
+using LazerTag.ObserverPattern;
 using LazerTag.ObserverPattern.PlatformCollisionEvents;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -98,7 +99,7 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         private void CheckCollision()
         {
-            foreach (Collider other in GameWorld.Instance.Colliders)
+            foreach (Collider other in GameState.Colliders)
             {
                 if (other != this && other.CollisionBox.Intersects(CollisionBox))
                 {

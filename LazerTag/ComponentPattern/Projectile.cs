@@ -1,4 +1,5 @@
-﻿using LazerTag.ObserverPattern;
+﻿using LazerTag.MenuStates;
+using LazerTag.ObserverPattern;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -76,7 +77,7 @@ namespace LazerTag.ComponentPattern
             }
 
             velocity *= speed;
-            GameObject.Transform.Translate(velocity * GameWorld.DeltaTime);
+            GameObject.Transform.Translate(velocity * GameState.DeltaTime);
         }
 
         /// <summary>
@@ -93,7 +94,7 @@ namespace LazerTag.ComponentPattern
                 if(other.Tag == "Platform")
                 {
                     // remove self 
-                    GameWorld.Instance.Destroy(GameObject);
+                    GameState.Destroy(GameObject);
                 }
             }
         }

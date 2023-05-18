@@ -1,4 +1,5 @@
 ﻿using LazerTag.CreationalPattern;
+using LazerTag.MenuStates;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -96,7 +97,7 @@ namespace LazerTag.ComponentPattern
         {
             Character = CharacterFactory.Instance.Create(Type);
 
-            GameWorld.Instance.Instantiate(Character);
+            GameState.Instantiate(Character);
         }
 
         /// <summary>
@@ -108,7 +109,7 @@ namespace LazerTag.ComponentPattern
 
             if (Life <= 0)
             {
-                GameWorld.Instance.PlayerCount--;
+                GameState.PlayerCount--;
             }
 
             Character character = Character.GetComponent<Character>() as Character;

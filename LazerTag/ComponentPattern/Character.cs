@@ -1,5 +1,6 @@
 ﻿using LazerTag.CommandPattern;
 using LazerTag.CreationalPattern;
+using LazerTag.MenuStates;
 using LazerTag.ObserverPattern;
 using LazerTag.ObserverPattern.PlatformCollisionEvents;
 using Microsoft.Xna.Framework;
@@ -180,16 +181,16 @@ namespace LazerTag.ComponentPattern
             }
 
             // make character fall using gravity 
-            GameObject.Transform.Translate(gravity * GameWorld.DeltaTime);
+            GameObject.Transform.Translate(gravity * GameState.DeltaTime);
 
             // when character has jumped 
             if (IsJumping)
             {
-                jumpTime += GameWorld.DeltaTime; 
+                jumpTime += GameState.DeltaTime; 
                 if (jumpTime <= 0.185f)
                 {
                     Vector2 jumpVelocity = new Vector2(0, -5) * speed;
-                    GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
+                    GameObject.Transform.Translate(jumpVelocity * GameState.DeltaTime);
                 }
             }
 
@@ -198,13 +199,13 @@ namespace LazerTag.ComponentPattern
             weapon.Move(GameObject.Transform.Position);
             
             // update timers 
-            shootTimer += GameWorld.DeltaTime;
-            iframeTimer += GameWorld.DeltaTime;
+            shootTimer += GameState.DeltaTime;
+            iframeTimer += GameState.DeltaTime;
 
             
             if(HasSpecialAmmo == true)
             {
-                specialAmmoTimer += GameWorld.DeltaTime;
+                specialAmmoTimer += GameState.DeltaTime;
 
                 if (specialAmmoTimer > specialAmmoTime)
                 {
@@ -216,7 +217,7 @@ namespace LazerTag.ComponentPattern
 
             if(HasSolarUpgrade == true)
             {
-                solarUpgradeTimer += GameWorld.DeltaTime;
+                solarUpgradeTimer += GameState.DeltaTime;
 
                 if(solarUpgradeTimer > solarUpgradeTime)
                 {
@@ -262,7 +263,7 @@ namespace LazerTag.ComponentPattern
             }
 
             velocity *= speed;
-            GameObject.Transform.Translate(velocity * GameWorld.DeltaTime);
+            GameObject.Transform.Translate(velocity * GameState.DeltaTime);
         }
 
         /// <summary>
@@ -310,7 +311,7 @@ namespace LazerTag.ComponentPattern
                     projectile.Velocity = weapon.ProjectileVelocity;
 
                     // instantiate projectile in GameWorld 
-                    GameWorld.Instance.Instantiate(projectileObject);
+                    GameState.Instantiate(projectileObject);
 
                     
 
@@ -355,27 +356,27 @@ namespace LazerTag.ComponentPattern
                 if(other.GetComponent<Projectile>() != null && other.Tag != GameObject.Tag)
                 {
                     // destroy projectile 
-                    GameWorld.Instance.Destroy(other);
+                    GameState.Destroy(other);
 
                     // only destroy self, when iframe is over 
                     if (iframeTimer > iframeTime)
                     {
                         // update other players score 
-                        Player otherPlayer = GameWorld.Instance.FindPlayerByTag(other.Tag);
+                        Player otherPlayer = GameState.FindPlayerByTag(other.Tag);
                         otherPlayer.Score += 100;
 
                         // if character hs solar upgrade, remove it 
                         HasSolarUpgrade = false; 
 
                         // remove character from player 
-                        Player player = GameWorld.Instance.FindPlayerByTag(GameObject.Tag);
+                        Player player = GameState.FindPlayerByTag(GameObject.Tag);
                         player.RemoveCharacter();
 
                         // destroy weapon 
-                        GameWorld.Instance.Destroy(WeaponObject);
+                        GameState.Destroy(WeaponObject);
 
                         // destroy self lastly
-                        GameWorld.Instance.Destroy(GameObject);
+                        GameState.Destroy(GameObject);
                     }
                 }
 
@@ -387,8 +388,8 @@ namespace LazerTag.ComponentPattern
                         AmmoCount = 5;
 
                         Battery pickUp = other.GetComponent<Battery>() as Battery;
-                        GameWorld.Instance.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
-                        GameWorld.Instance.Destroy(other);
+                        GameState.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
+                        GameState.Destroy(other);
                     }
                 }
                 if (other.Tag == "SpecialAmmo")
@@ -397,8 +398,8 @@ namespace LazerTag.ComponentPattern
                     AmmoCount = 5;
 
                     SpecialAmmo pickUp = other.GetComponent<SpecialAmmo>() as SpecialAmmo;
-                    GameWorld.Instance.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
-                    GameWorld.Instance.Destroy(other);     
+                    GameState.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
+                    GameState.Destroy(other);     
 
                 }
                 if(other.Tag == "SolarUpgrade")
@@ -406,8 +407,8 @@ namespace LazerTag.ComponentPattern
                     HasSolarUpgrade = true;
 
                     SolarUpgrade pickUp = other.GetComponent<SolarUpgrade>() as SolarUpgrade;
-                    GameWorld.Instance.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
-                    GameWorld.Instance.Destroy(other);
+                    GameState.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
+                    GameState.Destroy(other);
                 }
             }
 
@@ -518,7 +519,7 @@ namespace LazerTag.ComponentPattern
 
             WeaponObject.Transform.Position = GameObject.Transform.Position;
 
-            GameWorld.Instance.Instantiate(WeaponObject);
+            GameState.Instantiate(WeaponObject);
         }
 
         public void RemoveCharacter()
@@ -527,14 +528,14 @@ namespace LazerTag.ComponentPattern
             HasSolarUpgrade = false;
 
             // remove character from player 
-            Player player = GameWorld.Instance.FindPlayerByTag(GameObject.Tag);
+            Player player = GameState.FindPlayerByTag(GameObject.Tag);
             player.RemoveCharacter();
 
             // destroy weapon 
-            GameWorld.Instance.Destroy(WeaponObject);
+            GameState.Destroy(WeaponObject);
 
             // destroy self lastly
-            GameWorld.Instance.Destroy(GameObject);
+            GameState.Destroy(GameObject);
         }
         #endregion
     }

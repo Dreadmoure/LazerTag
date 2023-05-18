@@ -25,6 +25,7 @@ namespace LazerTag.ComponentPattern
         #region fields
         private SpriteRenderer spriteRenderer;
         private Vector2 aimDirection;
+        private Vector2 position; 
         #endregion
 
         #region properties
@@ -56,55 +57,76 @@ namespace LazerTag.ComponentPattern
         /// <summary>
         /// Method used to move the weapon with the position of the character
         /// </summary>
-        /// <param name="position">characters position</param>
-        public void Move(Vector2 position)
+        /// <param name="characterPosition">characters position</param>
+        public void Move(Vector2 characterPosition)
         {
-            ProjectileSpawnPosition = position; 
+            ProjectileSpawnPosition = characterPosition;
+            this.position = characterPosition; 
 
-            if (aimDirection.Y == -1)
-            {
-                // top 
-                spriteRenderer.Flip = SpriteEffects.None;
-                GameObject.Transform.Position = position + new Vector2(0, -30);
-                GameObject.Transform.Rotation = -1.6f;
+            int displacement = 30;
 
-                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35); 
-                ProjectileVelocity = new Vector2(0, -1);
-                ProjectileDirection = ProjectileDirection.Vertical; 
-            }
-            else if (aimDirection.Y == 1)
-            {
-                // bottom 
-                spriteRenderer.Flip = SpriteEffects.None;
-                GameObject.Transform.Position = position + new Vector2(0, 30);
-                GameObject.Transform.Rotation = 1.6f;
+            // set position 
+            GameObject.Transform.Position = characterPosition + displacement * aimDirection;
 
-                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, 35);
-                ProjectileVelocity = new Vector2(0, 1);
-                ProjectileDirection = ProjectileDirection.Vertical;
-            }
-            else if (aimDirection.X == -1)
-            {
-                // left 
-                spriteRenderer.Flip = SpriteEffects.FlipHorizontally;
-                GameObject.Transform.Position = position + new Vector2(-30, 0);
-                GameObject.Transform.Rotation = 0f;
+            // set weapon rotation 
+            //GameObject.Transform.Rotation = (float)Math.Atan2(aimDirection.Y, aimDirection.X);
 
-                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(-35, 0);
-                ProjectileVelocity = new Vector2(-1, 0);
-                ProjectileDirection = ProjectileDirection.Horizontal;
-            }
-            else
-            {
-                // right
-                spriteRenderer.Flip = SpriteEffects.None;
-                GameObject.Transform.Position = position + new Vector2(30, 0);
-                GameObject.Transform.Rotation = 0f;
+            //if (GameObject.Transform.Rotation > Math.PI / 2 && GameObject.Transform.Rotation < 3 * Math.PI / 2)
+            //{
+            //    spriteRenderer.Flip = SpriteEffects.FlipVertically;
+            //}
+            //else
+            //{
+            //    spriteRenderer.Flip = SpriteEffects.None;
+            //}
 
-                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(35, 0);
-                ProjectileVelocity = new Vector2(1, 0);
-                ProjectileDirection = ProjectileDirection.Horizontal;
-            }
+
+
+
+            //if (aimDirection.Y == -1)
+            //{
+            //    // top 
+            //    spriteRenderer.Flip = SpriteEffects.None;
+            //    GameObject.Transform.Position = position + new Vector2(0, -30);
+            //    GameObject.Transform.Rotation = -1.6f;
+
+            //    ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35); 
+            //    ProjectileVelocity = new Vector2(0, -1);
+            //    ProjectileDirection = ProjectileDirection.Vertical; 
+            //}
+            //else if (aimDirection.Y == 1)
+            //{
+            //    // bottom 
+            //    spriteRenderer.Flip = SpriteEffects.None;
+            //    GameObject.Transform.Position = position + new Vector2(0, 30);
+            //    GameObject.Transform.Rotation = 1.6f;
+
+            //    ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, 35);
+            //    ProjectileVelocity = new Vector2(0, 1);
+            //    ProjectileDirection = ProjectileDirection.Vertical;
+            //}
+            //else if (aimDirection.X == -1)
+            //{
+            //    // left 
+            //    spriteRenderer.Flip = SpriteEffects.FlipHorizontally;
+            //    GameObject.Transform.Position = position + new Vector2(-30, 0);
+            //    GameObject.Transform.Rotation = 0f;
+
+            //    ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(-35, 0);
+            //    ProjectileVelocity = new Vector2(-1, 0);
+            //    ProjectileDirection = ProjectileDirection.Horizontal;
+            //}
+            //else
+            //{
+            //    // right
+            //    spriteRenderer.Flip = SpriteEffects.None;
+            //    GameObject.Transform.Position = position + new Vector2(30, 0);
+            //    GameObject.Transform.Rotation = 0f;
+
+            //    ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(35, 0);
+            //    ProjectileVelocity = new Vector2(1, 0);
+            //    ProjectileDirection = ProjectileDirection.Horizontal;
+            //}
 
         }
 
@@ -115,7 +137,17 @@ namespace LazerTag.ComponentPattern
         /// <param name="aimDirection">the direction it is aiming</param>
         public void Aim(Vector2 aimDirection)
         {
-            this.aimDirection = aimDirection;
+            this.aimDirection = new Vector2(aimDirection.X - position.X, aimDirection.Y - position.Y);
+
+            if(this.aimDirection != Vector2.Zero)
+            {
+                this.aimDirection.Normalize();
+            }
+
+            ProjectileVelocity = aimDirection;
+
+            // set weapon rotation 
+            GameObject.Transform.Rotation = (float)Math.Atan2(aimDirection.Y, aimDirection.X);
         }
         #endregion
     }

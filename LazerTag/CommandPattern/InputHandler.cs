@@ -99,7 +99,7 @@ namespace LazerTag.CommandPattern
                         if (padInfo.Button == Buttons.RightThumbstickLeft || padInfo.Button == Buttons.RightThumbstickRight ||
                             padInfo.Button == Buttons.RightThumbstickUp || padInfo.Button == Buttons.RightThumbstickDown)
                         {
-                            padbinds[padInfo].Execute(character);
+                            //padbinds[padInfo].Execute(character);
                             padInfo.IsDown = true;
                         }
                     }
@@ -112,6 +112,16 @@ namespace LazerTag.CommandPattern
                     }
                 }
             }
+
+
+
+
+            GamePadState gps = GamePad.GetState(PlayerIndex.One);
+
+            Vector2 aimDirection = new Vector2(gps.ThumbSticks.Right.X, -gps.ThumbSticks.Right.Y);
+
+            AimCommand ac = new AimCommand(aimDirection);
+            ac.Execute(character);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LazerTag.MenuStates;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         public override void Update()
         {
-            timeElapsed += GameWorld.DeltaTime;
+            timeElapsed += GameState.DeltaTime;
 
             CurrentIndex = (int)(timeElapsed * currentAnimation.FPS);
 

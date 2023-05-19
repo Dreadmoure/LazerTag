@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using LazerTag.MenuStates;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,11 +39,11 @@ namespace LazerTag.ComponentPattern
 
         public override void Update()
         {
-            removeTimer += GameWorld.DeltaTime; 
+            removeTimer += GameState.DeltaTime; 
             if(removeTimer >= 15)
             {
-                GameWorld.Instance.isSpawnPosOccupied[OccupiedPos] = false;
-                GameWorld.Instance.Destroy(GameObject);
+                GameState.isSpawnPosOccupied[OccupiedPos] = false;
+                GameState.Destroy(GameObject);
             }
         }
     }

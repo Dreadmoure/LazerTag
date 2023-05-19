@@ -22,12 +22,12 @@ namespace LazerTag.Repository.Repositories
         /// <summary>
         /// Gets and sets database connection 
         /// </summary>
-        protected IDbConnection Connection { get; set; }
+        protected IDbConnection Connection { get; private set; }
 
         /// <summary>
         /// method used for opening a repository
         /// </summary>
-        public virtual void Open()
+        public void Open()
         {
             if (Connection == null)
             {

@@ -1,6 +1,6 @@
 ﻿using LazerTag.Domain;
 using LazerTag.Repository.Mapper;
-using SharpDX.Direct3D9;
+using LazerTag.Repository.Provider;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
@@ -14,15 +14,20 @@ namespace LazerTag.Repository.Repositories
     {
         private readonly HighScoreMapper mapper;
 
+        public HighScoreRepository(IDatabaseProvider provider, HighScoreMapper mapper)
+        {
+            Provider = provider;
+            this.mapper = mapper;
+        }
 
         /// <summary>
         /// method for adding a score to the highscore database
         /// </summary>
-        /// <param name="score">the score of the winner</param>
         /// <param name="name">the name of the winner</param>
-        public void AddScore(int score, string name)
+        /// <param name="score">the score of the winner</param>
+        public void AddScore(string name, int score)
         {
-            var cmd = new SQLiteCommand($"INSERT INTO HighScores (Name, Score) VALUES ('{name}','{(int)score}')", (SQLiteConnection)Connection);
+            var cmd = new SQLiteCommand($"INSERT INTO HighScore (Name, Score) VALUES ('{name}','{(int)score}')", (SQLiteConnection)Connection);
             cmd.ExecuteNonQuery();
         }
 
@@ -31,7 +36,7 @@ namespace LazerTag.Repository.Repositories
         /// </summary>
         protected override void CreateDatabaseTables()
         {
-            var cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS HighScores (Id INTEGER PRIMARY KEY, Name VARCHAR(50), Score INTEGER)", (SQLiteConnection)Connection);
+            var cmd = new SQLiteCommand($"CREATE TABLE IF NOT EXISTS HighScore (Id INTEGER PRIMARY KEY, Name VARCHAR(50), Score INTEGER)", (SQLiteConnection)Connection);
             cmd.ExecuteNonQuery();
         }
 
@@ -41,7 +46,7 @@ namespace LazerTag.Repository.Repositories
         /// <returns>List of highscores</returns>
         public List<HighScore> GetAllScores()
         {
-            var cmd = new SQLiteCommand("SELECT * from HighScores", (SQLiteConnection)Connection);
+            var cmd = new SQLiteCommand("SELECT * from HighScore", (SQLiteConnection)Connection);
             var reader = cmd.ExecuteReader();
 
             var result = mapper.MapHighScoreFromReader(reader);
@@ -57,7 +62,7 @@ namespace LazerTag.Repository.Repositories
         /// <param name="name">the name we want to change it to</param>
         public void UpdateScore(int id, string name)
         {
-            var cmd = new SQLiteCommand($"UPDATE HighScores set Name = {name} WHERE Id = {id}", (SQLiteConnection)Connection);
+            var cmd = new SQLiteCommand($"UPDATE HighScore set Name = {name} WHERE Id = {id}", (SQLiteConnection)Connection);
             cmd.ExecuteNonQuery();
         }
 
@@ -68,7 +73,7 @@ namespace LazerTag.Repository.Repositories
         /// <param name="id">the position of the score you want to delete</param>
         public void DeleteScore(int id)
         {
-            var cmd = new SQLiteCommand($"DELETE from HighScores WHERE Id= {id}", (SQLiteConnection)Connection);
+            var cmd = new SQLiteCommand($"DELETE from HighScore WHERE Id= {id}", (SQLiteConnection)Connection);
             cmd.ExecuteNonQuery();
         }
     }

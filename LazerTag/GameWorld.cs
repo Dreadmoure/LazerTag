@@ -1,15 +1,20 @@
 ﻿using LazerTag.BuilderPattern;
 using LazerTag.ComponentPattern;
 using LazerTag.CreationalPattern;
+using LazerTag.Domain;
+using LazerTag.Repository;
 using LazerTag.MenuStates;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Data.SQLite;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-
+using LazerTag.Repository.Provider;
+using LazerTag.Repository.Mapper;
+using LazerTag.Repository.Repositories;
 
 namespace LazerTag
 {
@@ -52,6 +57,12 @@ namespace LazerTag
         public State MenuState { get; private set; }
         public State HighscoreState { get; private set; }
         public State HelpState { get; private set; }
+
+        public IDatabaseProvider Provider { get; private set; }
+
+        public HighScoreMapper HighScoreMapper { get; private set; }
+
+        public static HighScoreRepository HighScoreRepository { get; private set; }
         #endregion
 
         #region constructor
@@ -70,10 +81,33 @@ namespace LazerTag
             _graphics.PreferredBackBufferHeight = 1080;
 
             ScreenSize = new Vector2(_graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+
+            HighScoreMapper = new HighScoreMapper();
+            Provider = new SQLiteDatabaseProvider("Data Source=highScores.db;Version=3;new=true");
+            HighScoreRepository = new HighScoreRepository(Provider, HighScoreMapper);
+
+            HighScoreDummyMethod();
+
         }
         #endregion
 
         #region methods
+        /// <summary>
+        /// used to add scores to the database, for internal use only
+        /// </summary>
+        private void HighScoreDummyMethod()
+        {
+
+            GameWorld.HighScoreRepository.Open();
+
+            GameWorld.HighScoreRepository.AddScore("Ida", 50);
+            GameWorld.HighScoreRepository.AddScore("Denni", 300);
+            GameWorld.HighScoreRepository.AddScore("Lars", 995);
+
+            GameWorld.HighScoreRepository.Close();
+        }
+
+
         /// <summary>
         /// method which runs first when the program is executed
         /// </summary>

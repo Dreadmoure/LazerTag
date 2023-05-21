@@ -515,7 +515,22 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         private void SpawnWeapon()
         {
-            WeaponObject = WeaponFactory.Instance.Create(PlayerIndex.One);
+            if (CharacterIndex == PlayerIndex.One)
+            {
+                WeaponObject = WeaponFactory.Instance.Create(PlayerIndex.One);
+            }
+            else if(CharacterIndex == PlayerIndex.Two)
+            {
+                WeaponObject = WeaponFactory.Instance.Create(PlayerIndex.Two);
+            }
+            else if(CharacterIndex == PlayerIndex.Three)
+            {
+                WeaponObject = WeaponFactory.Instance.Create(PlayerIndex.Three);
+            }
+            else if(CharacterIndex == PlayerIndex.Four)
+            {
+                WeaponObject = WeaponFactory.Instance.Create(PlayerIndex.Four);
+            }
 
             WeaponObject.Transform.Position = GameObject.Transform.Position;
 

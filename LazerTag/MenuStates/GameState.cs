@@ -35,6 +35,11 @@ namespace LazerTag.MenuStates
         public static int PlayerCount { get; set; } = 4;
 
         /// <summary>
+        /// property for getting the winner of the game 
+        /// </summary>
+        public static Player Winner { get; private set; }
+
+        /// <summary>
         /// property for getting the elapsed gametime
         /// </summary>
         public static float DeltaTime { get; private set; }
@@ -56,7 +61,8 @@ namespace LazerTag.MenuStates
             newGameObjects = new List<GameObject>();
             pickupSpawnPos = new List<Vector2>();
             Colliders = new List<Collider>();
-            PlayerCount = 4; 
+            PlayerCount = 4;
+            Winner = null; 
         }
 
         #region methods 
@@ -176,11 +182,38 @@ namespace LazerTag.MenuStates
 
             if (PlayerCount <= 1)
             {
-                ResetLevel();
+                Winner = FindWinner(); 
+
+                game.ChangeState(new GameOverState(content, graphicsDevice, game));
+
+                //ResetLevel();
             }
 
             //calls cleanup
             Cleanup();
+        }
+
+        private Player FindWinner()
+        {
+            // save all players in a list 
+            List<Player> players = new List<Player>();
+            players.Add(FindPlayerByTag(PlayerIndex.One.ToString()));
+            players.Add(FindPlayerByTag(PlayerIndex.Two.ToString()));
+            players.Add(FindPlayerByTag(PlayerIndex.Three.ToString()));
+            players.Add(FindPlayerByTag(PlayerIndex.Four.ToString()));
+
+            Player temp = players.First(); 
+
+            // find the player with the highest score 
+            foreach (Player player in players)
+            {
+                if(temp.Score < player.Score)
+                {
+                    temp = player; 
+                }
+            }
+
+            return temp; 
         }
 
         private void ResetLevel()

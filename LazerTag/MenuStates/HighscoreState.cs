@@ -18,6 +18,8 @@ namespace LazerTag.MenuStates
         private Button backButton;
         private static List<HighScore> highScoreResults;
         private SpriteFont font;
+        private Texture2D title;
+        private Vector2 titleOrigin; 
 
         public HighscoreState(ContentManager content, GraphicsDevice graphicsDevice, GameWorld game) : base(content, graphicsDevice, game)
         {
@@ -33,6 +35,10 @@ namespace LazerTag.MenuStates
             backButton.LoadContent(content);
 
             font = content.Load<SpriteFont>("Fonts\\LifeFont");
+
+            // set title 
+            title = content.Load<Texture2D>("Menus\\Titles\\HighScoreTitle");
+            titleOrigin = new Vector2(title.Width / 2, title.Height / 2);
 
             GameWorld.HighScoreRepository.Open();
 
@@ -57,6 +63,9 @@ namespace LazerTag.MenuStates
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+
+            // draw title 
+            spriteBatch.Draw(title, new Vector2(GameWorld.ScreenSize.X / 2, 300), null, Color.White, 0f, titleOrigin, 1f, SpriteEffects.None, 0.9f);
 
             backButton.Draw(gameTime, spriteBatch);
 

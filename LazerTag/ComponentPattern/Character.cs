@@ -390,6 +390,8 @@ namespace LazerTag.ComponentPattern
                         Battery pickUp = other.GetComponent<Battery>() as Battery;
                         GameState.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
                         GameState.Destroy(other);
+
+                        SoundMixer.Instance.BatteryPickUp();
                     }
                 }
                 if (other.Tag == "SpecialAmmo")
@@ -399,8 +401,9 @@ namespace LazerTag.ComponentPattern
 
                     SpecialAmmo pickUp = other.GetComponent<SpecialAmmo>() as SpecialAmmo;
                     GameState.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
-                    GameState.Destroy(other);     
+                    GameState.Destroy(other);
 
+                    SoundMixer.Instance.SpecialAmmoPickUp();
                 }
                 if(other.Tag == "SolarUpgrade")
                 {
@@ -409,6 +412,8 @@ namespace LazerTag.ComponentPattern
                     SolarUpgrade pickUp = other.GetComponent<SolarUpgrade>() as SolarUpgrade;
                     GameState.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
                     GameState.Destroy(other);
+
+                    SoundMixer.Instance.SolarUpgradePickUp();
                 }
             }
 

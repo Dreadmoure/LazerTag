@@ -1011,6 +1011,18 @@
 /processorParam:TextureFormat=Color
 /build:Menus/Titles/Title.png
 
+#begin Music/joshua-mclean_blue-blast.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/joshua-mclean_blue-blast.wav
+
+#begin Music/joshua-mclean_stasis.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Music/joshua-mclean_stasis.wav
+
 #begin PickUps/ChargeIcon.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1286,6 +1298,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Projectiles/RedV.png
+
+#begin Sounds/02_Heal_02.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/02_Heal_02.wav
+
+#begin Sounds/16_Atk_buff_04.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/16_Atk_buff_04.wav
+
+#begin Sounds/39_Absorb_04.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/39_Absorb_04.wav
+
+#begin Sounds/back_style_2_echo_001.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/back_style_2_echo_001.wav
+
+#begin Sounds/confirm_style_2_echo_001.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/confirm_style_2_echo_001.wav
+
+#begin Sounds/cursor_style_2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/cursor_style_2.wav
 
 #begin testEnemy.png
 /importer:TextureImporter

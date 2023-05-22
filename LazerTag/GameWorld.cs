@@ -97,12 +97,13 @@ namespace LazerTag
         /// </summary>
         private void HighScoreDummyMethod()
         {
-
             GameWorld.HighScoreRepository.Open();
 
-            GameWorld.HighScoreRepository.AddScore("Ida", 50);
-            GameWorld.HighScoreRepository.AddScore("Denni", 300);
-            GameWorld.HighScoreRepository.AddScore("Lars", 995);
+            //GameWorld.HighScoreRepository.AddScore("Ida", 50);
+            //GameWorld.HighScoreRepository.AddScore("Denni", 300);
+            //GameWorld.HighScoreRepository.AddScore("Lars", 995);
+
+            //GameWorld.HighScoreRepository.UpdateScore(1, "Karl", 1200);
 
             GameWorld.HighScoreRepository.Close();
         }

@@ -40,12 +40,12 @@ namespace LazerTag.MenuStates
             title = content.Load<Texture2D>("Menus\\Titles\\HighScoreTitle");
             titleOrigin = new Vector2(title.Width / 2, title.Height / 2);
 
+            // handle database for HighScores 
             GameWorld.HighScoreRepository.Open();
-
             highScoreResults = GameWorld.HighScoreRepository.GetAllScores();
-
             GameWorld.HighScoreRepository.Close();
 
+            // sort the list 
             QuickSortRecursive(ref highScoreResults, 0, highScoreResults.Count -1);
         }
 
@@ -92,18 +92,18 @@ namespace LazerTag.MenuStates
         /// Sorts the elements from largest to smallest where the pivot point is between them.
         /// </summary>
         /// <param name="data">the list of highscores we need sorted</param>
-        /// <param name="left">left is the index of the leftmost element of the sublist</param>
-        /// <param name="right">right is the index of the leftmost element of the sublist</param>
-        private void QuickSortRecursive(ref List<HighScore> data, int left, int right)
+        /// <param name="leftIndex">left is the index of the leftmost element of the sublist</param>
+        /// <param name="rightIndex">right is the index of the leftmost element of the sublist</param>
+        private void QuickSortRecursive(ref List<HighScore> data, int leftIndex, int rightIndex)
         {
-            if (left < right)
+            if (leftIndex < rightIndex)
             {
-                //creates a partition at the pivotpoint
-                int q = Partition(ref data, left, right);
+                //creates a partition 
+                int storedIndex = Partition(ref data, leftIndex, rightIndex);
                 //calls quicksort recursively on the left partition
-                QuickSortRecursive(ref data, left, q - 1);
+                QuickSortRecursive(ref data, leftIndex, storedIndex - 1);
                 //calls quicksort recursively on the right partition
-                QuickSortRecursive(ref data, q + 1, right);
+                QuickSortRecursive(ref data, storedIndex + 1, rightIndex);
             }
         }
 
@@ -111,18 +111,18 @@ namespace LazerTag.MenuStates
         /// Method for making a partition of the list depending on left and right
         /// </summary>
         /// <param name="data">list of scores we give it</param>
-        /// <param name="left">left is the index of the leftmost element of the sublist</param>
-        /// <param name="right">right is the index of the leftmost element of the sublist</param>
+        /// <param name="leftIndex">left is the index of the leftmost element of the sublist</param>
+        /// <param name="rightIndex">right is the index of the leftmost element of the sublist</param>
         /// <returns>returns the index it has reached</returns>
-        private int Partition(ref List<HighScore> data, int left, int right)
+        private int Partition(ref List<HighScore> data, int leftIndex, int rightIndex)
         {
             //sets the pivot point
-            HighScore pivot = data[right];
+            HighScore pivot = data[rightIndex];
             HighScore temp;
-            int i = left;
+            int i = leftIndex;
 
             //loops through the data list
-            for (int j = left; j < right; ++j)
+            for (int j = leftIndex; j < rightIndex; ++j)
             {
                 //compares each data against the pivot point
                 if (data[j].Score >= pivot.Score) // >= makes sure it is from largest to smallest
@@ -135,7 +135,7 @@ namespace LazerTag.MenuStates
             }
 
             //swaps the data
-            data[right] = data[i];
+            data[rightIndex] = data[i];
             data[i] = pivot;
 
             return i;

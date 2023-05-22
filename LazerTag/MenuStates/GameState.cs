@@ -68,6 +68,9 @@ namespace LazerTag.MenuStates
         #region methods 
         public override void LoadContent()
         {
+            // load music 
+            SoundMixer.Instance.PlayGameMusic();
+
             // load playes 
             for (int i = 0; i < PlayerCount; i++)
             {

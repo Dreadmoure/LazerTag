@@ -15,7 +15,7 @@ namespace LazerTag.MenuStates
         #region Fields 
         private Texture2D buttonTexture;
         private SpriteFont textFont;
-        private string text;
+        private string textureName;
 
         private float scale;
         private float layer;
@@ -68,24 +68,23 @@ namespace LazerTag.MenuStates
         /// <summary>
         /// Constructor for Button - sets its initial variables 
         /// </summary>
-        /// <param name="position"></param>
-        /// <param name="text"></param>
-        /// <param name="color">Color overlay</param>
-        public Button(Vector2 position, string text, Color color)
+        /// <param name="position">the position at which the button should be placed</param>
+        /// <param name="textureName">the texture name that the button should have</param>
+        public Button(Vector2 position, string textureName)
         {
-            this.Position = position;
-            this.text = text;
-            this.color = color;
+            Position = position;
+            this.textureName = textureName;
+            color = Color.White;
             layer = 0.96f;
-            scale = 1.5f;
+            scale = 1f; 
         }
         #endregion
 
         #region Methods
         public void LoadContent(ContentManager content)
         {
-            buttonTexture = content.Load<Texture2D>("Menus\\button");
-            textFont = content.Load<SpriteFont>("Fonts\\LifeFont");
+            // load button texture
+            buttonTexture = content.Load<Texture2D>($"Menus\\Buttons\\{textureName}");
         }
 
         public void Update(GameTime gameTime)
@@ -139,16 +138,8 @@ namespace LazerTag.MenuStates
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            // draw button 
             spriteBatch.Draw(buttonTexture, Position, null, color, 0f, GetOrigin, scale, SpriteEffects.None, layer);
-
-            if (!string.IsNullOrEmpty(text))
-            {
-                // calculate text position according to textFont and text length 
-                float x = (GetRectangle.X + GetRectangle.Width / 2) - textFont.MeasureString(text).X / 2;
-                float y = (GetRectangle.Y + GetRectangle.Height / 2) - textFont.MeasureString(text).Y / 2;
-                // write the lext on top of the button tecture 
-                spriteBatch.DrawString(textFont, text, new Vector2(x, y), Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, layer + 0.01f);
-            }
         }
         #endregion
     }

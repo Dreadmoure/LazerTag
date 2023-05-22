@@ -11,7 +11,10 @@ namespace LazerTag.MenuStates
 {
     public class MenuState : State
     {
-        private Texture2D menuBackground;
+        private Texture2D title;
+        private Vector2 titleOrigin; 
+        //private Texture2D menuBackground;
+        //private Vector2 backgroundOrigin; 
         private List<Button> buttons;
         private Button playButton;
         private Button highscoreButton;
@@ -24,10 +27,10 @@ namespace LazerTag.MenuStates
 
             Color buttonColor = Color.White; 
 
-            playButton = new Button(buttonPosition, "Play", buttonColor);
-            highscoreButton = new Button(buttonPosition + new Vector2(0, 100), "Highscore", buttonColor);
-            helpButton = new Button(buttonPosition + new Vector2(0, 200), "Help", buttonColor);
-            quitButton = new Button(buttonPosition + new Vector2(0, 300), "Quit", buttonColor);
+            playButton = new Button(buttonPosition, "NewGameButton");
+            highscoreButton = new Button(buttonPosition + new Vector2(0, 100), "HighScoreButton");
+            helpButton = new Button(buttonPosition + new Vector2(0, 200), "HowToPlayButton");
+            quitButton = new Button(buttonPosition + new Vector2(0, 300), "QuitGameButton");
 
             buttons = new List<Button>() { playButton, highscoreButton, helpButton, quitButton };
         }
@@ -38,7 +41,13 @@ namespace LazerTag.MenuStates
             // set mouse visible 
             game.IsMouseVisible = true;
 
-            //menuBackground = content.Load<Texture2D>("");
+            // set title 
+            title = content.Load<Texture2D>("Menus\\Titles\\Title");
+            titleOrigin = new Vector2(title.Width/2, title.Height/2);
+            
+            // set background 
+            //menuBackground = content.Load<Texture2D>("Menus\\MenuBackground");
+            //backgroundOrigin = new Vector2(menuBackground.Width/2, menuBackground.Height/2);
 
             foreach (Button button in buttons)
             {
@@ -87,6 +96,9 @@ namespace LazerTag.MenuStates
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
 
+            // draw title 
+            spriteBatch.Draw(title, new Vector2(GameWorld.ScreenSize.X/2, 300), null, Color.White, 0f, titleOrigin, 1f, SpriteEffects.None, 0.9f);
+            
             foreach (Button button in buttons)
             {
                 button.Draw(gameTime, spriteBatch); 

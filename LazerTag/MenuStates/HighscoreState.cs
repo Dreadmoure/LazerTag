@@ -23,7 +23,7 @@ namespace LazerTag.MenuStates
         {
             Vector2 backButtonPosition = new Vector2(200, 100);
 
-            backButton = new Button(backButtonPosition, "Back", Color.White);
+            backButton = new Button(backButtonPosition, "BlueBackButton");
 
             highScoreResults = new List<HighScore>();
         }

@@ -62,7 +62,13 @@ namespace LazerTag.Repository.Repositories
         /// <param name="name">the name we want to change it to</param>
         public void UpdateScore(int id, string name)
         {
-            var cmd = new SQLiteCommand($"UPDATE HighScore set Name = {name} WHERE Id = {id}", (SQLiteConnection)Connection);
+            var cmd = new SQLiteCommand($"UPDATE HighScore set Name = '{name}' WHERE Id = {id}", (SQLiteConnection)Connection);
+            cmd.ExecuteNonQuery();
+        }
+
+        public void UpdateScore(int id, string name, int score)
+        {
+            var cmd = new SQLiteCommand($"UPDATE HighScore set Name = '{name}', Score = {score} WHERE Id = {id}", (SQLiteConnection)Connection);
             cmd.ExecuteNonQuery();
         }
 

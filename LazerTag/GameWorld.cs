@@ -131,6 +131,9 @@ namespace LazerTag
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
+            // load content for SoundMixer 
+            SoundMixer.Instance.LoadContent(Content);
+
             // handle states
             currentState = MenuState;
             currentState.LoadContent();

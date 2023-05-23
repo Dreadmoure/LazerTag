@@ -105,6 +105,9 @@ namespace LazerTag.MenuStates
                 {
                     isClicked = true;
                     color.A = 255;
+
+                    // play sound for button clicked 
+                    SoundMixer.Instance.ButtonFx(); 
                 }
             }
             else if (color.A < 255)

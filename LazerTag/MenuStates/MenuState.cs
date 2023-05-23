@@ -53,6 +53,9 @@ namespace LazerTag.MenuStates
             {
                 button.LoadContent(content);
             }
+
+            // load music 
+            SoundMixer.Instance.PlayMenuMusic(); 
         }
 
         public override void Update(GameTime gameTime)

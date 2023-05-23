@@ -539,7 +539,16 @@ namespace LazerTag.ComponentPattern
 
             WeaponObject.Transform.Position = GameObject.Transform.Position;
 
-            GameState.Instantiate(WeaponObject);
+
+            if(GameWorld.Instance.CurrentState == GameWorld.Instance.LockInState)
+            {
+                LockInState.Instantiate(WeaponObject);
+            }
+            else
+            {
+                GameState.Instantiate(WeaponObject);
+            }
+            
         }
 
         public void RemoveCharacter()

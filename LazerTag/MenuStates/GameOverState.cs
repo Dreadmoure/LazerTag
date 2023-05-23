@@ -14,7 +14,9 @@ namespace LazerTag.MenuStates
 {
     public class GameOverState : State
     {
-        private Button saveButton; 
+        private Button saveButton;
+        private SpriteFont font; 
+        private TextBox textBox; 
 
         private Texture2D title;
         private Vector2 titleOrigin;
@@ -37,10 +39,12 @@ namespace LazerTag.MenuStates
 
             winner = GameState.Winner.Type.ToString();
             winnerScore = GameState.Winner.Score;
-            winnerName = winner; 
+            winnerName = ""; 
 
             Vector2 buttonPosition = new Vector2(GameWorld.ScreenSize.X/2, GameWorld.ScreenSize.Y / 2 + 300);
             saveButton = new Button(buttonPosition, "MainMenuButton");
+
+            textBox = new TextBox(new Vector2(GameWorld.ScreenSize.X/2, GameWorld.ScreenSize.Y/1.55f));
         }
 
         /// <summary>
@@ -49,10 +53,14 @@ namespace LazerTag.MenuStates
         public override void LoadContent()
         {
             saveButton.LoadContent(content);
+            textBox.LoadContent(content);
 
             // set title 
             title = content.Load<Texture2D>("Menus\\Titles\\GameOverTitle");
             titleOrigin = new Vector2(title.Width / 2, title.Height / 2);
+
+            // set font 
+            font = content.Load<SpriteFont>("Fonts\\GameOverFont");
         }
 
         /// <summary>
@@ -62,13 +70,19 @@ namespace LazerTag.MenuStates
         public override void Update(GameTime gameTime)
         {
             saveButton.Update(gameTime);
+            textBox.Update();
+            winnerName = textBox.GetTextEntered; 
 
             if (saveButton.isClicked)
             {
                 saveButton.isClicked = false;
 
-                // save name and score to repository 
-                SaveToRepository(); 
+                // check that name has been entered in textbox 
+                if (!string.Equals(winnerName, ""))
+                {
+                    // save name and score to repository 
+                    SaveToRepository();
+                }
 
                 game.ChangeState(GameWorld.Instance.MenuState); 
             }
@@ -124,7 +138,17 @@ namespace LazerTag.MenuStates
             // draw title 
             spriteBatch.Draw(title, new Vector2(GameWorld.ScreenSize.X / 2, 300), null, Color.White, 0f, titleOrigin, 1f, SpriteEffects.None, 0.9f);
 
+            string winnerText = "Winner: Player " + winner;
+            string winnerScoreText = "Score: " + winnerScore.ToString(); 
+
+            float winnerX = font.MeasureString(winnerText).X / 2; 
+            float winnerScoreX = font.MeasureString(winnerScoreText).X / 2; 
+            spriteBatch.DrawString(font, winnerText, new Vector2(GameWorld.ScreenSize.X/2, GameWorld.ScreenSize.Y/2.5f), Color.White, 0, new Vector2(winnerX, 0), 1f, SpriteEffects.None, 0.5f); 
+            spriteBatch.DrawString(font, winnerScoreText, new Vector2(GameWorld.ScreenSize.X/2, GameWorld.ScreenSize.Y/2.1f), Color.White, 0, new Vector2(winnerScoreX, 0), 1f, SpriteEffects.None, 0.5f); 
+
             saveButton.Draw(gameTime, spriteBatch);
+
+            textBox.Draw(spriteBatch);
 
             spriteBatch.End();
         }

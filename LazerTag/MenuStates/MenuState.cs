@@ -84,7 +84,7 @@ namespace LazerTag.MenuStates
                 helpButton.isClicked = false;
 
                 // change state to HelpState
-                game.ChangeState(GameWorld.Instance.HelpState);
+                game.ChangeState(GameWorld.Instance.SettingsState);
             }
             if (quitButton.isClicked)
             {

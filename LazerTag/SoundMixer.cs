@@ -28,9 +28,6 @@ namespace LazerTag
         #endregion
 
         #region fields 
-        //private string menuMusic;
-        //private string gameMusic;
-
         private Song menuMusic; 
         private Song gameMusic;
 
@@ -41,16 +38,25 @@ namespace LazerTag
 
         private SoundEffect batteryPickUP; 
         private SoundEffect specialAmmoPickUP; 
-        private SoundEffect solarUpgradePickUp; 
+        private SoundEffect solarUpgradePickUp;
+
+        private SoundEffect shoot; 
         #endregion
 
         #region properties 
-        private static Song Music { get; set; }
+        public static float Volume { get; set; }
+
+        public static bool MusicOn { get; set; }
+
+        public static bool SoundEffectsOn { get; set; }
         #endregion
 
         private SoundMixer()
         {
-            
+            Volume = 0.5f; 
+
+            MusicOn = true;
+            SoundEffectsOn = true; 
         }
 
         #region methods 
@@ -69,48 +75,96 @@ namespace LazerTag
             batteryPickUP = content.Load<SoundEffect>("Sounds\\02_Heal_02");
             specialAmmoPickUP = content.Load<SoundEffect>("Sounds\\39_Absorb_04");
             solarUpgradePickUp = content.Load<SoundEffect>("Sounds\\16_Atk_buff_04");
+
+            shoot = content.Load<SoundEffect>("Sounds\\LASRGun_Classic Blaster A Fire_03"); 
+        }
+
+        public void SetMusic()
+        {
+            if (MusicOn)
+            {
+                MediaPlayer.Resume();
+            }
+            else
+            {
+                MediaPlayer.Pause();
+            }
         }
 
         public void PlayMenuMusic()
         {
-            MediaPlayer.Play(menuMusic);
-            MediaPlayer.IsRepeating = true;
+            if (MusicOn)
+            {
+                MediaPlayer.Volume = Volume; 
+                MediaPlayer.Play(menuMusic);
+                MediaPlayer.IsRepeating = true;
+            }
         }
 
         public void PlayGameMusic()
         {
-            MediaPlayer.Play(gameMusic);
-            MediaPlayer.IsRepeating = true; 
+            if (MusicOn)
+            {
+                MediaPlayer.Volume = Volume;
+                MediaPlayer.Play(gameMusic);
+                MediaPlayer.IsRepeating = true;
+            }
         }
 
         public void ButtonFx()
         {
-            buttonClick.Play();
+            if (SoundEffectsOn)
+            {
+                buttonClick.Play(volume: Volume, pitch: 0.0f, pan: 0.0f);
+            }
         }
 
         public void LoginFx()
         {
-            login.Play();
+            if (SoundEffectsOn)
+            {
+                login.Play(volume: Volume, pitch: 0.0f, pan: 0.0f);
+            }
         }
 
         public void LogoutFx()
         {
-            logout.Play();
+            if (SoundEffectsOn)
+            {
+                logout.Play(volume: Volume, pitch: 0.0f, pan: 0.0f);
+            }
         }
 
         public void BatteryPickUp()
         {
-            batteryPickUP.Play();
+            if (SoundEffectsOn)
+            {
+                batteryPickUP.Play(volume: Volume, pitch: 0.0f, pan: 0.0f);
+            }
         }
 
         public void SpecialAmmoPickUp()
         {
-            specialAmmoPickUP.Play();
+            if (SoundEffectsOn)
+            {
+                specialAmmoPickUP.Play(volume: Volume, pitch: 0.0f, pan: 0.0f);
+            }
         }
 
         public void SolarUpgradePickUp()
         {
-            solarUpgradePickUp.Play();
+            if (SoundEffectsOn)
+            {
+                solarUpgradePickUp.Play(volume: Volume, pitch: 0.0f, pan: 0.0f);
+            }
+        }
+
+        public void ShootFx()
+        {
+            if (SoundEffectsOn)
+            {
+                shoot.Play(volume: Volume, pitch: 0.0f, pan: 0.0f);
+            }
         }
         #endregion
     }

@@ -28,8 +28,7 @@ namespace LazerTag.MenuStates
         private static float spawnTime = 5;
 
         //score check
-        private Player playerScore1 = null;
-        private Player playerScore2 = null;
+        private List<Player> topPlayers; 
         #endregion
 
         #region properties 
@@ -183,6 +182,8 @@ namespace LazerTag.MenuStates
 
             if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             {
+                ResetPlayers();
+
                 // exit to main menu 
                 game.ChangeState(GameWorld.Instance.MenuState);
             }
@@ -202,13 +203,44 @@ namespace LazerTag.MenuStates
                     ResetLevel();
                     //somehow get the players which are tied and make sure only those 2 are in the game with 1 life
                 }
-
-
-
             }
 
             //calls cleanup
             Cleanup();
+        }
+
+        private void ResetPlayers()
+        {
+            Player playerOne = FindPlayerByTag(PlayerIndex.One.ToString());
+            Player playerTwo = FindPlayerByTag(PlayerIndex.Two.ToString());
+            Player playerThree = FindPlayerByTag(PlayerIndex.Three.ToString());
+            Player playerFour = FindPlayerByTag(PlayerIndex.Four.ToString());
+
+            //kill remaining players
+            if (playerOne.Character != null)
+            {
+                Character character = playerOne.Character.GetComponent<Character>() as Character;
+                character.RemoveCharacter();
+                playerOne.Life = 0;
+            }
+            if (playerTwo.Character != null)
+            {
+                Character character = playerTwo.Character.GetComponent<Character>() as Character;
+                character.RemoveCharacter();
+                playerTwo.Life = 0;
+            }
+            if (playerThree.Character != null)
+            {
+                Character character = playerThree.Character.GetComponent<Character>() as Character;
+                character.RemoveCharacter();
+                playerThree.Life = 0;
+            }
+            if (playerFour.Character != null)
+            {
+                Character character = playerFour.Character.GetComponent<Character>() as Character;
+                character.RemoveCharacter();
+                playerFour.Life = 0;
+            }
         }
 
         private bool IsStaleMate()
@@ -219,116 +251,89 @@ namespace LazerTag.MenuStates
             players.Add(FindPlayerByTag(PlayerIndex.Three.ToString()));
             players.Add(FindPlayerByTag(PlayerIndex.Four.ToString()));
 
-            playerScore1 = players.First();
+            // find a player with highest score 
+            Player player = players.First();
 
-            foreach(Player player in players)
+            foreach (Player p in players)
             {
-                if(playerScore1.Score < player.Score)
+                if(player.Score < p.Score)
                 {
-                    playerScore1 = player;
-                    players.Remove(player);
+                    player = p; 
                 }
             }
 
-            playerScore2 = players.First();
+            // check all others with the same score, and store in list 
+            topPlayers = new List<Player>();
 
-            foreach(Player player in players)
+            foreach (Player p in players)
             {
-                if(playerScore2.Score < player.Score)
+                if(player.Score == p.Score)
                 {
-                    playerScore2 = player;
+                    topPlayers.Add(p); 
                 }
             }
 
-            if(playerScore1.Score == playerScore2.Score)
+            if(topPlayers.Count > 1)
             {
-                return true;
+                return true; 
             }
             else
             {
-                return false;
+                return false; 
             }
         }
 
         private Player FindWinner()
         {
-            if(playerScore1.Score > playerScore2.Score)
+            Player winner = topPlayers.First(); 
+
+            foreach (Player player in topPlayers)
             {
-                return playerScore1;
+                if (player.Score > player.Score)
+                {
+                    winner = player;
+                }
+                else
+                {
+                    winner = player;
+                }
             }
-            else
-            {
-                return playerScore2;
-            }
+
+            return winner; 
         }
 
         private void ResetLevel()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            ResetPlayers();
+
+            Player playerOne = FindPlayerByTag(PlayerIndex.One.ToString());
+            Player playerTwo = FindPlayerByTag(PlayerIndex.Two.ToString());
+            Player playerThree = FindPlayerByTag(PlayerIndex.Three.ToString());
+            Player playerFour = FindPlayerByTag(PlayerIndex.Four.ToString());
+
+            //sets life to 1 for the two remaining players 
+            foreach (Player player in topPlayers)
             {
-                Player playerOne = FindPlayerByTag(PlayerIndex.One.ToString());
-                Player playerTwo = FindPlayerByTag(PlayerIndex.Two.ToString());
-                Player playerThree = FindPlayerByTag(PlayerIndex.Three.ToString());
-                Player playerFour = FindPlayerByTag(PlayerIndex.Four.ToString());
-
-                //kill remaining player
-                if (playerOne.Character != null)
-                {
-                    playerOne.Life = 0;
-                    Character character = playerOne.Character.GetComponent<Character>() as Character;
-                    character.RemoveCharacter();
-
-                }
-                if (playerTwo.Character != null)
-                {
-                    playerTwo.Life = 0;
-                    Character character = playerTwo.Character.GetComponent<Character>() as Character;
-                    character.RemoveCharacter();
-                }
-                if (playerThree.Character != null)
-                {
-                    playerThree.Life = 0;
-                    Character character = playerThree.Character.GetComponent<Character>() as Character;
-                    character.RemoveCharacter();
-                }
-                if (playerFour.Character != null)
-                {
-                    playerFour.Life = 0;
-                    Character character = playerFour.Character.GetComponent<Character>() as Character;
-                    character.RemoveCharacter();
-                }
-
-                //reset life and scores
-                //sets life to 1
-                if (playerScore1.Type == PlayerIndex.One || playerScore2.Type == PlayerIndex.One)
+                if (player.Type == PlayerIndex.One)
                 {
                     playerOne.Life = 1;
-                    //playerOne.Life = 4;
-                    //playerOne.Score = 0;
+                    PlayerCount++;
                 }
-                else if(playerScore1.Type == PlayerIndex.Two || playerScore2.Type == PlayerIndex.Two)
+                if (player.Type == PlayerIndex.Two)
                 {
                     playerTwo.Life = 1;
-                    //playerTwo.Life = 4;
-                    //playerTwo.Score = 0;
+                    PlayerCount++;
                 }
-                else if(playerScore1.Type == PlayerIndex.Three || playerScore2.Type == PlayerIndex.Three)
+                if (player.Type == PlayerIndex.Three)
                 {
                     playerThree.Life = 1;
-                    //playerThree.Life = 4;
-                    //playerThree.Score = 0;
+                    PlayerCount++;
                 }
-                else if(playerScore1.Type ==PlayerIndex.Four || playerScore2.Type == PlayerIndex.Four)
+                if (player.Type == PlayerIndex.Four)
                 {
                     playerFour.Life = 1;
-                    //playerFour.Life = 4;
-                    //playerFour.Score = 0;
+                    PlayerCount++;
                 }
-                
-                
-                //set the playercount
-                PlayerCount = 2;
-                //PlayerCount = 4;
             }
         }
 

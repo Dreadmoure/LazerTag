@@ -69,19 +69,26 @@ namespace LazerTag.MenuStates
 
             backButton.Draw(gameTime, spriteBatch);
 
-            int i = 0;
+            int id = 1; 
+            int yOffset = 0;
 
             foreach (HighScore highScore in highScoreResults)
             {
                 string name = highScore.Name;
+                string score = highScore.Score.ToString();
 
-                int score = highScore.Score;
+                float idOffsetX = font.MeasureString(id.ToString()).X;
+                float scoreOffsetX = font.MeasureString(score).X;
 
-                spriteBatch.DrawString(font, name, new Vector2(GameWorld.ScreenSize.X / 2, GameWorld.ScreenSize.Y / 2 + i), Color.White);
-                spriteBatch.DrawString(font, score.ToString(), new Vector2(GameWorld.ScreenSize.X / 2 + 100, GameWorld.ScreenSize.Y / 2 + i), Color.White);
-                i += 50;
+                Vector2 position = new Vector2(GameWorld.ScreenSize.X / 2, GameWorld.ScreenSize.Y / 2.5f + yOffset);
+
+                spriteBatch.DrawString(font, id.ToString(), position + new Vector2(-200 -idOffsetX, 0), Color.White);
+                spriteBatch.DrawString(font, name, position + new Vector2(-180, 0), Color.White);
+                spriteBatch.DrawString(font, score, position + new Vector2(200 - scoreOffsetX, 0), Color.White);
+
+                id++; 
+                yOffset += 50;
             }
-
 
             spriteBatch.End();
         }

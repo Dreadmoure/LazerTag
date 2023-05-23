@@ -1347,6 +1347,12 @@
 /processorParam:Quality=Best
 /build:Sounds/cursor_style_2.wav
 
+#begin Sounds/LASRGun_Classic Blaster A Fire_03.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/LASRGun_Classic Blaster A Fire_03.wav
+
 #begin testEnemy.png
 /importer:TextureImporter
 /processor:TextureProcessor

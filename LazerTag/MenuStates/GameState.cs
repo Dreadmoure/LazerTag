@@ -26,6 +26,10 @@ namespace LazerTag.MenuStates
         public static bool[] isSpawnPosOccupied;
         private static float spawnTimer = 0;
         private static float spawnTime = 5;
+
+        //score check
+        private Player playerScore1 = null;
+        private Player playerScore2 = null;
         #endregion
 
         #region properties 
@@ -182,38 +186,77 @@ namespace LazerTag.MenuStates
 
             if (PlayerCount <= 1)
             {
-                Winner = FindWinner(); 
+                bool isStaleMate = IsStaleMate(); //checks if there is a stalemate
 
-                game.ChangeState(new GameOverState(content, graphicsDevice, game));
+                if (isStaleMate == false)
+                {
+                    Winner = FindWinner(); //if there is not stalemate it checks the highest score and sets that to the winner
 
-                //ResetLevel();
+                    game.ChangeState(new GameOverState(content, graphicsDevice, game));
+                }
+                else //if there is a stalemate reset the level with the players that are in a stalemate
+                {
+                    ResetLevel();
+                    //somehow get the players which are tied and make sure only those 2 are in the game with 1 life
+                }
+
+
+
             }
 
             //calls cleanup
             Cleanup();
         }
 
-        private Player FindWinner()
+        private bool IsStaleMate()
         {
-            // save all players in a list 
             List<Player> players = new List<Player>();
             players.Add(FindPlayerByTag(PlayerIndex.One.ToString()));
             players.Add(FindPlayerByTag(PlayerIndex.Two.ToString()));
             players.Add(FindPlayerByTag(PlayerIndex.Three.ToString()));
             players.Add(FindPlayerByTag(PlayerIndex.Four.ToString()));
 
-            Player temp = players.First(); 
+            playerScore1 = players.First();
 
-            // find the player with the highest score 
-            foreach (Player player in players)
+            foreach(Player player in players)
             {
-                if(temp.Score < player.Score)
+                if(playerScore1.Score < player.Score)
                 {
-                    temp = player; 
+                    playerScore1 = player;
+                    players.Remove(player);
                 }
             }
 
-            return temp; 
+            playerScore2 = players.First();
+
+            foreach(Player player in players)
+            {
+                if(playerScore2.Score < player.Score)
+                {
+                    playerScore2 = player;
+                }
+            }
+
+            if(playerScore1.Score == playerScore2.Score)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private Player FindWinner()
+        {
+            if(playerScore1.Score > playerScore2.Score)
+            {
+                return playerScore1;
+            }
+            else
+            {
+                return playerScore2;
+            }
         }
 
         private void ResetLevel()
@@ -253,19 +296,36 @@ namespace LazerTag.MenuStates
                 }
 
                 //reset life and scores
-                playerOne.Life = 4;
-                playerOne.Score = 0;
-
-                playerTwo.Life = 4;
-                playerTwo.Score = 0;
-
-                playerThree.Life = 4;
-                playerThree.Score = 0;
-
-                playerFour.Life = 4;
-                playerFour.Score = 0;
-
-                PlayerCount = 4;
+                //sets life to 1
+                if (playerScore1.Type == PlayerIndex.One || playerScore2.Type == PlayerIndex.One)
+                {
+                    playerOne.Life = 1;
+                    //playerOne.Life = 4;
+                    //playerOne.Score = 0;
+                }
+                else if(playerScore1.Type == PlayerIndex.Two || playerScore2.Type == PlayerIndex.Two)
+                {
+                    playerTwo.Life = 1;
+                    //playerTwo.Life = 4;
+                    //playerTwo.Score = 0;
+                }
+                else if(playerScore1.Type == PlayerIndex.Three || playerScore2.Type == PlayerIndex.Three)
+                {
+                    playerThree.Life = 1;
+                    //playerThree.Life = 4;
+                    //playerThree.Score = 0;
+                }
+                else if(playerScore1.Type ==PlayerIndex.Four || playerScore2.Type == PlayerIndex.Four)
+                {
+                    playerFour.Life = 1;
+                    //playerFour.Life = 4;
+                    //playerFour.Score = 0;
+                }
+                
+                
+                //set the playercount
+                PlayerCount = 2;
+                //PlayerCount = 4;
             }
         }
 

@@ -96,8 +96,17 @@ namespace LazerTag.ComponentPattern
         private void SpawnCharacter()
         {
             Character = CharacterFactory.Instance.Create(Type);
+            Character character = Character.GetComponent<Character>() as Character;
 
-            GameState.Instantiate(Character);
+            if (GameWorld.Instance.CurrentState == GameWorld.Instance.LockInState)
+            {
+                LockInState.Instantiate(Character);
+            }
+            else
+            {
+                GameState.Instantiate(Character);
+            }
+            
         }
 
         /// <summary>

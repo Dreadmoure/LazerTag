@@ -14,8 +14,12 @@ namespace LazerTag.MenuStates
     {
         #region Fields 
         private Texture2D buttonTexture;
+        private Texture2D buttonOnTexture;
+        private Texture2D buttonOffTexture;
         private SpriteFont textFont;
         private string textureName;
+        private string textureOnName;
+        private string textureOffName;
 
         private float scale;
         private float layer;
@@ -25,6 +29,9 @@ namespace LazerTag.MenuStates
         private MouseState _currentMouse;
         private MouseState _previousMouse;
         public bool isClicked;
+
+        private bool isSwitch;
+        private bool isOn = true; 
         #endregion
 
         #region Properties 
@@ -76,15 +83,41 @@ namespace LazerTag.MenuStates
             this.textureName = textureName;
             color = Color.White;
             layer = 0.96f;
-            scale = 1f; 
+            scale = 1f;
+            isSwitch = false; 
+        }
+
+        public Button(Vector2 position, string textureOnName, string textureOffName)
+        {
+            Position = position;
+            this.textureName = textureOnName;
+            this.textureOnName = textureOnName;
+            this.textureOffName = textureOffName;
+            color = Color.White;
+            layer = 0.96f;
+            scale = 1f;
+            isSwitch = true; 
         }
         #endregion
 
         #region Methods
         public void LoadContent(ContentManager content)
         {
-            // load button texture
-            buttonTexture = content.Load<Texture2D>($"Menus\\Buttons\\{textureName}");
+            if(!string.IsNullOrEmpty(textureName))
+            {
+                buttonTexture = content.Load<Texture2D>($"Menus\\Buttons\\{textureName}");
+            }
+            
+            if(!string.IsNullOrEmpty(textureOnName))
+            {
+                buttonOnTexture = content.Load<Texture2D>($"Menus\\Buttons\\{textureOnName}");
+            }
+            
+            if(!string.IsNullOrEmpty(textureOffName))
+            {
+                buttonOffTexture = content.Load<Texture2D>($"Menus\\Buttons\\{textureOffName}");
+            }
+            
         }
 
         public void Update(GameTime gameTime)
@@ -139,10 +172,27 @@ namespace LazerTag.MenuStates
             }
         }
 
+        public void SwitchButton(bool isOn)
+        {
+            this.isOn = isOn; 
+        }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            // draw button 
-            spriteBatch.Draw(buttonTexture, Position, null, color, 0f, GetOrigin, scale, SpriteEffects.None, layer);
+            if (buttonTexture != null && !isSwitch)
+            {
+                spriteBatch.Draw(buttonTexture, Position, null, color, 0f, GetOrigin, scale, SpriteEffects.None, layer);
+            }
+
+            if (buttonOnTexture != null && isOn && isSwitch)
+            {
+                spriteBatch.Draw(buttonOnTexture, Position, null, color, 0f, GetOrigin, scale, SpriteEffects.None, layer);
+            }
+
+            if (buttonOffTexture != null && !isOn && isSwitch)
+            {
+                spriteBatch.Draw(buttonOffTexture, Position, null, color, 0f, GetOrigin, scale, SpriteEffects.None, layer);
+            }
         }
         #endregion
     }

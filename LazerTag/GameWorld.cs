@@ -44,7 +44,6 @@ namespace LazerTag
         private SpriteBatch _spriteBatch;
 
         // handle states 
-        private State currentState;
         private State nextState; 
         #endregion
 
@@ -58,6 +57,13 @@ namespace LazerTag
         public State HighscoreState { get; private set; }
         public State HelpState { get; private set; }
         public State SettingsState { get; private set; }
+        public State LockInState { get; private set; }
+        public State CurrentState { get; set; }
+
+        /// <summary>
+        /// property for getting the elapsed gametime
+        /// </summary>
+        public static float DeltaTime { get; private set; }
 
         public IDatabaseProvider Provider { get; private set; }
 
@@ -122,6 +128,8 @@ namespace LazerTag
             HighscoreState = new HighscoreState(Content, GraphicsDevice, this);
             HelpState = new HelpState(Content, GraphicsDevice, this); 
             SettingsState = new SettingsState(Content, GraphicsDevice, this); 
+            LockInState = new LockInState(Content, GraphicsDevice, this); 
+
 
             base.Initialize();
         }
@@ -137,8 +145,8 @@ namespace LazerTag
             SoundMixer.Instance.LoadContent(Content);
 
             // handle states
-            currentState = MenuState;
-            currentState.LoadContent();
+            CurrentState = MenuState;
+            CurrentState.LoadContent();
             nextState = null; 
         }
 
@@ -151,15 +159,18 @@ namespace LazerTag
             //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             //    Exit();
 
+            //updates the gametime
+            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             // check if a new state is available 
-            if(nextState != null)
+            if (nextState != null)
             {
-                currentState = nextState;
-                currentState.LoadContent();
+                CurrentState = nextState;
+                CurrentState.LoadContent();
                 nextState = null; 
             }
 
-            currentState.Update(gameTime); 
+            CurrentState.Update(gameTime); 
 
             base.Update(gameTime);
         }
@@ -177,7 +188,7 @@ namespace LazerTag
         {
             GraphicsDevice.Clear(Color.DimGray);
 
-            currentState.Draw(gameTime, _spriteBatch); 
+            CurrentState.Draw(gameTime, _spriteBatch); 
 
             base.Draw(gameTime);
         }

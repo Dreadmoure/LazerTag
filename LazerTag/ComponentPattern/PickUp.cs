@@ -39,7 +39,7 @@ namespace LazerTag.ComponentPattern
 
         public override void Update()
         {
-            removeTimer += GameState.DeltaTime; 
+            removeTimer += GameWorld.DeltaTime; 
             if(removeTimer >= 15)
             {
                 GameState.isSpawnPosOccupied[OccupiedPos] = false;

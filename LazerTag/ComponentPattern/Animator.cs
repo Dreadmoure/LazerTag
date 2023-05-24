@@ -37,7 +37,7 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         public override void Update()
         {
-            timeElapsed += GameState.DeltaTime;
+            timeElapsed += GameWorld.DeltaTime;
 
             CurrentIndex = (int)(timeElapsed * currentAnimation.FPS);
 

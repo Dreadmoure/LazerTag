@@ -35,17 +35,12 @@ namespace LazerTag.MenuStates
         /// <summary>
         /// propertry for getting and setting the amount of players in the game
         /// </summary>
-        public static int PlayerCount { get; set; } = 4;
+        public static int PlayerCount { get; set; }
 
         /// <summary>
         /// property for getting the winner of the game 
         /// </summary>
         public static Player Winner { get; private set; }
-
-        /// <summary>
-        /// property for getting the elapsed gametime
-        /// </summary>
-        public static float DeltaTime { get; private set; }
 
         /// <summary>
         /// Used to add colliders on instantiated objects and remove from the objects slated for removal
@@ -64,7 +59,7 @@ namespace LazerTag.MenuStates
             newGameObjects = new List<GameObject>();
             pickupSpawnPos = new List<Vector2>();
             Colliders = new List<Collider>();
-            PlayerCount = 4;
+            PlayerCount = LockInState.PlayerIndices.Count;
             Winner = null; 
         }
 
@@ -74,12 +69,19 @@ namespace LazerTag.MenuStates
             // load music 
             SoundMixer.Instance.PlayGameMusic();
 
-            // load playes 
-            for (int i = 0; i < PlayerCount; i++)
+            foreach(PlayerIndex playerIndex in LockInState.PlayerIndices)
             {
-                Director playerDirector = new Director(new PlayerBuilder(i));
+                Director playerDirector = new Director(new PlayerBuilder((int)playerIndex));
                 gameObjects.Add(playerDirector.Construct());
             }
+
+            //// load playes 
+            //for (int i = 0; i < PlayerCount; i++)
+            //{
+            //    Director playerDirector = new Director(new PlayerBuilder(i));
+            //    gameObjects.Add(playerDirector.Construct());
+
+            //}
 
             // load level 
             AddPlatforms();
@@ -160,11 +162,10 @@ namespace LazerTag.MenuStates
 
         public override void Update(GameTime gameTime)
         {
-            //updates the gametime
-            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            
 
             // spawn pickups via thread 
-            spawnTimer += DeltaTime;
+            spawnTimer += GameWorld.DeltaTime;
             if (spawnTimer >= spawnTime)
             {
                 spawnTimer = 0;
@@ -217,30 +218,46 @@ namespace LazerTag.MenuStates
             Player playerFour = FindPlayerByTag(PlayerIndex.Four.ToString());
 
             //kill remaining players
-            if (playerOne.Character != null)
+            if(playerOne != null)
             {
-                Character character = playerOne.Character.GetComponent<Character>() as Character;
-                character.RemoveCharacter();
-                playerOne.Life = 0;
+                if (playerOne.Character != null)
+                {
+                    Character character = playerOne.Character.GetComponent<Character>() as Character;
+                    character.RemoveCharacter();
+                    playerOne.Life = 0;
+                }
             }
-            if (playerTwo.Character != null)
+            
+            if(playerTwo != null)
             {
-                Character character = playerTwo.Character.GetComponent<Character>() as Character;
-                character.RemoveCharacter();
-                playerTwo.Life = 0;
+                if (playerTwo.Character != null)
+                {
+                    Character character = playerTwo.Character.GetComponent<Character>() as Character;
+                    character.RemoveCharacter();
+                    playerTwo.Life = 0;
+                }
             }
-            if (playerThree.Character != null)
+            
+            if(playerThree != null)
             {
-                Character character = playerThree.Character.GetComponent<Character>() as Character;
-                character.RemoveCharacter();
-                playerThree.Life = 0;
+                if (playerThree.Character != null)
+                {
+                    Character character = playerThree.Character.GetComponent<Character>() as Character;
+                    character.RemoveCharacter();
+                    playerThree.Life = 0;
+                }
             }
-            if (playerFour.Character != null)
+            
+            if(playerFour != null)
             {
-                Character character = playerFour.Character.GetComponent<Character>() as Character;
-                character.RemoveCharacter();
-                playerFour.Life = 0;
+                if (playerFour.Character != null)
+                {
+                    Character character = playerFour.Character.GetComponent<Character>() as Character;
+                    character.RemoveCharacter();
+                    playerFour.Life = 0;
+                }
             }
+            
         }
 
         private bool IsStaleMate()
@@ -314,26 +331,42 @@ namespace LazerTag.MenuStates
             //sets life to 1 for the two remaining players 
             foreach (Player player in topPlayers)
             {
-                if (player.Type == PlayerIndex.One)
+                if(playerOne != null)
                 {
-                    playerOne.Life = 1;
-                    PlayerCount++;
+                    if (player.Type == PlayerIndex.One)
+                    {
+                        playerOne.Life = 1;
+                        PlayerCount++;
+                    }
                 }
-                if (player.Type == PlayerIndex.Two)
+                
+                if(playerTwo != null)
                 {
-                    playerTwo.Life = 1;
-                    PlayerCount++;
+                    if (player.Type == PlayerIndex.Two)
+                    {
+                        playerTwo.Life = 1;
+                        PlayerCount++;
+                    }
                 }
-                if (player.Type == PlayerIndex.Three)
+                
+                if(playerThree != null)
                 {
-                    playerThree.Life = 1;
-                    PlayerCount++;
+                    if (player.Type == PlayerIndex.Three)
+                    {
+                        playerThree.Life = 1;
+                        PlayerCount++;
+                    }
                 }
-                if (player.Type == PlayerIndex.Four)
+                
+                if(playerFour != null)
                 {
-                    playerFour.Life = 1;
-                    PlayerCount++;
+                    if (player.Type == PlayerIndex.Four)
+                    {
+                        playerFour.Life = 1;
+                        PlayerCount++;
+                    }
                 }
+                
             }
         }
 

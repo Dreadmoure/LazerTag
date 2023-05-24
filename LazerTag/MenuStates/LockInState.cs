@@ -197,13 +197,7 @@ namespace LazerTag.MenuStates
                 canPlay = false;
             }
 
-            GamePadState padState = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.IndependentAxes);
-
-            if (canPlay && padState.IsButtonDown(Buttons.Start))
-            {
-                ResetPlayers();
-                game.ChangeState(new GameState(content, graphicsDevice, game));
-            }
+            EnterGame();
 
             Cleanup();
         }
@@ -274,6 +268,28 @@ namespace LazerTag.MenuStates
                             isLockedIn[i] = false;
                             PlayerIndices.Remove((PlayerIndex)i);
                         }
+                    }
+                }
+            }
+        }
+
+        private void EnterGame()
+        {
+            //check the device for playerindex
+            for (int i = 0; i < 4; i++)
+            {
+                GamePadCapabilities capabilities = GamePad.GetCapabilities((PlayerIndex)i);
+
+                //if there is a controller attached, handle it
+                if (capabilities.IsConnected)
+                {
+                    //get the current state of Controller1
+                    GamePadState padState = GamePad.GetState((PlayerIndex)i, GamePadDeadZone.IndependentAxes);
+
+                    if (canPlay && padState.IsButtonDown(Buttons.Start))
+                    {
+                        ResetPlayers();
+                        game.ChangeState(new GameState(content, graphicsDevice, game));
                     }
                 }
             }

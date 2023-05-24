@@ -181,16 +181,16 @@ namespace LazerTag.ComponentPattern
             }
 
             // make character fall using gravity 
-            GameObject.Transform.Translate(gravity * GameState.DeltaTime);
+            GameObject.Transform.Translate(gravity * GameWorld.DeltaTime);
 
             // when character has jumped 
             if (IsJumping)
             {
-                jumpTime += GameState.DeltaTime; 
+                jumpTime += GameWorld.DeltaTime; 
                 if (jumpTime <= 0.185f)
                 {
                     Vector2 jumpVelocity = new Vector2(0, -5) * speed;
-                    GameObject.Transform.Translate(jumpVelocity * GameState.DeltaTime);
+                    GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
                 }
             }
 
@@ -199,13 +199,13 @@ namespace LazerTag.ComponentPattern
             weapon.Move(GameObject.Transform.Position);
             
             // update timers 
-            shootTimer += GameState.DeltaTime;
-            iframeTimer += GameState.DeltaTime;
+            shootTimer += GameWorld.DeltaTime;
+            iframeTimer += GameWorld.DeltaTime;
 
             
             if(HasSpecialAmmo == true)
             {
-                specialAmmoTimer += GameState.DeltaTime;
+                specialAmmoTimer += GameWorld.DeltaTime;
 
                 if (specialAmmoTimer > specialAmmoTime)
                 {
@@ -217,7 +217,7 @@ namespace LazerTag.ComponentPattern
 
             if(HasSolarUpgrade == true)
             {
-                solarUpgradeTimer += GameState.DeltaTime;
+                solarUpgradeTimer += GameWorld.DeltaTime;
 
                 if(solarUpgradeTimer > solarUpgradeTime)
                 {
@@ -263,7 +263,7 @@ namespace LazerTag.ComponentPattern
             }
 
             velocity *= speed;
-            GameObject.Transform.Translate(velocity * GameState.DeltaTime);
+            GameObject.Transform.Translate(velocity * GameWorld.DeltaTime);
         }
 
         /// <summary>
@@ -310,8 +310,16 @@ namespace LazerTag.ComponentPattern
                     Projectile projectile = projectileObject.GetComponent<Projectile>() as Projectile;
                     projectile.Velocity = weapon.ProjectileVelocity;
 
-                    // instantiate projectile in GameWorld 
-                    GameState.Instantiate(projectileObject);
+                    // instantiate projectile in GameWorld
+                    if(GameWorld.Instance.CurrentState == GameWorld.Instance.LockInState)
+                    {
+                        LockInState.Instantiate(projectileObject);
+                    }
+                    else
+                    {
+                        GameState.Instantiate(projectileObject);
+                    }
+                    
 
                     
 
@@ -355,29 +363,61 @@ namespace LazerTag.ComponentPattern
                 // check for other characters projectiles 
                 if(other.GetComponent<Projectile>() != null && other.Tag != GameObject.Tag)
                 {
-                    // destroy projectile 
-                    GameState.Destroy(other);
-
-                    // only destroy self, when iframe is over 
-                    if (iframeTimer > iframeTime)
+                    if (GameWorld.Instance.CurrentState == GameWorld.Instance.LockInState)
                     {
-                        // update other players score 
-                        Player otherPlayer = GameState.FindPlayerByTag(other.Tag);
-                        otherPlayer.Score += 100;
+                        // destroy projectile 
+                        LockInState.Destroy(other);
 
-                        // if character hs solar upgrade, remove it 
-                        HasSolarUpgrade = false; 
+                        // only destroy self, when iframe is over 
+                        if (iframeTimer > iframeTime)
+                        {
+                            // update other players score 
+                            Player otherPlayer = LockInState.FindPlayerByTag(other.Tag);
+                            otherPlayer.Score += 100;
 
-                        // remove character from player 
-                        Player player = GameState.FindPlayerByTag(GameObject.Tag);
-                        player.RemoveCharacter();
+                            // if character hs solar upgrade, remove it 
+                            HasSolarUpgrade = false;
 
-                        // destroy weapon 
-                        GameState.Destroy(WeaponObject);
+                            // remove character from player 
+                            Player player = LockInState.FindPlayerByTag(GameObject.Tag);
+                            player.RemoveCharacter();
 
-                        // destroy self lastly
-                        GameState.Destroy(GameObject);
+
+                            // destroy weapon 
+                            LockInState.Destroy(WeaponObject);
+
+                            // destroy self lastly
+                            LockInState.Destroy(GameObject);
+                        }
                     }
+                    else
+                    {
+                        // destroy projectile 
+                        GameState.Destroy(other);
+
+                        // only destroy self, when iframe is over 
+                        if (iframeTimer > iframeTime)
+                        {
+                            // update other players score 
+                            Player otherPlayer = GameState.FindPlayerByTag(other.Tag);
+                            otherPlayer.Score += 100;
+
+                            // if character hs solar upgrade, remove it 
+                            HasSolarUpgrade = false;
+
+                            // remove character from player 
+                            Player player = GameState.FindPlayerByTag(GameObject.Tag);
+                            player.RemoveCharacter();
+
+
+                            // destroy weapon 
+                            GameState.Destroy(WeaponObject);
+
+                            // destroy self lastly
+                            GameState.Destroy(GameObject);
+                        }
+                    }
+                    
                 }
 
                 // check for pick ups 
@@ -556,15 +596,31 @@ namespace LazerTag.ComponentPattern
             // if character hs solar upgrade, remove it 
             HasSolarUpgrade = false;
 
-            // remove character from player 
-            Player player = GameState.FindPlayerByTag(GameObject.Tag);
-            player.RemoveCharacter();
+            if(GameWorld.Instance.CurrentState == GameWorld.Instance.LockInState)
+            {
+                // remove character from player 
+                Player player = LockInState.FindPlayerByTag(GameObject.Tag);
+                player.RemoveCharacter();
 
-            // destroy weapon 
-            GameState.Destroy(WeaponObject);
+                // destroy weapon 
+                LockInState.Destroy(WeaponObject);
 
-            // destroy self lastly
-            GameState.Destroy(GameObject);
+                // destroy self lastly
+                LockInState.Destroy(GameObject);
+            }
+            else
+            {
+                // remove character from player 
+                Player player = GameState.FindPlayerByTag(GameObject.Tag);
+                player.RemoveCharacter();
+
+                // destroy weapon 
+                GameState.Destroy(WeaponObject);
+
+                // destroy self lastly
+                GameState.Destroy(GameObject);
+            }
+            
         }
         #endregion
     }

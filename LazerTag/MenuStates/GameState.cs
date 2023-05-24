@@ -263,10 +263,11 @@ namespace LazerTag.MenuStates
         private bool IsStaleMate()
         {
             List<Player> players = new List<Player>();
-            players.Add(FindPlayerByTag(PlayerIndex.One.ToString()));
-            players.Add(FindPlayerByTag(PlayerIndex.Two.ToString()));
-            players.Add(FindPlayerByTag(PlayerIndex.Three.ToString()));
-            players.Add(FindPlayerByTag(PlayerIndex.Four.ToString()));
+
+            foreach (PlayerIndex playerIndex in LockInState.PlayerIndices)
+            {
+                players.Add(FindPlayerByTag(playerIndex.ToString()));
+            }
 
             // find a player with highest score 
             Player player = players.First();

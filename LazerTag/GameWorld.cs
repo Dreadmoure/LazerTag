@@ -126,7 +126,6 @@ namespace LazerTag
             // set initial state 
             MenuState = new MenuState(Content, GraphicsDevice, this);
             HighscoreState = new HighscoreState(Content, GraphicsDevice, this);
-            HelpState = new HelpState(Content, GraphicsDevice, this); 
             SettingsState = new SettingsState(Content, GraphicsDevice, this); 
             LockInState = new LockInState(Content, GraphicsDevice, this); 
 

@@ -29,7 +29,7 @@ namespace LazerTag.MenuStates
 
             playButton = new Button(buttonPosition, "NewGameButton");
             highscoreButton = new Button(buttonPosition + new Vector2(0, 100), "HighScoreButton");
-            helpButton = new Button(buttonPosition + new Vector2(0, 200), "HowToPlayButton");
+            helpButton = new Button(buttonPosition + new Vector2(0, 200), "OptionsButton");
             quitButton = new Button(buttonPosition + new Vector2(0, 300), "QuitGameButton");
 
             buttons = new List<Button>() { playButton, highscoreButton, helpButton, quitButton };

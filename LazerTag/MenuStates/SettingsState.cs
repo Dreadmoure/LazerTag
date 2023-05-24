@@ -17,6 +17,8 @@ namespace LazerTag.MenuStates
         private Button backButton;
         private Button setMusic;
         private Button setFx;
+        private Texture2D title;
+        private Vector2 titleOrigin;
 
         private List<Button> buttons;
 
@@ -40,6 +42,9 @@ namespace LazerTag.MenuStates
         #region methods 
         public override void LoadContent()
         {
+            title = content.Load<Texture2D>("Menus\\Titles\\OptionsTitle");
+            titleOrigin = new Vector2(title.Width / 2, title.Height / 2);
+
             foreach (Button button in buttons)
             {
                 button.LoadContent(content);
@@ -103,6 +108,9 @@ namespace LazerTag.MenuStates
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
+
+            // draw title 
+            spriteBatch.Draw(title, new Vector2(GameWorld.ScreenSize.X / 2, 300), null, Color.White, 0f, titleOrigin, 1f, SpriteEffects.None, 0.9f);
 
             foreach (Button button in buttons)
             {

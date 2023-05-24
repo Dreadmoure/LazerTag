@@ -35,6 +35,13 @@ namespace LazerTag.MenuStates
                     new Vector2(GameWorld.ScreenSize.X/1.35f, GameWorld.ScreenSize.Y/3.5f), 
                     new Vector2(GameWorld.ScreenSize.X/4.5f, GameWorld.ScreenSize.Y/1.3f) };
 
+        private Texture2D[] helpSprites = new Texture2D[4];
+        private Vector2[] helpSpritesPos = new Vector2[4] {
+                    new Vector2(GameWorld.ScreenSize.X/3f, GameWorld.ScreenSize.Y/1.88f),
+                    new Vector2(GameWorld.ScreenSize.X/2.55f, GameWorld.ScreenSize.Y/1.88f),
+                    new Vector2(GameWorld.ScreenSize.X/1.75f, GameWorld.ScreenSize.Y/1.88f),
+                    new Vector2(GameWorld.ScreenSize.X/1.6f, GameWorld.ScreenSize.Y/1.88f) };
+
         private static int playerCount;
         #endregion
 
@@ -76,6 +83,11 @@ namespace LazerTag.MenuStates
             lockOutSprite = content.Load<Texture2D>("Menus\\LockOutButton");
             startButtonSprite = content.Load<Texture2D>("Menus\\StartButton");
             font = content.Load<SpriteFont>("Fonts\\LifeFont");
+
+            for (int i = 0; i < 4; i++)
+            {
+                helpSprites[i] = content.Load<Texture2D>($"Menus\\HelpButton{i+1}");
+            }
 
             // load playes 
             for (int i = 0; i < playerCount; i++)
@@ -216,6 +228,11 @@ namespace LazerTag.MenuStates
             for (int i = 0; i < gameObjects.Count; i++)
             {
                 gameObjects[i].Draw(spriteBatch);
+            }
+
+            for(int i = 0; i < helpSprites.Length; i++)
+            {
+                spriteBatch.Draw(helpSprites[i], helpSpritesPos[i], null, Color.White, 0f, new Vector2(helpSprites[i].Width / 2, helpSprites[i].Height / 2), 1, SpriteEffects.None, 0.9f);
             }
 
             for(int i = 0; i < 4; i++)

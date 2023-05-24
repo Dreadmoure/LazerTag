@@ -12,6 +12,14 @@ using System.Threading.Tasks;
 
 namespace LazerTag.MenuStates
 {
+    public enum PlayerColor
+    {
+        Red, 
+        Blue, 
+        Green, 
+        Pink
+    }
+
     public class GameOverState : State
     {
         private Button saveButton;
@@ -37,7 +45,11 @@ namespace LazerTag.MenuStates
             // set mouse visible 
             game.IsMouseVisible = true;
 
-            winner = GameState.Winner.Type.ToString();
+
+            int winnerId = (int)GameState.Winner.Type;
+            PlayerColor pc = (PlayerColor)winnerId; 
+            winner = pc.ToString(); 
+
             winnerScore = GameState.Winner.Score;
             winnerName = ""; 
 
@@ -138,7 +150,7 @@ namespace LazerTag.MenuStates
             // draw title 
             spriteBatch.Draw(title, new Vector2(GameWorld.ScreenSize.X / 2, 300), null, Color.White, 0f, titleOrigin, 1f, SpriteEffects.None, 0.9f);
 
-            string winnerText = "Winner: Player " + winner;
+            string winnerText = "Winner: " + winner + " Player";
             string winnerScoreText = "Score: " + winnerScore.ToString(); 
 
             float winnerX = font.MeasureString(winnerText).X / 2; 

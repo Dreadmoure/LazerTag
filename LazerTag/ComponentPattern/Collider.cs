@@ -99,7 +99,18 @@ namespace LazerTag.ComponentPattern
         /// </summary>
         private void CheckCollision()
         {
-            foreach (Collider other in GameState.Colliders)
+            List<Collider> colliders = new List<Collider>();
+
+            if(GameWorld.Instance.CurrentState == GameWorld.Instance.LockInState)
+            {
+                colliders = LockInState.Colliders;
+            }
+            else
+            {
+                colliders = GameState.Colliders;
+            }
+
+            foreach (Collider other in colliders)
             {
                 if (other != this && other.CollisionBox.Intersects(CollisionBox))
                 {

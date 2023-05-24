@@ -207,21 +207,29 @@ namespace LazerTag.ComponentPattern
         /// <param name="spriteBatch">passed in from gameworld so we can draw through it</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            float lifeTextX = spriteFont.MeasureString(LifeText).X / 2;
-            float lifeTextY = spriteFont.MeasureString(LifeText).Y / 2;
-
-            Vector2 lifeTextOrigin = new Vector2(lifeTextX, lifeTextY);
-
-            float scoreTextX = spriteFont.MeasureString(ScoreText).X / 2;
-            float scoreTextY = spriteFont.MeasureString(ScoreText).Y / 2;
-
-            Vector2 scoreTextOrigin = new Vector2(scoreTextX, scoreTextY);
-
-            //draw a sprite
-            if (Sprite != null)
+            if(GameWorld.Instance.CurrentState != GameWorld.Instance.LockInState)
             {
-                spriteBatch.Draw(Sprite, SpritePosition, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth);
+                float lifeTextX = spriteFont.MeasureString(LifeText).X / 2;
+                float lifeTextY = spriteFont.MeasureString(LifeText).Y / 2;
+
+                Vector2 lifeTextOrigin = new Vector2(lifeTextX, lifeTextY);
+
+                float scoreTextX = spriteFont.MeasureString(ScoreText).X / 2;
+                float scoreTextY = spriteFont.MeasureString(ScoreText).Y / 2;
+
+                Vector2 scoreTextOrigin = new Vector2(scoreTextX, scoreTextY);
+
+                if (Sprite != null)
+                {
+                    spriteBatch.Draw(Sprite, SpritePosition, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth);
+                }
+
+                //draw lifeText
+                spriteBatch.DrawString(spriteFont, LifeText, LifeTextPosition, Color.White, 0f, lifeTextOrigin, 1f, SpriteEffects.None, LayerDepth + 0.01f);
+                //draw scoreText
+                spriteBatch.DrawString(spriteFont, ScoreText, ScoreTextPosition, Color.White, 0f, scoreTextOrigin, 1f, SpriteEffects.None, LayerDepth + 0.01f);
             }
+
             if (AmmoCountSprite != null)
             {
                 spriteBatch.Draw(AmmoCountSprite, AmmoCountSpritePosition, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth);
@@ -231,11 +239,6 @@ namespace LazerTag.ComponentPattern
             {
                 spriteBatch.Draw(SolarUpgradeSprite, SolarUpgradeSpritePos, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth + 0.01f);
             }
-
-            //draw lifeText
-            spriteBatch.DrawString(spriteFont, LifeText, LifeTextPosition, Color.White, 0f, lifeTextOrigin, 1f, SpriteEffects.None, LayerDepth + 0.01f);
-            //draw scoreText
-            spriteBatch.DrawString(spriteFont, ScoreText, ScoreTextPosition, Color.White, 0f, scoreTextOrigin, 1f, SpriteEffects.None, LayerDepth + 0.01f);
         }
         #endregion
     }

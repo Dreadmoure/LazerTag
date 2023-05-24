@@ -70,7 +70,7 @@ namespace LazerTag.MenuStates
                 playButton.isClicked = false;
 
                 // change state to GameState
-                game.ChangeState(new GameState(content, graphicsDevice, game));
+                game.ChangeState(GameWorld.Instance.LockInState);
             }
             if (highscoreButton.isClicked)
             {

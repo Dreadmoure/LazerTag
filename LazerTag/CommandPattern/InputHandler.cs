@@ -40,7 +40,7 @@ namespace LazerTag.CommandPattern
         /// <param name="character">the character the command should be executed on</param>
         public void Execute(Character character)
         {
-            //check the device for player one
+            //check the device for playerindex
             GamePadCapabilities capabilities = GamePad.GetCapabilities(character.CharacterIndex);
 
             //if there is a controller attached, handle it

@@ -27,8 +27,8 @@ namespace LazerTag.MenuStates
         {
             Vector2 position = new Vector2(GameWorld.ScreenSize.X / 2, GameWorld.ScreenSize.Y / 3);
 
-            setMusic = new Button(position + new Vector2(200, 200), "GreenBackButton");
-            setFx = new Button(position + new Vector2(200, 300), "GreenBackButton");
+            setMusic = new Button(position + new Vector2(200, 200), "OnButton", "OffButton");
+            setFx = new Button(position + new Vector2(200, 300), "OnButton", "OffButton");
 
             Vector2 backButtonPosition = new Vector2(200, 100);
 
@@ -82,6 +82,7 @@ namespace LazerTag.MenuStates
 
                 SoundMixer.MusicOn = !SoundMixer.MusicOn;
                 SoundMixer.Instance.SetMusic();
+                setMusic.SwitchButton(SoundMixer.MusicOn); 
             }
 
             if (setFx.isClicked)
@@ -89,6 +90,7 @@ namespace LazerTag.MenuStates
                 setFx.isClicked = false;
 
                 SoundMixer.SoundEffectsOn = !SoundMixer.SoundEffectsOn;
+                setFx.SwitchButton(SoundMixer.SoundEffectsOn);
             }
 
             if (backButton.isClicked)

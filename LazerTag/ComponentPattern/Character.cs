@@ -321,7 +321,8 @@ namespace LazerTag.ComponentPattern
                     }
                     
 
-                    
+                    // play sound 
+                    SoundMixer.Instance.ShootFx();
 
                     // decrease ammo, and reset timer
                     if (HasSpecialAmmo == false)

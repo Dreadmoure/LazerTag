@@ -56,6 +56,7 @@ namespace LazerTag
         public State MenuState { get; private set; }
         public State HighscoreState { get; private set; }
         public State HelpState { get; private set; }
+        public State SettingsState { get; private set; }
         public State LockInState { get; private set; }
         public State CurrentState { get; set; }
 
@@ -126,7 +127,9 @@ namespace LazerTag
             MenuState = new MenuState(Content, GraphicsDevice, this);
             HighscoreState = new HighscoreState(Content, GraphicsDevice, this);
             HelpState = new HelpState(Content, GraphicsDevice, this); 
+            SettingsState = new SettingsState(Content, GraphicsDevice, this); 
             LockInState = new LockInState(Content, GraphicsDevice, this); 
+
 
             base.Initialize();
         }

@@ -59,6 +59,11 @@ namespace LazerTag
         public State LockInState { get; private set; }
         public State CurrentState { get; set; }
 
+        /// <summary>
+        /// property for getting the elapsed gametime
+        /// </summary>
+        public static float DeltaTime { get; private set; }
+
         public IDatabaseProvider Provider { get; private set; }
 
         public HighScoreMapper HighScoreMapper { get; private set; }
@@ -151,8 +156,11 @@ namespace LazerTag
             //if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             //    Exit();
 
+            //updates the gametime
+            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             // check if a new state is available 
-            if(nextState != null)
+            if (nextState != null)
             {
                 CurrentState = nextState;
                 CurrentState.LoadContent();

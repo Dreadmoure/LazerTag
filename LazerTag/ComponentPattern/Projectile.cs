@@ -77,7 +77,7 @@ namespace LazerTag.ComponentPattern
             }
 
             velocity *= speed;
-            GameObject.Transform.Translate(velocity * GameState.DeltaTime);
+            GameObject.Transform.Translate(velocity * GameWorld.DeltaTime);
         }
 
         /// <summary>
@@ -94,7 +94,15 @@ namespace LazerTag.ComponentPattern
                 if(other.Tag == "Platform")
                 {
                     // remove self 
-                    GameState.Destroy(GameObject);
+                    if(GameWorld.Instance.CurrentState == GameWorld.Instance.LockInState)
+                    {
+                        LockInState.Destroy(GameObject);
+                    }
+                    else
+                    {
+                        GameState.Destroy(GameObject);
+                    }
+                    
                 }
             }
         }

@@ -23,7 +23,12 @@ namespace LazerTag.MenuStates
 
         private Texture2D lockInSprite;
         private Texture2D lockOutSprite;
+        private Texture2D startButtonSprite;
+        private SpriteFont font;
+        private string lockInString = "Lock in to play";
+        private string lockOutString = "Lock out";
         private bool[] isLockedIn = new bool[4] { false, false, false, false };
+        private bool canPlay = false;
         private Vector2[] lockSpritePos = new Vector2[4] {
                     new Vector2(GameWorld.ScreenSize.X/4.5f, GameWorld.ScreenSize.Y/3.5f),
                     new Vector2(GameWorld.ScreenSize.X/1.35f, GameWorld.ScreenSize.Y/1.3f), 
@@ -39,11 +44,7 @@ namespace LazerTag.MenuStates
         /// </summary>
         public static List<Collider> Colliders { get; private set; } = new List<Collider>();
 
-        /// <summary>
-        /// property for getting the elapsed gametime
-        /// </summary>
-        public static float DeltaTime { get; private set; }
-
+        public static List<PlayerIndex> PlayerIndices { get; private set; }
 
         #endregion
 
@@ -52,24 +53,29 @@ namespace LazerTag.MenuStates
             // set mouse to not visible 
             game.IsMouseVisible = false;
 
-            // reset all 
-            gameObjects = new List<GameObject>();
-            destroyGameObjects = new List<GameObject>();
-            newGameObjects = new List<GameObject>();
-            pickupSpawnPos = new List<Vector2>();
-            Colliders = new List<Collider>();
-
             playerCount = 4;
         }
 
         #region methods
         public override void LoadContent()
         {
+            // reset all 
+            gameObjects = new List<GameObject>();
+            destroyGameObjects = new List<GameObject>();
+            newGameObjects = new List<GameObject>();
+            pickupSpawnPos = new List<Vector2>();
+            Colliders = new List<Collider>();
+            canPlay = false;
+            isLockedIn = new bool[4] { false, false, false, false };
+            PlayerIndices = new List<PlayerIndex>();
+
             // load music 
             SoundMixer.Instance.PlayGameMusic();
 
             lockInSprite = content.Load<Texture2D>("Menus\\LockInButton");
             lockOutSprite = content.Load<Texture2D>("Menus\\LockOutButton");
+            startButtonSprite = content.Load<Texture2D>("Menus\\StartButton");
+            font = content.Load<SpriteFont>("Fonts\\LifeFont");
 
             // load playes 
             for (int i = 0; i < playerCount; i++)
@@ -155,8 +161,14 @@ namespace LazerTag.MenuStates
 
         public override void Update(GameTime gameTime)
         {
-            //updates the gametime
-            DeltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //press escape to go back to the menu
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            {
+                ResetPlayers();
+
+                // exit to main menu 
+                game.ChangeState(GameWorld.Instance.MenuState);
+            }
 
             //calls update on all gameobjects
             for (int i = 0; i < gameObjects.Count; i++)
@@ -164,28 +176,34 @@ namespace LazerTag.MenuStates
                 gameObjects[i].Update();
             }
 
-            //check the device for playerindex
-            GamePadCapabilities capabilities = GamePad.GetCapabilities(PlayerIndex.One);
+            LockIn();
 
-            //if there is a controller attached, handle it
-            if (capabilities.IsConnected)
+            int playersReady = 0;
+
+            for(int i = 0; i < isLockedIn.Length; i++)
             {
-                //get the current state of Controller1
-                GamePadState padState = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.IndependentAxes);
-
-                if (capabilities.GamePadType == GamePadType.GamePad)
+                if (isLockedIn[i])
                 {
-                    if (padState.IsButtonDown(Buttons.A))
-                    {
-                        isLockedIn[0] = true;
-                    }
-                    if (padState.IsButtonDown(Buttons.Y))
-                    {
-                        isLockedIn[0] = false;
-                    }
+                    playersReady++;
                 }
             }
 
+            if(playersReady >= 2)
+            {
+                canPlay = true;
+            }
+            else
+            {
+                canPlay = false;
+            }
+
+            GamePadState padState = GamePad.GetState(PlayerIndex.One, GamePadDeadZone.IndependentAxes);
+
+            if (canPlay && padState.IsButtonDown(Buttons.Start))
+            {
+                ResetPlayers();
+                game.ChangeState(new GameState(content, graphicsDevice, game));
+            }
 
             Cleanup();
         }
@@ -193,6 +211,9 @@ namespace LazerTag.MenuStates
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             graphicsDevice.Clear(Color.DarkGray);
+
+            float lockInStringX = font.MeasureString(lockInString).X / 2;
+            float lockOutStringX = font.MeasureString(lockOutString).X / 2;
 
             //we begin to draw
             spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);
@@ -207,18 +228,55 @@ namespace LazerTag.MenuStates
             {
                 if (isLockedIn[i])
                 {
-                    spriteBatch.Draw(lockOutSprite, lockSpritePos[i], null, Color.White, 0f, new Vector2(lockInSprite.Width / 2, lockInSprite.Height / 2), 1, SpriteEffects.None, 0.9f);
+                    spriteBatch.DrawString(font, lockOutString, lockSpritePos[i] + new Vector2(0, -150), Color.White, 0f, new Vector2(lockOutStringX, 0), 1, SpriteEffects.None, 0.1f);
+                    spriteBatch.Draw(lockOutSprite, lockSpritePos[i], null, Color.White, 0f, new Vector2(lockInSprite.Width / 2, lockInSprite.Height / 2), 1, SpriteEffects.None, 0.1f);
                 }
                 else
                 {
-                    spriteBatch.Draw(lockInSprite, lockSpritePos[i], null, Color.White, 0f, new Vector2(lockInSprite.Width / 2, lockInSprite.Height / 2), 1, SpriteEffects.None, 0.9f);
+                    spriteBatch.DrawString(font, lockInString, lockSpritePos[i] + new Vector2(0, -150), Color.White, 0f, new Vector2(lockInStringX, 0), 1, SpriteEffects.None, 0.1f);
+                    spriteBatch.Draw(lockInSprite, lockSpritePos[i], null, Color.White, 0f, new Vector2(lockInSprite.Width / 2, lockInSprite.Height / 2), 1, SpriteEffects.None, 0.1f);
                 }
                 
+            }
+
+            if (canPlay)
+            {
+                spriteBatch.Draw(startButtonSprite, new Vector2(GameWorld.ScreenSize.X/2 - 35, GameWorld.ScreenSize.Y / 2 + 35), null, Color.White, 0f, new Vector2(startButtonSprite.Width / 2, startButtonSprite.Height / 2), 1, SpriteEffects.None, 0.9f);
             }
             
 
             // stop drawing
             spriteBatch.End();
+        }
+
+        private void LockIn()
+        {
+            //check the device for playerindex
+            for (int i = 0; i < 4; i++)
+            {
+                GamePadCapabilities capabilities = GamePad.GetCapabilities((PlayerIndex)i);
+
+                //if there is a controller attached, handle it
+                if (capabilities.IsConnected)
+                {
+                    //get the current state of Controller1
+                    GamePadState padState = GamePad.GetState((PlayerIndex)i, GamePadDeadZone.IndependentAxes);
+
+                    if (capabilities.GamePadType == GamePadType.GamePad)
+                    {
+                        if (padState.IsButtonDown(Buttons.A) && !isLockedIn[i])
+                        {
+                            isLockedIn[i] = true;
+                            PlayerIndices.Add((PlayerIndex)i);
+                        }
+                        if (padState.IsButtonDown(Buttons.Y) && isLockedIn[i])
+                        {
+                            isLockedIn[i] = false;
+                            PlayerIndices.Remove((PlayerIndex)i);
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -289,6 +347,70 @@ namespace LazerTag.MenuStates
             //clear the lists
             destroyGameObjects.Clear();
             newGameObjects.Clear();
+        }
+
+        private void ResetPlayers()
+        {
+            Player playerOne = FindPlayerByTag(PlayerIndex.One.ToString());
+            Player playerTwo = FindPlayerByTag(PlayerIndex.Two.ToString());
+            Player playerThree = FindPlayerByTag(PlayerIndex.Three.ToString());
+            Player playerFour = FindPlayerByTag(PlayerIndex.Four.ToString());
+
+            //kill remaining players
+            if (playerOne.Character != null)
+            {
+                Character character = playerOne.Character.GetComponent<Character>() as Character;
+                character.RemoveCharacter();
+                playerOne.Life = 0;
+            }
+            if (playerTwo.Character != null)
+            {
+                Character character = playerTwo.Character.GetComponent<Character>() as Character;
+                character.RemoveCharacter();
+                playerTwo.Life = 0;
+            }
+            if (playerThree.Character != null)
+            {
+                Character character = playerThree.Character.GetComponent<Character>() as Character;
+                character.RemoveCharacter();
+                playerThree.Life = 0;
+            }
+            if (playerFour.Character != null)
+            {
+                Character character = playerFour.Character.GetComponent<Character>() as Character;
+                character.RemoveCharacter();
+                playerFour.Life = 0;
+            }
+        }
+
+        /// <summary>
+        /// method for finding a player based on its tag
+        /// </summary>
+        /// <param name="tag">the tag of the player we want to find</param>
+        /// <returns></returns>
+        public static Player FindPlayerByTag(string tag)
+        {
+            List<Player> players = new List<Player>();
+
+            foreach (GameObject gameObject in gameObjects)
+            {
+                Player p = gameObject.GetComponent<Player>() as Player;
+
+                if (p != null)
+                {
+                    players.Add(p);
+                }
+            }
+
+            foreach (Player p in players)
+            {
+                if (p.Type.ToString() == tag)
+                {
+                    return p;
+                }
+            }
+
+            return null;
         }
         #endregion
     }

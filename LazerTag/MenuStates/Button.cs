@@ -16,7 +16,6 @@ namespace LazerTag.MenuStates
         private Texture2D buttonTexture;
         private Texture2D buttonOnTexture;
         private Texture2D buttonOffTexture;
-        private SpriteFont textFont;
         private string textureName;
         private string textureOnName;
         private string textureOffName;

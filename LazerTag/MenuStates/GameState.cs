@@ -27,7 +27,6 @@ namespace LazerTag.MenuStates
         private static float spawnTimer = 0;
         private static float spawnTime = 5;
 
-        //score check
         private List<Player> topPlayers; 
         #endregion
 
@@ -48,6 +47,12 @@ namespace LazerTag.MenuStates
         public static List<Collider> Colliders { get; private set; } = new List<Collider>();
         #endregion
 
+        /// <summary>
+        /// constructor for GameState - sends parameters to base State 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="graphicsDevice"></param>
+        /// <param name="game"></param>
         public GameState(ContentManager content, GraphicsDevice graphicsDevice, GameWorld game) : base(content, graphicsDevice, game)
         {
             // set mouse invisible 
@@ -64,24 +69,20 @@ namespace LazerTag.MenuStates
         }
 
         #region methods 
+        /// <summary>
+        /// method for loading all content in game 
+        /// </summary>
         public override void LoadContent()
         {
             // load music 
             SoundMixer.Instance.PlayGameMusic();
 
+            // load players 
             foreach(PlayerIndex playerIndex in LockInState.PlayerIndices)
             {
                 Director playerDirector = new Director(new PlayerBuilder((int)playerIndex));
                 gameObjects.Add(playerDirector.Construct());
             }
-
-            //// load playes 
-            //for (int i = 0; i < PlayerCount; i++)
-            //{
-            //    Director playerDirector = new Director(new PlayerBuilder(i));
-            //    gameObjects.Add(playerDirector.Construct());
-
-            //}
 
             // load level 
             AddPlatforms();
@@ -160,10 +161,12 @@ namespace LazerTag.MenuStates
             isSpawnPosOccupied = new bool[pickupSpawnPos.Count];
         }
 
+        /// <summary>
+        /// method for updating game 
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
-            
-
             // spawn pickups via thread 
             spawnTimer += GameWorld.DeltaTime;
             if (spawnTimer >= spawnTime)
@@ -210,6 +213,10 @@ namespace LazerTag.MenuStates
             Cleanup();
         }
 
+        /// <summary>
+        /// method for resetting players, 
+        /// when resetting the level, or before starting deathmatch 
+        /// </summary>
         private void ResetPlayers()
         {
             Player playerOne = FindPlayerByTag(PlayerIndex.One.ToString());
@@ -260,6 +267,11 @@ namespace LazerTag.MenuStates
             
         }
 
+        /// <summary>
+        /// method for checking if players are stalemate before ending game, 
+        /// used for checking if a deathmatch should happen 
+        /// </summary>
+        /// <returns></returns>
         private bool IsStaleMate()
         {
             List<Player> players = new List<Player>();
@@ -301,6 +313,10 @@ namespace LazerTag.MenuStates
             }
         }
 
+        /// <summary>
+        /// method for finding the winner 
+        /// </summary>
+        /// <returns></returns>
         private Player FindWinner()
         {
             Player winner = topPlayers.First(); 
@@ -320,6 +336,9 @@ namespace LazerTag.MenuStates
             return winner; 
         }
 
+        /// <summary>
+        /// method for resetting the level, should be called before exiting game, otherwise errors would occur 
+        /// </summary>
         private void ResetLevel()
         {
             ResetPlayers();
@@ -371,6 +390,9 @@ namespace LazerTag.MenuStates
             }
         }
 
+        /// <summary>
+        /// method for spawning pickups, spawned via thread 
+        /// </summary>
         private void SpawnPickup()
         {
             Random random = new Random();
@@ -431,6 +453,11 @@ namespace LazerTag.MenuStates
             Instantiate(pickup);
         }
 
+        /// <summary>
+        /// method for drawing all in game sprites 
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             graphicsDevice.Clear(Color.DarkGray); 
@@ -504,8 +531,6 @@ namespace LazerTag.MenuStates
                     Character character = destroyGameObjects[i].GetComponent<Character>() as Character;
                     collider.CollisionEvent.Detach(character);
                 }
-
-
 
                 if (collider != null)
                 {

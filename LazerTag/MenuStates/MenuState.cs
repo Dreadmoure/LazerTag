@@ -13,14 +13,18 @@ namespace LazerTag.MenuStates
     {
         private Texture2D title;
         private Vector2 titleOrigin; 
-        //private Texture2D menuBackground;
-        //private Vector2 backgroundOrigin; 
         private List<Button> buttons;
         private Button playButton;
         private Button highscoreButton;
-        private Button helpButton;
+        private Button settingsButton;
         private Button quitButton; 
 
+        /// <summary>
+        /// constructor for MenuState - sends parameters to base State 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="graphicsDevice"></param>
+        /// <param name="game"></param>
         public MenuState(ContentManager content, GraphicsDevice graphicsDevice, GameWorld game) : base(content, graphicsDevice, game)
         {
             Vector2 buttonPosition = new Vector2(GameWorld.ScreenSize.X / 2, GameWorld.ScreenSize.Y / 2);
@@ -29,13 +33,16 @@ namespace LazerTag.MenuStates
 
             playButton = new Button(buttonPosition, "NewGameButton");
             highscoreButton = new Button(buttonPosition + new Vector2(0, 100), "HighScoreButton");
-            helpButton = new Button(buttonPosition + new Vector2(0, 200), "OptionsButton");
+            settingsButton = new Button(buttonPosition + new Vector2(0, 200), "OptionsButton");
             quitButton = new Button(buttonPosition + new Vector2(0, 300), "QuitGameButton");
 
-            buttons = new List<Button>() { playButton, highscoreButton, helpButton, quitButton };
+            buttons = new List<Button>() { playButton, highscoreButton, settingsButton, quitButton };
         }
 
         #region Methods 
+        /// <summary>
+        /// method to load all content 
+        /// </summary>
         public override void LoadContent()
         {
             // set mouse visible 
@@ -58,6 +65,10 @@ namespace LazerTag.MenuStates
             SoundMixer.Instance.PlayMenuMusic(); 
         }
 
+        /// <summary>
+        /// method for updating menu 
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             foreach (Button button in buttons)
@@ -79,9 +90,9 @@ namespace LazerTag.MenuStates
                 // change state to HighscoreState
                 game.ChangeState(GameWorld.Instance.HighscoreState);
             }
-            if (helpButton.isClicked)
+            if (settingsButton.isClicked)
             {
-                helpButton.isClicked = false;
+                settingsButton.isClicked = false;
 
                 // change state to HelpState
                 game.ChangeState(GameWorld.Instance.SettingsState);
@@ -95,6 +106,11 @@ namespace LazerTag.MenuStates
             }
         }
 
+        /// <summary>
+        /// draws all elements in the menu 
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);

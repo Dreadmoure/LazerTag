@@ -45,7 +45,7 @@ namespace LazerTag.MenuStates
             // set mouse visible 
             game.IsMouseVisible = true;
 
-
+            // make winner id be by the color instead of number 
             int winnerId = (int)GameState.Winner.Type;
             PlayerColor pc = (PlayerColor)winnerId; 
             winner = pc.ToString(); 

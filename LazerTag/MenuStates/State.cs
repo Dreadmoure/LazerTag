@@ -28,8 +28,19 @@ namespace LazerTag.MenuStates
             this.game = game;
         }
 
+        /// <summary>
+        /// abstract method to be implemented 
+        /// </summary>
         public abstract void LoadContent();
+
+        /// <summary>
+        /// abstract method to be implemented 
+        /// </summary>
         public abstract void Update(GameTime gameTime);
+
+        /// <summary>
+        /// abstract method to be implemented 
+        /// </summary>
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
     }
 }

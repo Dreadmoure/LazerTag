@@ -30,8 +30,6 @@ namespace LazerTag.CommandPattern
             padbinds.Add(new PadInfo(Buttons.RightThumbstickUp), new AimCommand(new Vector2(0, -1)));
             padbinds.Add(new PadInfo(Buttons.RightThumbstickDown), new AimCommand(new Vector2(0, 1)));
             padbinds.Add(new PadInfo(Buttons.RightTrigger), new ShootCommand());
-
-            
         }
 
         /// <summary>

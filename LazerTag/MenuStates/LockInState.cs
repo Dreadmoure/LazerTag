@@ -19,8 +19,6 @@ namespace LazerTag.MenuStates
         private static List<GameObject> destroyGameObjects = new List<GameObject>();
         private static List<GameObject> newGameObjects = new List<GameObject>();
 
-        private static List<Vector2> pickupSpawnPos = new List<Vector2>();
-
         private Texture2D lockInSprite;
         private Texture2D lockOutSprite;
         private Texture2D startButtonSprite;
@@ -51,15 +49,20 @@ namespace LazerTag.MenuStates
         /// </summary>
         public static List<Collider> Colliders { get; private set; } = new List<Collider>();
 
+        /// <summary>
+        /// property for keeping track of who has locked in 
+        /// </summary>
         public static List<PlayerIndex> PlayerIndices { get; private set; }
-
         #endregion
 
+        /// <summary>
+        /// constructor for LockInState - sends parameters to base State 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="graphicsDevice"></param>
+        /// <param name="game"></param>
         public LockInState(ContentManager content, GraphicsDevice graphicsDevice, GameWorld game) : base(content, graphicsDevice, game)
         {
-            // set mouse to not visible 
-            game.IsMouseVisible = false;
-
             playerCount = 4;
         }
 
@@ -70,11 +73,11 @@ namespace LazerTag.MenuStates
             gameObjects = new List<GameObject>();
             destroyGameObjects = new List<GameObject>();
             newGameObjects = new List<GameObject>();
-            pickupSpawnPos = new List<Vector2>();
             Colliders = new List<Collider>();
             canPlay = false;
             isLockedIn = new bool[4] { false, false, false, false };
             PlayerIndices = new List<PlayerIndex>();
+            game.IsMouseVisible = false;
 
             // load music 
             SoundMixer.Instance.PlayGameMusic();
@@ -163,10 +166,6 @@ namespace LazerTag.MenuStates
                         Director platformDirector = new Director(new PlatformBuilder(j, i, tileIds[i, j]));
                         gameObjects.Add(platformDirector.Construct());
                     }
-                    if (tileIds[i, j] == 9)
-                    {
-                        pickupSpawnPos.Add(new Vector2(j * 50, i * 50));
-                    }
                 }
             }
         }
@@ -254,7 +253,6 @@ namespace LazerTag.MenuStates
             {
                 spriteBatch.Draw(startButtonSprite, new Vector2(GameWorld.ScreenSize.X/2 - 35, GameWorld.ScreenSize.Y / 2 + 35), null, Color.White, 0f, new Vector2(startButtonSprite.Width / 2, startButtonSprite.Height / 2), 1, SpriteEffects.None, 0.9f);
             }
-            
 
             // stop drawing
             spriteBatch.End();
@@ -277,11 +275,13 @@ namespace LazerTag.MenuStates
                     {
                         if (padState.IsButtonDown(Buttons.A) && !isLockedIn[i])
                         {
+                            SoundMixer.Instance.LoginFx();
                             isLockedIn[i] = true;
                             PlayerIndices.Add((PlayerIndex)i);
                         }
                         if (padState.IsButtonDown(Buttons.Y) && isLockedIn[i])
                         {
+                            SoundMixer.Instance.LogoutFx();
                             isLockedIn[i] = false;
                             PlayerIndices.Remove((PlayerIndex)i);
                         }
@@ -305,6 +305,7 @@ namespace LazerTag.MenuStates
 
                     if (canPlay && padState.IsButtonDown(Buttons.Start))
                     {
+                        SoundMixer.Instance.LoginFx();
                         ResetPlayers();
                         game.ChangeState(new GameState(content, graphicsDevice, game));
                     }

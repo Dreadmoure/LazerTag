@@ -55,10 +55,9 @@ namespace LazerTag
 
         public State MenuState { get; private set; }
         public State HighscoreState { get; private set; }
-        public State HelpState { get; private set; }
         public State SettingsState { get; private set; }
         public State LockInState { get; private set; }
-        public State CurrentState { get; set; }
+        public State CurrentState { get; private set; }
 
         /// <summary>
         /// property for getting the elapsed gametime
@@ -92,30 +91,10 @@ namespace LazerTag
             HighScoreMapper = new HighScoreMapper();
             Provider = new SQLiteDatabaseProvider("Data Source=highScores.db;Version=3;new=true");
             HighScoreRepository = new HighScoreRepository(Provider, HighScoreMapper);
-
-            HighScoreDummyMethod();
-
         }
         #endregion
 
         #region methods
-        /// <summary>
-        /// used to add scores to the database, for internal use only
-        /// </summary>
-        private void HighScoreDummyMethod()
-        {
-            GameWorld.HighScoreRepository.Open();
-
-            //GameWorld.HighScoreRepository.AddScore("Ida", 50);
-            //GameWorld.HighScoreRepository.AddScore("Denni", 300);
-            //GameWorld.HighScoreRepository.AddScore("Lars", 995);
-
-            //GameWorld.HighScoreRepository.UpdateScore(1, "Karl", 1200);
-
-            GameWorld.HighScoreRepository.Close();
-        }
-
-
         /// <summary>
         /// method which runs first when the program is executed
         /// </summary>

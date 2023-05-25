@@ -19,8 +19,14 @@ namespace LazerTag.MenuStates
         private static List<HighScore> highScoreResults;
         private SpriteFont font;
         private Texture2D title;
-        private Vector2 titleOrigin; 
+        private Vector2 titleOrigin;
 
+        /// <summary>
+        /// constructor for HighscoreState - sends parameters to base State 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="graphicsDevice"></param>
+        /// <param name="game"></param>
         public HighscoreState(ContentManager content, GraphicsDevice graphicsDevice, GameWorld game) : base(content, graphicsDevice, game)
         {
             Vector2 backButtonPosition = new Vector2(200, 100);
@@ -30,6 +36,9 @@ namespace LazerTag.MenuStates
             highScoreResults = new List<HighScore>();
         }
 
+        /// <summary>
+        /// method for loading content 
+        /// </summary>
         public override void LoadContent()
         {
             backButton.LoadContent(content);
@@ -49,6 +58,10 @@ namespace LazerTag.MenuStates
             QuickSortRecursive(ref highScoreResults, 0, highScoreResults.Count -1);
         }
 
+        /// <summary>
+        /// method for updating 
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             backButton.Update(gameTime);
@@ -60,6 +73,11 @@ namespace LazerTag.MenuStates
             }
         }
 
+        /// <summary>
+        /// method for drawing 
+        /// </summary>
+        /// <param name="gameTime"></param>
+        /// <param name="spriteBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);

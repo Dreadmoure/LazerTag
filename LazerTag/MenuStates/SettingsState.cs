@@ -25,6 +25,12 @@ namespace LazerTag.MenuStates
         private SpriteFont font;
         #endregion
 
+        /// <summary>
+        /// constructor for SettingsState - sends parameters to base State 
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="graphicsDevice"></param>
+        /// <param name="game"></param>
         public SettingsState(ContentManager content, GraphicsDevice graphicsDevice, GameWorld game) : base(content, graphicsDevice, game)
         {
             Vector2 position = new Vector2(GameWorld.ScreenSize.X / 2, GameWorld.ScreenSize.Y / 3);

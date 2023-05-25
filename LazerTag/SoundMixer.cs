@@ -44,6 +44,9 @@ namespace LazerTag
         #endregion
 
         #region properties 
+        /// <summary>
+        /// Propert for getting and setting the overall volume/master
+        /// </summary>
         public static float Volume { get; set; }
 
         public static bool MusicOn { get; set; }
@@ -51,6 +54,9 @@ namespace LazerTag
         public static bool SoundEffectsOn { get; set; }
         #endregion
 
+        /// <summary>
+        /// private constructor for SoundMixer
+        /// </summary>
         private SoundMixer()
         {
             Volume = 0.5f; 
@@ -59,7 +65,11 @@ namespace LazerTag
             SoundEffectsOn = true; 
         }
 
-        #region methods 
+        #region methods
+        /// <summary>
+        /// Method used for loading content
+        /// </summary>
+        /// <param name="content">the contentmanager we can access</param>
         public void LoadContent(ContentManager content)
         {
             // load all music 
@@ -79,6 +89,9 @@ namespace LazerTag
             shoot = content.Load<SoundEffect>("Sounds\\LASRGun_Classic Blaster A Fire_03"); 
         }
 
+        /// <summary>
+        /// method used to set the music
+        /// </summary>
         public void SetMusic()
         {
             if (MusicOn)
@@ -91,6 +104,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// method used to play the music in the menu
+        /// </summary>
         public void PlayMenuMusic()
         {
             if (MusicOn)
@@ -101,6 +117,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// method used to play the game in GameState
+        /// </summary>
         public void PlayGameMusic()
         {
             if (MusicOn)
@@ -111,6 +130,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// Method for playing a soundeffect on a buttonclick
+        /// </summary>
         public void ButtonFx()
         {
             if (SoundEffectsOn)
@@ -119,6 +141,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// Method for playing a soundeffect on login
+        /// </summary>
         public void LoginFx()
         {
             if (SoundEffectsOn)
@@ -127,6 +152,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// Method for playing a soundeffect on a logout
+        /// </summary>
         public void LogoutFx()
         {
             if (SoundEffectsOn)
@@ -135,6 +163,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// Method for playing a soundeffect on picking up a Battery
+        /// </summary>
         public void BatteryPickUp()
         {
             if (SoundEffectsOn)
@@ -143,6 +174,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// Method for playing a soundeffect on picking up a SpecialAmmo
+        /// </summary>
         public void SpecialAmmoPickUp()
         {
             if (SoundEffectsOn)
@@ -151,6 +185,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// Method for playing a soundeffect on picking up a SolarUpgrade
+        /// </summary>
         public void SolarUpgradePickUp()
         {
             if (SoundEffectsOn)
@@ -159,6 +196,9 @@ namespace LazerTag
             }
         }
 
+        /// <summary>
+        /// Method for playing a soundeffect on shooting
+        /// </summary>
         public void ShootFx()
         {
             if (SoundEffectsOn)

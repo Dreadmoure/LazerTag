@@ -34,7 +34,7 @@ namespace LazerTag.CreationalPattern
 
         #region constructor
         /// <summary>
-        /// private constructor for ProjectileFactory
+        /// private constructor for VerticalProjectileFactory
         /// </summary>
         private VerticalProjectileFactory()
         {

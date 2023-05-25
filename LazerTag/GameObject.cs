@@ -99,7 +99,7 @@ namespace LazerTag
         }
 
         /// <summary>
-        /// method for cloning and object and all its components
+        /// method for cloning an object and all its components
         /// </summary>
         /// <returns>returns the cloned object</returns>
         public object Clone()

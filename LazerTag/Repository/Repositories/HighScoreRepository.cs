@@ -14,6 +14,11 @@ namespace LazerTag.Repository.Repositories
     {
         private readonly HighScoreMapper mapper;
 
+        /// <summary>
+        /// Constructor for the HighScoreRepository
+        /// </summary>
+        /// <param name="provider">the databaseprovider</param>
+        /// <param name="mapper">the specific mapper to the repositroy</param>
         public HighScoreRepository(IDatabaseProvider provider, HighScoreMapper mapper)
         {
             Provider = provider;

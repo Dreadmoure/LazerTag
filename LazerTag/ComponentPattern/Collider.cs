@@ -60,10 +60,8 @@ namespace LazerTag.ComponentPattern
         /// <summary>
         /// updates each frame
         /// </summary>
-        /// <param name="gameTime">we can acces the renderer through this</param>
         public override void Update()
         {
-            //UpdatePixelCollider();
             CheckCollision();
         }
 
@@ -73,7 +71,7 @@ namespace LazerTag.ComponentPattern
         /// <param name="spriteBatch">SpriteBatch</param>
         public override void Draw(SpriteBatch spriteBatch)
         {
-            //DrawRectangle(CollisionBox, spriteBatch);
+            //DrawRectangle(CollisionBox, spriteBatch); //Uncomment to draw the collisionboxes
         }
 
         /// <summary>

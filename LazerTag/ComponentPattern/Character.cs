@@ -128,7 +128,6 @@ namespace LazerTag.ComponentPattern
             specialAmmoTimer = 0;
 
             //upgrade
-            //hasSolarUpgrade = false;
             solarUpgradeTime = 3;
             solarUpgradeTimer = 0;
 

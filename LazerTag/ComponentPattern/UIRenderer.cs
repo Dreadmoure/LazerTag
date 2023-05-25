@@ -13,8 +13,8 @@ namespace LazerTag.ComponentPattern
         #region fields
         private SpriteFont spriteFont;
         private bool hasSolarUpgrade = false;
-        private Texture2D SolarUpgradeSprite;
-        private Vector2 SolarUpgradeSpritePos;
+        private Texture2D solarUpgradeSprite;
+        private Vector2 solarUpgradeSpritePos;
         #endregion
 
         #region properties
@@ -193,9 +193,9 @@ namespace LazerTag.ComponentPattern
 
                 Vector2 newPos = new Vector2(newPosX, newPosY);
 
-                SolarUpgradeSpritePos = newPos;
+                solarUpgradeSpritePos = newPos;
 
-                SolarUpgradeSprite = GameWorld.Instance.Content.Load<Texture2D>("PickUps\\ChargeIcon");
+                solarUpgradeSprite = GameWorld.Instance.Content.Load<Texture2D>("PickUps\\ChargeIcon");
             }
             
         }
@@ -237,7 +237,7 @@ namespace LazerTag.ComponentPattern
 
             if (hasSolarUpgrade == true)
             {
-                spriteBatch.Draw(SolarUpgradeSprite, SolarUpgradeSpritePos, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth + 0.01f);
+                spriteBatch.Draw(solarUpgradeSprite, solarUpgradeSpritePos, null, Color.White, 0f, Origin, Scale, SpriteEffects.None, LayerDepth + 0.01f);
             }
         }
         #endregion

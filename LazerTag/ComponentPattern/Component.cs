@@ -35,7 +35,6 @@ namespace LazerTag.ComponentPattern
         /// <summary>
         /// handed down
         /// </summary>
-        /// <param name="gameTime">we can access the gametime should we need it</param>
         public virtual void Update()
         {
 

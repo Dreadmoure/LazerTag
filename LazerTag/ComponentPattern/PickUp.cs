@@ -13,15 +13,18 @@ namespace LazerTag.ComponentPattern
     /// </summary>
     public abstract class PickUp : Component
     {
+        #region fields
         protected SpriteRenderer spriteRenderer; 
         private Collider collider;
         private float removeTimer = 0;
+        #endregion
 
         /// <summary>
         /// property used to set or get the occupied position in the pickuparray
         /// </summary>
-        public int OccupiedPos { get; set; } 
+        public int OccupiedPos { get; set; }
 
+        #region methods
         /// <summary>
         /// method run when first initialized 
         /// </summary>
@@ -46,5 +49,6 @@ namespace LazerTag.ComponentPattern
                 GameState.Destroy(GameObject);
             }
         }
+        #endregion
     }
 }

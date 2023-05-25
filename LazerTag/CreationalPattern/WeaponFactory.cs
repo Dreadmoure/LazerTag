@@ -67,7 +67,7 @@ namespace LazerTag.CreationalPattern
         }
 
         /// <summary>
-        /// Method for making prototype1
+        /// Method for making prototype2
         /// </summary>
         private void CreatePrototype2()
         {
@@ -83,7 +83,7 @@ namespace LazerTag.CreationalPattern
         }
 
         /// <summary>
-        /// Method for making prototype1
+        /// Method for making prototype3
         /// </summary>
         private void CreatePrototype3()
         {
@@ -99,7 +99,7 @@ namespace LazerTag.CreationalPattern
         }
 
         /// <summary>
-        /// Method for making prototype1
+        /// Method for making prototype4
         /// </summary>
         private void CreatePrototype4()
         {

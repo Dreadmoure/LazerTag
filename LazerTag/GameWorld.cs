@@ -19,7 +19,7 @@ using LazerTag.Repository.Repositories;
 namespace LazerTag
 {
     /// <summary>
-    /// class for the gameworld which inherits from game
+    /// Forfatter : Denni, Ida
     /// </summary>
     public class GameWorld : Game
     {
@@ -81,7 +81,7 @@ namespace LazerTag
             Content.RootDirectory = "Content";
             //IsMouseVisible = true;
 
-            //_graphics.IsFullScreen = true; 
+            _graphics.IsFullScreen = true; 
 
             _graphics.PreferredBackBufferWidth = 1920;
             _graphics.PreferredBackBufferHeight = 1080;

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LazerTag.BuilderPattern
 {
     /// <summary>
-    /// Interface IBuilder
+    /// Forfatter : Denni, Ida
     /// </summary>
     public interface IBuilder
     {

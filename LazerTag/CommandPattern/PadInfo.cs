@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CommandPattern
 {
+    /// <summary>
+    /// Forfatter : Denni
+    /// </summary>
     public class PadInfo
     {
         /// <summary>

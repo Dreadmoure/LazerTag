@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ObserverPattern.PlatformCollisionEvents
 {
+    /// <summary>
+    /// Forfatter : Ida
+    /// </summary>
     public class TopCollisionEvent : GameEvent
     {
         /// <summary>

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag
 {
+    /// <summary>
+    /// Forfatter : Ida
+    /// </summary>
     public class SoundMixer
     {
         #region singleton 

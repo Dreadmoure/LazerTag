@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CreationalPattern
 {
+    /// <summary>
+    /// Forfatter : Ida
+    /// </summary>
     public class VerticalProjectileFactory : Factory
     {
         #region singleton

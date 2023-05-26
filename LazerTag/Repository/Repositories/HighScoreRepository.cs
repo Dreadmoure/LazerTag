@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.Repository.Repositories
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class HighScoreRepository : Repository
     {
         private readonly HighScoreMapper mapper;

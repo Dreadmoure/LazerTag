@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LazerTag.ComponentPattern
 {
     /// <summary>
-    /// Battery is a subclass of PickUp 
+    /// Forfatter : Denni
     /// </summary>
     public class Battery : PickUp
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace LazerTag.ComponentPattern
 {
     /// <summary>
-    /// superclass for all pickup types 
+    /// Forfatter : Denni, Ida
     /// </summary>
     public abstract class PickUp : Component
     {

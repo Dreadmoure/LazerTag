@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class Collider : Component
     {
         #region fields
@@ -138,6 +141,7 @@ namespace LazerTag.ComponentPattern
 
         /// <summary>
         /// method for detecting if top of platform has been touched by character 
+        /// Forfatter: Ida
         /// </summary>
         /// <param name="r1">the characters rectangle</param>
         /// <param name="r2">the platform rectangle</param>
@@ -152,6 +156,7 @@ namespace LazerTag.ComponentPattern
 
         /// <summary>
         /// method for detecting if bottom of platform has been touched by character 
+        /// Forfatter: Ida
         /// </summary>
         /// <param name="r1">the characters rectangle</param>
         /// <param name="r2">the platform rectangle</param>
@@ -166,6 +171,7 @@ namespace LazerTag.ComponentPattern
 
         /// <summary>
         /// method for detecting if left of platform has been touched by character 
+        /// Forfatter: Ida
         /// </summary>
         /// <param name="r1">the characters rectangle</param>
         /// <param name="r2">the platform rectangle</param>
@@ -180,6 +186,7 @@ namespace LazerTag.ComponentPattern
 
         /// <summary>
         /// method for detecting if right of platform has been touched by character 
+        /// Forfatter: Ida
         /// </summary>
         /// <param name="r1">the characters rectangle</param>
         /// <param name="r2">the platform rectangle</param>

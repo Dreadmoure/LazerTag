@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CommandPattern
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class AimCommand : ICommand
     {
         private Vector2 aimDirection;

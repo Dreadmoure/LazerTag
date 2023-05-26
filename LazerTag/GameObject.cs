@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace LazerTag
 {
     /// <summary>
-    /// class for a gameobject which implements the IClonable interface, used in cloning the object
+    /// Forfatter : Denni, Ida
     /// </summary>
     public class GameObject : ICloneable
     {

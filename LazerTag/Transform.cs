@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LazerTag
 {
     /// <summary>
-    /// class for Transform which every gameobject gets
+    /// Forfatter : Denni, Ida
     /// </summary>
     public class Transform
     {

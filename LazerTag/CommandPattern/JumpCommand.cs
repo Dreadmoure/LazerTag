@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CommandPattern
 {
+    /// <summary>
+    /// Forfatter : Ida
+    /// </summary>
     public class JumpCommand : ICommand
     {
         /// <summary>

@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.MenuStates
 {
+    /// <summary>
+    /// Forfatter : Denni
+    /// </summary>
     public class LockInState : State
     {
         #region fields

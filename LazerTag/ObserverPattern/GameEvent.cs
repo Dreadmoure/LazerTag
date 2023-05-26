@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LazerTag.ObserverPattern
 {
     /// <summary>
-    /// Handles events
+    /// Forfatter : Denni, Ida
     /// </summary>
     public class GameEvent
     {

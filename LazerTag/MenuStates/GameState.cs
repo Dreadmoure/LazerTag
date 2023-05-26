@@ -15,6 +15,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.MenuStates
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class GameState : State
     {
         #region fields 
@@ -108,6 +111,7 @@ namespace LazerTag.MenuStates
 
         /// <summary>
         /// method for setting up the level with platforms 
+        /// Forfatter: Ida
         /// </summary>
         private void AddPlatforms()
         {
@@ -270,6 +274,7 @@ namespace LazerTag.MenuStates
         /// <summary>
         /// method for checking if players are stalemate before ending game, 
         /// used for checking if a deathmatch should happen 
+        /// Forfatter: Denni
         /// </summary>
         /// <returns></returns>
         private bool IsStaleMate()
@@ -315,6 +320,7 @@ namespace LazerTag.MenuStates
 
         /// <summary>
         /// method for finding the winner 
+        /// Forfatter: Denni
         /// </summary>
         /// <returns></returns>
         private Player FindWinner()
@@ -564,6 +570,7 @@ namespace LazerTag.MenuStates
 
         /// <summary>
         /// method for finding a player based on its tag
+        /// Forfatter: Ida
         /// </summary>
         /// <param name="tag">the tag of the player we want to find</param>
         /// <returns></returns>

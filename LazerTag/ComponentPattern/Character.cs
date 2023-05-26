@@ -19,6 +19,9 @@ namespace LazerTag.ComponentPattern
     /// </summary>
     public enum Direction { Left, Right };
 
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class Character : Component, IGameListener
     {
         #region fields
@@ -238,7 +241,8 @@ namespace LazerTag.ComponentPattern
         }
 
         /// <summary>
-        /// private method for updating the characters collisionbox 
+        /// private method for updating the characters collisionbox
+        /// Forfatter: Ida
         /// </summary>
         private void UpdateCollisionBox()
         {
@@ -252,6 +256,7 @@ namespace LazerTag.ComponentPattern
 
         /// <summary>
         /// method for handling the move command given as input 
+        /// Forfatter: Denni
         /// </summary>
         /// <param name="velocity">the direction the character should move in</param>
         public void Move(Vector2 velocity)
@@ -266,7 +271,7 @@ namespace LazerTag.ComponentPattern
         }
 
         /// <summary>
-        /// method for handling the aim command given as input 
+        /// method for handling the aim command given as input
         /// </summary>
         /// <param name="aimDirection">the direction the weapon should aim</param>
         public void Aim(Vector2 aimDirection)
@@ -336,6 +341,7 @@ namespace LazerTag.ComponentPattern
 
         /// <summary>
         /// method for handling the jump command given as input
+        /// Forfatter : Ida
         /// </summary>
         public void Jump()
         {
@@ -591,6 +597,9 @@ namespace LazerTag.ComponentPattern
             
         }
 
+        /// <summary>
+        /// Method for removing a character
+        /// </summary>
         public void RemoveCharacter()
         {
             // if character hs solar upgrade, remove it 

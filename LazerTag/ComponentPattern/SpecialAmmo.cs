@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
+    /// <summary>
+    /// Forfatter : Denni
+    /// </summary>
     public class SpecialAmmo : PickUp
     {
         /// <summary>

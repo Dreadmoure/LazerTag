@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace LazerTag.CreationalPattern
 {
     /// <summary>
-    /// abstract class used for inheritance
+    /// Forfatter : Denni, Ida
     /// </summary>
     public abstract class Factory
     {

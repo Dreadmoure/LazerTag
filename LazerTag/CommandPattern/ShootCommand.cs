@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CommandPattern
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class ShootCommand : ICommand
     {
         /// <summary>

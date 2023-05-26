@@ -13,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.MenuStates
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class HighscoreState : State
     {
         private Button backButton;

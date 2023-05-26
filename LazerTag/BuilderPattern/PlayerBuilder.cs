@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.BuilderPattern
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class PlayerBuilder : IBuilder
     {
         private GameObject gameObject;

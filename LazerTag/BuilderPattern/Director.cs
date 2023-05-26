@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.BuilderPattern
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class Director
     {
         private IBuilder builder;

@@ -11,6 +11,7 @@ namespace LazerTag.Repository.Repositories
 {
     /// <summary>
     /// class used to inherit functionality
+    /// Forfatter: Denni, Ida
     /// </summary>
     public class Repository
     {

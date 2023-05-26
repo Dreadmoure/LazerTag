@@ -12,6 +12,9 @@ using System.Xml;
 
 namespace LazerTag.CommandPattern
 {
+    /// <summary>
+    /// Forfatter : Denni
+    /// </summary>
     public class InputHandler
     {
         private Dictionary<PadInfo, ICommand> padbinds = new Dictionary<PadInfo, ICommand>();

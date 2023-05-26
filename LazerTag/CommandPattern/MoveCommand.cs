@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CommandPattern
 {
+    /// <summary>
+    /// Forfatter : Denni
+    /// </summary>
     public class MoveCommand : ICommand
     {
         private Vector2 velocity;

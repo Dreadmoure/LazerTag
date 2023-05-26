@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.MenuStates
 {
+    /// <summary>
+    /// Forfatter : Ida
+    /// </summary>
     public class MenuState : State
     {
         private Texture2D title;

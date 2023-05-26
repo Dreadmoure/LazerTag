@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LazerTag
 {
     /// <summary>
-    /// class for the animation
+    /// Forfatter : Denni, Ida
     /// </summary>
     public class Animation
     {

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
+    /// <summary>
+    /// Forfatter : Denni
+    /// </summary>
     public class UIRenderer : Component
     {
         #region fields

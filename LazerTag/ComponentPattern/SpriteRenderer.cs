@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.ComponentPattern
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class SpriteRenderer : Component
     {
         #region properties

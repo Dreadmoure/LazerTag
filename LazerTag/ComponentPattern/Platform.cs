@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace LazerTag.ComponentPattern
 {
     /// <summary>
-    /// class for platforms 
+    /// Forfatter : Ida
     /// </summary>
     public class Platform : Component
     {

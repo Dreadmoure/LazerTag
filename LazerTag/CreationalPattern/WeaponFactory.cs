@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 namespace LazerTag.CreationalPattern
 {
     /// <summary>
-    /// class for the WeaponFactory which inherits from Factory
+    /// Forfatter : Denni
     /// </summary>
     public class WeaponFactory : Factory
     {

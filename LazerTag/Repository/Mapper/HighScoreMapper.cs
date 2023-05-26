@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.Repository.Mapper
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class HighScoreMapper
     {
         /// <summary>

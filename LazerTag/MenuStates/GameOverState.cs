@@ -20,6 +20,9 @@ namespace LazerTag.MenuStates
         Pink
     }
 
+    /// <summary>
+    /// Forfatter : Ida
+    /// </summary>
     public class GameOverState : State
     {
         private Button saveButton;
@@ -101,7 +104,8 @@ namespace LazerTag.MenuStates
         }
 
         /// <summary>
-        /// method used to check and save score to repository 
+        /// method used to check and save score to repository
+        /// Forfatter: Denni, Ida
         /// </summary>
         private void SaveToRepository()
         {

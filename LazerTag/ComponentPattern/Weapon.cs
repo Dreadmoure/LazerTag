@@ -20,6 +20,9 @@ namespace LazerTag.ComponentPattern
         Vertical
     }
 
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class Weapon : Component
     {
         #region fields

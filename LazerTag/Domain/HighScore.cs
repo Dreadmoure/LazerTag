@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.Domain
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class HighScore
     {
         #region properties

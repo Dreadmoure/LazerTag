@@ -8,6 +8,7 @@ namespace LazerTag.ObserverPattern
 {
     /// <summary>
     /// Interface for a listener which can be implemented
+    /// Forfatter : Denni, Ida
     /// </summary>
     public interface IGameListener
     {

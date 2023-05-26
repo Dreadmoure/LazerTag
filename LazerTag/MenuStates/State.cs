@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.MenuStates
 {
+    /// <summary>
+    /// Forfatter : Ida
+    /// </summary>
     public abstract class State
     {
         protected ContentManager content;

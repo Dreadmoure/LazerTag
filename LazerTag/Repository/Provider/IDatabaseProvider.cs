@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.Repository.Provider
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public interface IDatabaseProvider
     {
         /// <summary>

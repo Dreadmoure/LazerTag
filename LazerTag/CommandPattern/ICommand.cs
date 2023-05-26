@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LazerTag.CommandPattern
 {
     /// <summary>
-    /// interface class ICommand
+    /// Forfatter : Denni, Ida
     /// </summary>
     public interface ICommand
     {

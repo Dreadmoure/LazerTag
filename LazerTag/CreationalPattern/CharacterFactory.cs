@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace LazerTag.CreationalPattern
 {
+    /// <summary>
+    /// Forfatter : Denni
+    /// </summary>
     public class CharacterFactory : Factory
     {
         #region singleton

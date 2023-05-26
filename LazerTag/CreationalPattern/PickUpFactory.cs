@@ -13,6 +13,9 @@ namespace LazerTag.CreationalPattern
     /// </summary>
     public enum PickUpType { Battery, SpecialAmmo, SolarUpgrade }
 
+    /// <summary>
+    /// Forfatter : Denni,
+    /// </summary>
     public class PickUpFactory : Factory
     {
         #region singleton

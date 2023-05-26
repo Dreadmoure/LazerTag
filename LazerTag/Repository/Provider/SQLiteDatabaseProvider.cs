@@ -8,6 +8,9 @@ using System.Data;
 
 namespace LazerTag.Repository.Provider
 {
+    /// <summary>
+    /// Forfatter : Denni, Ida
+    /// </summary>
     public class SQLiteDatabaseProvider : IDatabaseProvider
     {
         private readonly string connectionString;

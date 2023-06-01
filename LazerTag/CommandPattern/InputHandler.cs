@@ -109,7 +109,6 @@ namespace LazerTag.CommandPattern
                     {
                         padInfo.IsDown = false;
                         character.IsWalking = false;
-                        character.IsJumping = false;
                     }
                 }
             }

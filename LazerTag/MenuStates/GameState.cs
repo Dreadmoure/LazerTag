@@ -30,7 +30,8 @@ namespace LazerTag.MenuStates
         private static float spawnTimer = 0;
         private static float spawnTime = 5;
 
-        private List<Player> topPlayers; 
+        private List<Player> topPlayers;
+        private GameObject backgroundObject;
         #endregion
 
         #region properties 
@@ -69,6 +70,7 @@ namespace LazerTag.MenuStates
             Colliders = new List<Collider>();
             PlayerCount = LockInState.PlayerIndices.Count;
             Winner = null; 
+
         }
 
         #region methods 
@@ -77,6 +79,10 @@ namespace LazerTag.MenuStates
         /// </summary>
         public override void LoadContent()
         {
+            Director backgroundDirector = new Director(new BackgroundBuilder());
+            backgroundObject = backgroundDirector.Construct();
+            gameObjects.Add(backgroundObject);
+
             // load music 
             SoundMixer.Instance.PlayGameMusic();
 
@@ -466,7 +472,9 @@ namespace LazerTag.MenuStates
         /// <param name="spriteBatch"></param>
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            graphicsDevice.Clear(Color.DarkGray); 
+            Background background = backgroundObject.GetComponent<Background>() as Background;
+
+            graphicsDevice.Clear(background.CurrentColor); 
 
             //we begin to draw
             spriteBatch.Begin(SpriteSortMode.FrontToBack, samplerState: SamplerState.PointClamp);

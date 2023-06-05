@@ -38,6 +38,7 @@ namespace LazerTag.ComponentPattern
         private Vector2 gravity;
         private bool canJump;
         private float jumpTime;
+        private float jumpSpeed;
 
         // iframes 
         private float iframeTimer;
@@ -119,6 +120,7 @@ namespace LazerTag.ComponentPattern
             AmmoCount = 5;
             
             speed = 250;
+            jumpSpeed = 600;
 
             shootTime = 0.5f;
 
@@ -189,9 +191,9 @@ namespace LazerTag.ComponentPattern
             if (IsJumping)
             {
                 jumpTime += GameWorld.DeltaTime; 
-                if (jumpTime <= 0.185f)
+                if (jumpTime <= 0.5f) //0.185
                 {
-                    Vector2 jumpVelocity = new Vector2(0, -5) * speed;
+                    Vector2 jumpVelocity = new Vector2(0, -1) * jumpSpeed;
                     GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
                 }
             }

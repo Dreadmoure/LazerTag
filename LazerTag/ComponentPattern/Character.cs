@@ -120,7 +120,7 @@ namespace LazerTag.ComponentPattern
             AmmoCount = 5;
             
             speed = 250;
-            jumpSpeed = 600;
+            jumpSpeed = 700;
 
             shootTime = 0.5f;
 
@@ -191,7 +191,7 @@ namespace LazerTag.ComponentPattern
             if (IsJumping)
             {
                 jumpTime += GameWorld.DeltaTime; 
-                if (jumpTime <= 0.5f) //0.185
+                if (jumpTime <= 0.4f) //0.185
                 {
                     Vector2 jumpVelocity = new Vector2(0, -1) * jumpSpeed;
                     GameObject.Transform.Translate(jumpVelocity * GameWorld.DeltaTime);
@@ -302,9 +302,17 @@ namespace LazerTag.ComponentPattern
                     {
                         projectileObject = HorizontalProjectileFactory.Instance.Create(CharacterIndex);
                     }
-                    else
+                    else if(weapon.ProjectileDirection == ProjectileDirection.Vertical)
                     {
                         projectileObject = VerticalProjectileFactory.Instance.Create(CharacterIndex);
+                    }
+                    else if (weapon.ProjectileDirection == ProjectileDirection.DiagonalRight)
+                    {
+                        projectileObject = DiagonalRightProjectileFactory.Instance.Create(CharacterIndex);
+                    }
+                    else if (weapon.ProjectileDirection == ProjectileDirection.DiagonalLeft)
+                    {
+                        projectileObject = DiagonalLeftProjectileFactory.Instance.Create(CharacterIndex);
                     }
 
                     projectileObject.Tag = GameObject.Tag;
@@ -315,6 +323,11 @@ namespace LazerTag.ComponentPattern
                     // set projectiles velocity 
                     Projectile projectile = projectileObject.GetComponent<Projectile>() as Projectile;
                     projectile.Velocity = weapon.ProjectileVelocity;
+
+                    if(projectile.Velocity != Vector2.Zero)
+                    {
+                        projectile.Velocity.Normalize();
+                    }
 
                     // instantiate projectile in GameWorld
                     if(GameWorld.Instance.CurrentState == GameWorld.Instance.LockInState)
@@ -446,6 +459,7 @@ namespace LazerTag.ComponentPattern
                 {
                     HasSpecialAmmo = true;
                     AmmoCount = 5;
+                    specialAmmoTimer = 0;
 
                     SpecialAmmo pickUp = other.GetComponent<SpecialAmmo>() as SpecialAmmo;
                     GameState.isSpawnPosOccupied[pickUp.OccupiedPos] = false;
@@ -456,6 +470,10 @@ namespace LazerTag.ComponentPattern
                 if(other.Tag == "SolarUpgrade")
                 {
                     HasSolarUpgrade = true;
+                    if(AmmoCount < 5)
+                    {
+                        AmmoCount++;
+                    }               
 
                     SolarUpgrade pickUp = other.GetComponent<SolarUpgrade>() as SolarUpgrade;
                     GameState.isSpawnPosOccupied[pickUp.OccupiedPos] = false;

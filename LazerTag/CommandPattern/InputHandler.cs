@@ -28,10 +28,6 @@ namespace LazerTag.CommandPattern
             padbinds.Add(new PadInfo(Buttons.LeftThumbstickRight), new MoveCommand(new Vector2(1, 0)));
             padbinds.Add(new PadInfo(Buttons.LeftTrigger), new JumpCommand());
 
-            padbinds.Add(new PadInfo(Buttons.RightThumbstickLeft), new AimCommand(new Vector2(-1, 0)));
-            padbinds.Add(new PadInfo(Buttons.RightThumbstickRight), new AimCommand(new Vector2(1, 0)));
-            padbinds.Add(new PadInfo(Buttons.RightThumbstickUp), new AimCommand(new Vector2(0, -1)));
-            padbinds.Add(new PadInfo(Buttons.RightThumbstickDown), new AimCommand(new Vector2(0, 1)));
             padbinds.Add(new PadInfo(Buttons.RightTrigger), new ShootCommand());
         }
 
@@ -96,13 +92,7 @@ namespace LazerTag.CommandPattern
                             padbinds[padInfo].Execute(character);
                             padInfo.IsDown = true;
                         }
-                        //Aim keys
-                        if (padInfo.Button == Buttons.RightThumbstickLeft || padInfo.Button == Buttons.RightThumbstickRight ||
-                            padInfo.Button == Buttons.RightThumbstickUp || padInfo.Button == Buttons.RightThumbstickDown)
-                        {
-                            padbinds[padInfo].Execute(character);
-                            padInfo.IsDown = true;
-                        }
+
                     }
 
                     if (!padState.IsButtonDown(padInfo.Button) && padInfo.IsDown == true)
@@ -111,6 +101,15 @@ namespace LazerTag.CommandPattern
                         character.IsWalking = false;
                     }
                 }
+            }
+
+            //Aim
+            Vector2 aimDirection = new Vector2(padState.ThumbSticks.Right.X, -padState.ThumbSticks.Right.Y);
+
+            if(aimDirection != Vector2.Zero)
+            {
+                AimCommand ac = new AimCommand(aimDirection);
+                ac.Execute(character);
             }
         }
     }

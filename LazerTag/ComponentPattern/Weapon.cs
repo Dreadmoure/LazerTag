@@ -28,6 +28,7 @@ namespace LazerTag.ComponentPattern
         #region fields
         private SpriteRenderer spriteRenderer;
         private Vector2 aimDirection;
+        private Vector2 offset;
         #endregion
 
         #region properties
@@ -54,6 +55,8 @@ namespace LazerTag.ComponentPattern
         public override void Start()
         {
             spriteRenderer = GameObject.GetComponent<SpriteRenderer>() as SpriteRenderer;
+            aimDirection = new Vector2(1, 0);
+            offset = new Vector2(30, 0);
         }
 
         /// <summary>
@@ -62,13 +65,15 @@ namespace LazerTag.ComponentPattern
         /// <param name="position">characters position</param>
         public void Move(Vector2 position)
         {
-            ProjectileSpawnPosition = position; 
+            ProjectileSpawnPosition = position;
+            GameObject.Transform.Position = position + offset;
 
+            
             if (aimDirection.Y == -1)
             {
                 // top 
                 spriteRenderer.Flip = SpriteEffects.None;
-                GameObject.Transform.Position = position + new Vector2(0, -30);
+                offset = new Vector2(0, -30);
                 GameObject.Transform.Rotation = -1.6f;
 
                 ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35); 
@@ -79,7 +84,7 @@ namespace LazerTag.ComponentPattern
             {
                 // bottom 
                 spriteRenderer.Flip = SpriteEffects.None;
-                GameObject.Transform.Position = position + new Vector2(0, 30);
+                offset = new Vector2(0, 30);
                 GameObject.Transform.Rotation = 1.6f;
 
                 ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, 35);
@@ -90,24 +95,69 @@ namespace LazerTag.ComponentPattern
             {
                 // left 
                 spriteRenderer.Flip = SpriteEffects.FlipHorizontally;
-                GameObject.Transform.Position = position + new Vector2(-30, 0);
+                offset = new Vector2(-30, 0);
                 GameObject.Transform.Rotation = 0f;
 
                 ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(-35, 0);
                 ProjectileVelocity = new Vector2(-1, 0);
                 ProjectileDirection = ProjectileDirection.Horizontal;
             }
-            else
+            else if (aimDirection.X == 1)
             {
                 // right
                 spriteRenderer.Flip = SpriteEffects.None;
-                GameObject.Transform.Position = position + new Vector2(30, 0);
+                offset = new Vector2(30, 0);
                 GameObject.Transform.Rotation = 0f;
 
                 ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(35, 0);
                 ProjectileVelocity = new Vector2(1, 0);
                 ProjectileDirection = ProjectileDirection.Horizontal;
             }
+            else if (aimDirection.X > Math.Cos(7*Math.PI /6) && aimDirection.X < Math.Cos(4*Math.PI /3) && aimDirection.Y > -Math.Sin(7 * Math.PI / 6) && aimDirection.Y < -Math.Sin(4 * Math.PI / 3))
+            {
+                // bottom left
+                spriteRenderer.Flip = SpriteEffects.FlipHorizontally;
+                offset = new Vector2(-15, 15);
+                GameObject.Transform.Rotation = -0.8f;
+
+                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35);
+                ProjectileVelocity = new Vector2(0, -1);
+                ProjectileDirection = ProjectileDirection.Vertical;
+            }
+            else if (aimDirection.X > Math.Cos(5* Math.PI / 3) && aimDirection.X < Math.Cos(11 * Math.PI / 6) && aimDirection.Y > -Math.Sin(11 * Math.PI / 6) && aimDirection.Y < -Math.Sin(5 * Math.PI / 3))
+            {
+                // bottom right
+                spriteRenderer.Flip = SpriteEffects.None;
+                offset = new Vector2(15, 15);
+                GameObject.Transform.Rotation = 0.8f;
+
+                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35);
+                ProjectileVelocity = new Vector2(0, -1);
+                ProjectileDirection = ProjectileDirection.Vertical;
+            }
+            else if (aimDirection.X > Math.Cos(Math.PI / 3) && aimDirection.X < Math.Cos(Math.PI / 6) && aimDirection.Y < -Math.Sin(Math.PI / 6) && aimDirection.Y > -Math.Sin(Math.PI / 3))
+            {
+                // top right
+                spriteRenderer.Flip = SpriteEffects.None;
+                offset = new Vector2(15, -15);
+                GameObject.Transform.Rotation = -0.8f;
+
+                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35);
+                ProjectileVelocity = new Vector2(0, -1);
+                ProjectileDirection = ProjectileDirection.Vertical;
+            }
+            else if (aimDirection.X < Math.Cos(2 * Math.PI / 3) && aimDirection.X > Math.Cos(5 * Math.PI / 6) && aimDirection.Y > -Math.Sin(2 * Math.PI / 3) && aimDirection.Y < -Math.Sin(5 * Math.PI / 6))
+            {
+                // top left
+                spriteRenderer.Flip = SpriteEffects.FlipHorizontally;
+                offset = new Vector2(-15, -15);
+                GameObject.Transform.Rotation = 0.8f;
+
+                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35);
+                ProjectileVelocity = new Vector2(0, -1);
+                ProjectileDirection = ProjectileDirection.Vertical;
+            }
+            
 
         }
 
@@ -119,6 +169,11 @@ namespace LazerTag.ComponentPattern
         public void Aim(Vector2 aimDirection)
         {
             this.aimDirection = aimDirection;
+            
+            if(this.aimDirection != Vector2.Zero)
+            {
+                this.aimDirection.Normalize();
+            }
         }
         #endregion
     }

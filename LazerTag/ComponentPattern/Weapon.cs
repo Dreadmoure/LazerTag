@@ -17,7 +17,9 @@ namespace LazerTag.ComponentPattern
     public enum ProjectileDirection
     {
         Horizontal,
-        Vertical
+        Vertical,
+        DiagonalLeft,
+        DiagonalRight
     }
 
     /// <summary>
@@ -120,9 +122,9 @@ namespace LazerTag.ComponentPattern
                 offset = new Vector2(-15, 15);
                 GameObject.Transform.Rotation = -0.8f;
 
-                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35);
-                ProjectileVelocity = new Vector2(0, -1);
-                ProjectileDirection = ProjectileDirection.Vertical;
+                ProjectileSpawnPosition = GameObject.Transform.Position + offset;
+                ProjectileVelocity = new Vector2(-1, 1);
+                ProjectileDirection = ProjectileDirection.DiagonalRight;
             }
             else if (aimDirection.X > Math.Cos(5* Math.PI / 3) && aimDirection.X < Math.Cos(11 * Math.PI / 6) && aimDirection.Y > -Math.Sin(11 * Math.PI / 6) && aimDirection.Y < -Math.Sin(5 * Math.PI / 3))
             {
@@ -131,9 +133,9 @@ namespace LazerTag.ComponentPattern
                 offset = new Vector2(15, 15);
                 GameObject.Transform.Rotation = 0.8f;
 
-                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35);
-                ProjectileVelocity = new Vector2(0, -1);
-                ProjectileDirection = ProjectileDirection.Vertical;
+                ProjectileSpawnPosition = GameObject.Transform.Position + offset;
+                ProjectileVelocity = new Vector2(1, 1);
+                ProjectileDirection = ProjectileDirection.DiagonalLeft;
             }
             else if (aimDirection.X > Math.Cos(Math.PI / 3) && aimDirection.X < Math.Cos(Math.PI / 6) && aimDirection.Y < -Math.Sin(Math.PI / 6) && aimDirection.Y > -Math.Sin(Math.PI / 3))
             {
@@ -142,9 +144,9 @@ namespace LazerTag.ComponentPattern
                 offset = new Vector2(15, -15);
                 GameObject.Transform.Rotation = -0.8f;
 
-                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35);
-                ProjectileVelocity = new Vector2(0, -1);
-                ProjectileDirection = ProjectileDirection.Vertical;
+                ProjectileSpawnPosition = GameObject.Transform.Position + offset;
+                ProjectileVelocity = new Vector2(1, -1);
+                ProjectileDirection = ProjectileDirection.DiagonalRight;
             }
             else if (aimDirection.X < Math.Cos(2 * Math.PI / 3) && aimDirection.X > Math.Cos(5 * Math.PI / 6) && aimDirection.Y > -Math.Sin(2 * Math.PI / 3) && aimDirection.Y < -Math.Sin(5 * Math.PI / 6))
             {
@@ -153,9 +155,9 @@ namespace LazerTag.ComponentPattern
                 offset = new Vector2(-15, -15);
                 GameObject.Transform.Rotation = 0.8f;
 
-                ProjectileSpawnPosition = GameObject.Transform.Position + new Vector2(0, -35);
-                ProjectileVelocity = new Vector2(0, -1);
-                ProjectileDirection = ProjectileDirection.Vertical;
+                ProjectileSpawnPosition = GameObject.Transform.Position + offset;
+                ProjectileVelocity = new Vector2(-1, -1);
+                ProjectileDirection = ProjectileDirection.DiagonalLeft;
             }
             
 

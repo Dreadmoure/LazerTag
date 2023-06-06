@@ -31,6 +31,11 @@ namespace LazerTag.MenuStates
             this.game = game;
         }
 
+        public virtual void PreloadContent()
+        {
+
+        }
+
         /// <summary>
         /// abstract method to be implemented 
         /// </summary>

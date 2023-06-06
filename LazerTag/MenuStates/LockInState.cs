@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LazerTag.MenuStates
@@ -44,6 +45,7 @@ namespace LazerTag.MenuStates
                     new Vector2(GameWorld.ScreenSize.X/1.6f, GameWorld.ScreenSize.Y/1.88f) };
 
         private static int playerCount;
+        private State gameState;
         #endregion
 
         #region properties
@@ -70,8 +72,18 @@ namespace LazerTag.MenuStates
         }
 
         #region methods
+        public override void PreloadContent()
+        {
+            gameState = new GameState(content, graphicsDevice, game);
+            gameState.PreloadContent();
+        }
+
         public override void LoadContent()
         {
+            Thread t = new Thread(PreloadContent);
+            t.IsBackground = true;
+            t.Start();
+
             // reset all 
             gameObjects = new List<GameObject>();
             destroyGameObjects = new List<GameObject>();

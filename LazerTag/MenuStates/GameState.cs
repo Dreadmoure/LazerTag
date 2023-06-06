@@ -60,41 +60,45 @@ namespace LazerTag.MenuStates
         public GameState(ContentManager content, GraphicsDevice graphicsDevice, GameWorld game) : base(content, graphicsDevice, game)
         {
             // set mouse invisible 
-            game.IsMouseVisible = false; 
+            game.IsMouseVisible = false;
+        }
 
-            // reset all 
+        #region methods 
+        public override void PreloadContent()
+        {
+            // preload stuff
             gameObjects = new List<GameObject>();
             destroyGameObjects = new List<GameObject>();
             newGameObjects = new List<GameObject>();
             pickupSpawnPos = new List<Vector2>();
             Colliders = new List<Collider>();
-            PlayerCount = LockInState.PlayerIndices.Count;
-            Winner = null; 
+            Winner = null;
 
+            // load level 
+            AddPlatforms();
         }
 
-        #region methods 
         /// <summary>
         /// method for loading all content in game 
         /// </summary>
         public override void LoadContent()
         {
-            Director backgroundDirector = new Director(new BackgroundBuilder());
-            backgroundObject = backgroundDirector.Construct();
-            gameObjects.Add(backgroundObject);
+            PlayerCount = LockInState.PlayerIndices.Count;
 
             // load music 
             SoundMixer.Instance.PlayGameMusic();
 
+            //Preload all content
+            Director backgroundDirector = new Director(new BackgroundBuilder());
+            backgroundObject = backgroundDirector.Construct();
+            gameObjects.Add(backgroundObject);
+
             // load players 
-            foreach(PlayerIndex playerIndex in LockInState.PlayerIndices)
+            foreach (PlayerIndex playerIndex in LockInState.PlayerIndices)
             {
                 Director playerDirector = new Director(new PlayerBuilder((int)playerIndex));
                 gameObjects.Add(playerDirector.Construct());
             }
-
-            // load level 
-            AddPlatforms();
 
             //loop that calls awake on all GameObjects
             for (int i = 0; i < gameObjects.Count; i++)
